@@ -1,1 +1,67 @@
-﻿My project/Temp
+# OS and editor noise
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.tmp
+*.temp
+*.log
+*.pid
+
+# Visual Studio / Rider / VS Code
+.vs/
+.idea/
+.vscode/
+*.user
+*.userprefs
+*.suo
+*.csproj
+*.sln
+*.sln.DotSettings.user
+
+# Unity generated directories
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+
+# Unity generated files
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+sysinfo.txt
+*.stackdump
+
+# Unity Asset Store tools
+[Aa]ssets/AssetStoreTools*
+
+# Crash and profiler output
+crashlytics-build.properties
+
+# TypeScript / Node tooling
+TsProj/node_modules/
+TsProj/dist/
+TsProj/.turbo/
+TsProj/.cache/
+TsProj/coverage/
+TsProj/npm-debug.log*
+TsProj/yarn-debug.log*
+TsProj/yarn-error.log*
+TsProj/pnpm-debug.log*
+TsProj/*.tsbuildinfo
+
+# Package manager caches
+.npm/
+.pnpm-store/
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz

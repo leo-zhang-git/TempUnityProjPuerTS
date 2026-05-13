@@ -24,7 +24,7 @@ The first delivery target is a minimal vertical slice: Unity starts the PuerTS r
 - Treat `doc-governance/My project/` as the authority root for this template's development documents.
 - Treat `My project/` as the Unity implementation target for this template.
 - Use `../program/` only as a reference for structure and conventions; do not modify it for this template task.
-- Keep TypeScript source, TypeScript build config, generated JavaScript, and related Node tooling under `TsProj/` at the Unity project root.
+- Keep TypeScript source, TypeScript build config, generated JavaScript, and related Node tooling under the workspace-root `TsProj/`, as a sibling of the Unity project root.
 - Keep Unity generated folders such as `Library/`, `Temp/`, `Logs/`, and `UserSettings/` out of documentation authority decisions.
 - Preserve Unity serialized assets and scene files carefully; changes to `.unity`, `.prefab`, `.asset`, `.meta`, or ProjectSettings files must be intentional and easy to explain.
 - Close each active stage before expanding the next one.

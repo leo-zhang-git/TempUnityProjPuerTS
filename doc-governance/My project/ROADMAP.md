@@ -1,35 +1,36 @@
-# Unity PuerTS Template Roadmap
+# Unity PuerTS 模板路线图
 
 <!-- governance-profile:start -->
 
 ## Current Stage
 
-Stage 5 - sample validation.
+阶段 6：正式 ECS 启动验证。
 
-The project now needs play-mode validation that the runtime Button displays the TypeScript-returned `hello world` string.
+项目当前需要进行 Play Mode 验证：运行时先进入 `Boot`，清理资源，初始化 TypeScript ECS 运行时，然后切换到 `Main`。
 
 ## Active Goals
 
-- Stage 1: PuerTS is present in the Unity project and a C# smoke-test entrypoint exists.
-- Stage 2: `TsProj/` exists at the workspace root with a minimal TypeScript project, source directory, build output directory, and compiler scripts.
-- Stage 3: Unity connects to `TsProj/dist/main.js` through PuerTS.
-- Stage 4: Build the sample Unity UI surface with a button and text label, with click behavior owned by TypeScript.
-- Stage 5: Validate the template by running the scene and confirming the button displays `hello world`.
+- 阶段 1：Unity 项目中已存在 PuerTS，并具备 C# smoke-test 入口。
+- 阶段 2：工作区根目录存在 `TsProj/`，包含最小 TypeScript 项目、源码目录、构建输出目录和编译脚本。
+- 阶段 3：Unity 通过 PuerTS 连接到 `TsProj/dist/main.js`。
+- 阶段 4：用正式 Boot/Main 场景流替换测试 UI 切片。
+- 阶段 5：在 `TsProj/src/ecs/` 和 `TsProj/src/game/` 下建立 TypeScript ECS 基线。
+- 阶段 6：运行 Play Mode，验证 Boot-to-Main 启动流。
 
 ## Progress
 
-- Current authority root: `doc-governance/My project/`.
-- Current governance profile: `stage-driven`.
-- Active work: run the Unity scene and confirm the runtime Button displays `hello world`.
-- Remaining work: decide the player-build JavaScript packaging path before treating the template as build-ready.
-- Remaining work: decide whether the runtime-created sample UI should stay code-created or become serialized scene/prefab content.
+- 当前权威根目录：`doc-governance/My project/`。
+- 当前治理画像：`stage-driven`。
+- 活跃工作：运行 Unity 场景，确认 `RuntimeBootstrap` 从 `Boot` 开始，初始化 TypeScript ECS 运行时，并切换到 `Main`。
+- 剩余工作：确定 Player 构建中的 JavaScript 打包路径，然后才能将模板视为构建就绪。
+- 剩余工作：启动和 ECS 基线验证完成后，为 `Main` 增加运行时内容。
 
 ## Explicit Non-goals
 
-- No production game framework is part of the first template slice.
-- No server-side TypeScript structure is part of the first template slice.
-- No hotfix packaging pipeline is part of the first template slice.
-- No copying of the full `../program/TsProj` tree is part of the first template slice.
-- No public README is generated unless explicitly requested.
+- 第一版模板切片不包含服务端 TypeScript 结构。
+- 第一版模板切片不包含热更打包流水线。
+- 第一版模板切片不复制完整的 `../program/TsProj` 树。
+- 正式运行时基线不包含测试 UI 或样例 UI。
+- 除非明确要求，否则不生成公开 README。
 
 <!-- governance-profile:end -->

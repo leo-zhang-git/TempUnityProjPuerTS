@@ -10,7 +10,10 @@ Desktop.ini
 # Visual Studio / Rider / VS Code
 .vs/
 .idea/
-.vscode/
+**/.vscode/*
+!TsProj/.vscode/
+!TsProj/.vscode/tasks.json
+!TsProj/.vscode/launch.json
 *.user
 *.userprefs
 *.suo

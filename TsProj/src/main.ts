@@ -1,27 +1,36 @@
-import { App, RuntimeHost } from "./app";
+import { GameRuntime } from "./game/game-runtime";
 
-let app: App | undefined;
+let runtime: GameRuntime | undefined;
 
-export function start(host?: RuntimeHost): void {
-  if (app) {
-    return;
+function ensureRuntime(): GameRuntime {
+  if (!runtime) {
+    runtime = new GameRuntime();
   }
 
-  app = new App(host);
-  app.start();
+  return runtime;
+}
+
+export function initializeBoot(): string {
+  return ensureRuntime().initializeBoot();
+}
+
+export function enterMain(): string {
+  return ensureRuntime().enterMain();
+}
+
+export function fixedUpdate(deltaTime: number): void {
+  runtime?.fixedUpdate(deltaTime);
+}
+
+export function update(deltaTime: number): void {
+  runtime?.update(deltaTime);
+}
+
+export function lateUpdate(deltaTime: number): void {
+  runtime?.lateUpdate(deltaTime);
 }
 
 export function dispose(): void {
-  app?.dispose();
-  app = undefined;
+  runtime?.dispose();
+  runtime = undefined;
 }
-
-export function onHelloButtonClick(): string {
-  if (!app) {
-    start();
-  }
-
-  return app!.showHelloWorld();
-}
-
-start();

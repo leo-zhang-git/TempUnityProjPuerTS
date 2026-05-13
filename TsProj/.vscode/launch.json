@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Attach PuerTS Runtime",
+      "type": "pwa-node",
+      "request": "attach",
+      "address": "localhost",
+      "port": 9230,
+      "sourceMaps": true,
+      "outFiles": [
+        "${workspaceFolder}/dist/**/*.js"
+      ],
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/dist/**/*.js",
+        "${workspaceFolder}/dist/**/*.js.map"
+      ]
+    }
+  ]
+}

@@ -5,9 +5,17 @@
   "description": "TypeScript runtime code for the Unity PuerTS template.",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "check": "tsc -p tsconfig.json --noEmit"
+    "watch": "tsc-watch -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "devDependencies": {
-    "typescript": "^5.0.2"
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.3.0",
+    "globals": "^17.6.0",
+    "tsc-watch": "^7.2.0",
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.59.3"
   }
 }

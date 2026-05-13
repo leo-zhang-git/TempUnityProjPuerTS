@@ -18,6 +18,8 @@
 - `TsProj/types/` owns local ambient declarations that are needed before full generated Unity/PuerTS typings are introduced.
 - `TsProj/src/main.ts` is the initial module entrypoint that Unity should load through PuerTS.
 - `TsProj/src/app.ts` owns the first sample's TypeScript application state and UI-facing command behavior.
+- `My project/Assets/Script/PuerTsTest.cs` owns the initial Unity-side PuerTS runtime lifecycle and editor-time JavaScript file loading.
+- `PuerTsTest.cs` also creates the first sample UI at runtime so the initial slice avoids manual serialized scene edits.
 
 ## Key Tradeoffs
 
@@ -26,11 +28,14 @@
 - Unity UI is sufficient for the first sample because the requirement is a button click and text display, not a full UI framework.
 - C# remains necessary at the runtime boundary because Unity owns scene lifecycle, serialized object references, and package initialization.
 - `TsProj/dist/` is acceptable as the editor-time JavaScript load location, but player builds will need an explicit copy or packaging step into a Unity-owned runtime asset location.
+- The bridge uses PuerTS module loading for built-in modules and a custom file loader for `TsProj/dist/` so TypeScript output can stay outside Unity `Assets/`.
+- Runtime-created UI keeps the first sample easy to regenerate and avoids treating serialized UI layout as part of the initial bridge contract.
 
 ## Guardrails
 
 - Do not move TypeScript source into `Assets/`; keep `Assets/` for Unity-facing files and `TsProj/` for TypeScript-facing files.
 - Do not put `node_modules/` or generated TypeScript build output under the Unity `Assets/` tree.
+- Keep the `TsProj/dist/` loader isolated to bridge code until a player-build packaging path exists.
 - Do not make the initial sample depend on the large production structure in `../program/`.
 - Do not introduce server-side TypeScript, hotfix packaging, config export, or production tooling unless the template scope changes explicitly.
 - Do not treat Unity generated folders such as `Library/`, `Temp/`, and `Logs/` as source or documentation authority.

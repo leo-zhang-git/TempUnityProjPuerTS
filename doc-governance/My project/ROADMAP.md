@@ -4,25 +4,25 @@
 
 ## Current Stage
 
-Stage 3 - Unity-to-JavaScript bridge.
+Stage 5 - sample validation.
 
-The project now needs Unity to load the built JavaScript output through PuerTS.
+The project now needs play-mode validation that the runtime Button displays the TypeScript-returned `hello world` string.
 
 ## Active Goals
 
 - Stage 1: PuerTS is present in the Unity project and a C# smoke-test entrypoint exists.
 - Stage 2: `TsProj/` exists at the workspace root with a minimal TypeScript project, source directory, build output directory, and compiler scripts.
-- Stage 3: Connect Unity to `TsProj/dist/main.js` through PuerTS.
-- Stage 4: Build the sample Unity UI scene with a button and text label, with click behavior owned by TypeScript.
+- Stage 3: Unity connects to `TsProj/dist/main.js` through PuerTS.
+- Stage 4: Build the sample Unity UI surface with a button and text label, with click behavior owned by TypeScript.
 - Stage 5: Validate the template by running the scene and confirming the button displays `hello world`.
 
 ## Progress
 
 - Current authority root: `doc-governance/My project/`.
 - Current governance profile: `stage-driven`.
-- Active work: replace the inline C# smoke test with a bridge that loads built JavaScript from `TsProj/dist/`.
+- Active work: run the Unity scene and confirm the runtime Button displays `hello world`.
 - Remaining work: decide the player-build JavaScript packaging path before treating the template as build-ready.
-- Remaining work: create or update Unity bridge assets and the sample scene.
+- Remaining work: decide whether the runtime-created sample UI should stay code-created or become serialized scene/prefab content.
 
 ## Explicit Non-goals
 

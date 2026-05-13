@@ -15,14 +15,19 @@ It covers the Unity project root, package state, intended runtime surface, and t
 - `com.unity.ugui` is present in the package manifest, so the project has Unity UI package support available.
 - PuerTS package source is present under `My project/Assets/Package/core/` and `My project/Assets/Package/v8/`.
 - Unity package dependencies reference PuerTS through local `file:../Assets/Package/...` entries in `My project/Packages/manifest.json`.
-- A C# smoke-test script exists at `My project/Assets/Script/PuerTsTest.cs` and starts a `Puerts.ScriptEnv` with the V8 backend.
+- A C# bridge script exists at `My project/Assets/Script/PuerTsTest.cs` and starts a `Puerts.ScriptEnv` with the V8 backend.
+- `PuerTsTest.cs` loads PuerTS built-in modules through the default Resources loader and loads template runtime JavaScript from `TsProj/dist/`.
+- `PuerTsTest.cs` executes `puerts/module.mjs` before loading the CommonJS `main.js` module.
+- `PuerTsTest.cs` keeps delegates for the TypeScript `dispose` and `onHelloButtonClick` exports.
+- `PuerTsTest.cs` creates a runtime UGUI sample surface with a Canvas, message label, and Button.
+- `PuerTsTest.OnHelloButtonClick()` calls the TypeScript `onHelloButtonClick` export, logs the returned `hello world` string, and writes it to the runtime message label.
 - The TypeScript project root is the workspace-root `TsProj/`, as a sibling of `My project/`.
 - `TsProj/` contains the minimal TypeScript build baseline: `package.json`, `tsconfig.json`, `src/`, and `types/`.
 - `TsProj/src/main.ts` exports `start`, `dispose`, and `onHelloButtonClick` as the stable initial runtime surface for the Unity bridge.
 - `TsProj/src/app.ts` owns the sample application state and returns/displays `hello world` through a small host interface.
 - `TsProj/dist/` is the generated JavaScript output directory and is ignored by Git.
-- The current Unity scene has not yet been wired to the TypeScript-built JavaScript output.
-- No TypeScript-driven UI sample exists in the scene yet.
+- `SampleScene.unity` contains `PuerTsTest` on the existing Directional Light object.
+- The sample UI is created at runtime instead of serialized into the scene.
 
 ## Fixed Rules
 
@@ -39,5 +44,5 @@ It covers the Unity project root, package state, intended runtime surface, and t
 - Use Unity editor or batchmode checks to validate Unity package and scene changes when Unity files change.
 - Use `npm run check` from `TsProj/` for TypeScript compiler validation.
 - Use `npm run build` from `TsProj/` to generate JavaScript into `TsProj/dist/`.
-- Use a play-mode or manual Unity scene check to validate the `hello world` button behavior after the sample scene exists.
+- Use a play-mode or manual Unity scene check to validate that clicking the runtime Button displays `hello world`.
 - Update this file whenever current behavior, package state, runtime entrypoints, or observable sample behavior changes.

@@ -1,0 +1,13 @@
+{
+  "name": "unity-puerts-template-ts",
+  "version": "0.1.0",
+  "private": true,
+  "description": "TypeScript runtime code for the Unity PuerTS template.",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.2"
+  }
+}

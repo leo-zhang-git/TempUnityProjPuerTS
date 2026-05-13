@@ -1,0 +1,1156 @@
+Using pre-set license
+Built from '2022.3/staging' branch; Version is '2022.3.45f1 (a13dfa44d684) revision 10567162'; Using compiler version '192829333'; Build Type 'Release'
+OS: 'Windows 11  (10.0.26200) 64bit Professional' Language: 'zh' Physical Memory: 65253 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+
+COMMAND LINE ARGUMENTS:
+F:\Unity 2022.3.45f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker1
+-projectPath
+F:/WorkSpace/TempUnityProjPuerTS/My project
+-logFile
+Logs/AssetImportWorker1.log
+-srvPort
+49513
+Successfully changed project path to: F:/WorkSpace/TempUnityProjPuerTS/My project
+F:/WorkSpace/TempUnityProjPuerTS/My project
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [44720]  Target information:
+
+Player connection [44720]  * "[IP] 192.168.5.155 [Port] 0 [Flags] 2 [Guid] 4160338346 [EditorId] 4160338346 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-GO57N7V) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [44720] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [44720] Host joined alternative multi-casting on [225.0.0.222:34997]...
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+Refreshing native plugins compatible for Editor in 7.26 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2022.3.45f1 (a13dfa44d684)
+[Subsystems] Discovering subsystems at path F:/Unity 2022.3.45f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path F:/WorkSpace/TempUnityProjPuerTS/My project/Assets
+GfxDevice: creating device client; threaded=0; jobified=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 3060 (ID=0x2504)
+    Vendor:   NVIDIA
+    VRAM:     12113 MB
+    Driver:   32.0.15.9174
+Initialize mono
+Mono path[0] = 'F:/Unity 2022.3.45f1/Editor/Data/Managed'
+Mono path[1] = 'F:/Unity 2022.3.45f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'F:/Unity 2022.3.45f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56920
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: F:/Unity 2022.3.45f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.003876 seconds.
+- Loaded All Assemblies, in  0.276 seconds
+Native extension for WindowsStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.216 seconds
+Domain Reload Profiling: 492ms
+	BeginReloadAssembly (82ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (1ms)
+	RebuildCommonClasses (29ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (46ms)
+	LoadAllAssembliesAndSetupDomain (111ms)
+		LoadAssemblies (81ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (110ms)
+			TypeCache.Refresh (109ms)
+				TypeCache.ScanAssembly (98ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (0ms)
+	FinalizeReload (216ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (175ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (8ms)
+			SetLoadedEditorAssemblies (7ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (2ms)
+			ProcessInitializeOnLoadAttributes (120ms)
+			ProcessInitializeOnLoadMethodAttributes (38ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+========================================================================
+Worker process is ready to serve import requests
+Caller must complete domain reload
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.472 seconds
+Native extension for WindowsStandalone target not found
+Package Manager log level set to [2]
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.541 seconds
+Domain Reload Profiling: 1013ms
+	BeginReloadAssembly (113ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (4ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (19ms)
+	RebuildCommonClasses (26ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (29ms)
+	LoadAllAssembliesAndSetupDomain (296ms)
+		LoadAssemblies (223ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (135ms)
+			TypeCache.Refresh (117ms)
+				TypeCache.ScanAssembly (106ms)
+			ScanForSourceGeneratedMonoScriptInfo (12ms)
+			ResolveRequiredComponents (4ms)
+	FinalizeReload (541ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (423ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (4ms)
+			SetLoadedEditorAssemblies (4ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (73ms)
+			ProcessInitializeOnLoadAttributes (322ms)
+			ProcessInitializeOnLoadMethodAttributes (18ms)
+			AfterProcessingInitializeOnLoad (2ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (5ms)
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
+Refreshing native plugins compatible for Editor in 1.61 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3089 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 19 unused Assets / (54.6 KB). Loaded Objects now: 3555.
+Memory consumption went from 118.0 MB to 117.9 MB.
+Total: 3.279100 ms (FindLiveObjects: 0.230200 ms CreateObjectMapping: 0.111400 ms MarkObjects: 2.856200 ms  DeleteObjects: 0.079700 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 23283.477175 seconds.
+  path: Assets
+  artifactKey: Guid(00000000000000001000000000000000) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets using Guid(00000000000000001000000000000000) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'ae5280ad91af67e2a353905758f96678') in 0.002170 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Prepare
+Caller must complete domain reload
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.346 seconds
+Native extension for WindowsStandalone target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.711 seconds
+Domain Reload Profiling: 1057ms
+	BeginReloadAssembly (123ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (4ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (30ms)
+	RebuildCommonClasses (27ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (19ms)
+	LoadAllAssembliesAndSetupDomain (168ms)
+		LoadAssemblies (211ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (19ms)
+			TypeCache.Refresh (8ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (5ms)
+			ResolveRequiredComponents (4ms)
+	FinalizeReload (712ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (378ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (4ms)
+			SetLoadedEditorAssemblies (5ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (67ms)
+			ProcessInitializeOnLoadAttributes (281ms)
+			ProcessInitializeOnLoadMethodAttributes (18ms)
+			AfterProcessingInitializeOnLoad (2ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (5ms)
+Refreshing native plugins compatible for Editor in 1.58 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3082 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 14 unused Assets / (28.5 KB). Loaded Objects now: 3559.
+Memory consumption went from 116.9 MB to 116.9 MB.
+Total: 2.307400 ms (FindLiveObjects: 0.199700 ms CreateObjectMapping: 0.111200 ms MarkObjects: 1.962100 ms  DeleteObjects: 0.033400 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/PuerTSTest.cs: 03bcd7c39b979757bb05d244810c1a25 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/precompiled-assembly-types:Assembly-CSharp: 3631b7fce5c19a9ab2738fdbce78022c -> 
+========================================================================
+Received Import Request.
+  Time since last request: 35.927366 seconds.
+  path: Assets/Script/PuerTSTest.cs
+  artifactKey: Guid(5c3d8c3e4f824c44f861aad861cc09b3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/PuerTSTest.cs using Guid(5c3d8c3e4f824c44f861aad861cc09b3) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '4c5e87f802194c7f3622e0a62d8e79f5') in 0.001897 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Prepare
+Caller must complete domain reload
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.350 seconds
+Native extension for WindowsStandalone target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.707 seconds
+Domain Reload Profiling: 1057ms
+	BeginReloadAssembly (122ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (5ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (24ms)
+	RebuildCommonClasses (28ms)
+	RebuildNativeTypeToScriptingClass (10ms)
+	initialDomainReloadingComplete (21ms)
+	LoadAllAssembliesAndSetupDomain (168ms)
+		LoadAssemblies (210ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (25ms)
+			TypeCache.Refresh (8ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (9ms)
+			ResolveRequiredComponents (7ms)
+	FinalizeReload (708ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (381ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (4ms)
+			SetLoadedEditorAssemblies (4ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (74ms)
+			ProcessInitializeOnLoadAttributes (279ms)
+			ProcessInitializeOnLoadMethodAttributes (18ms)
+			AfterProcessingInitializeOnLoad (2ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (6ms)
+Refreshing native plugins compatible for Editor in 1.60 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3082 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 14 unused Assets / (28.5 KB). Loaded Objects now: 3562.
+Memory consumption went from 116.9 MB to 116.9 MB.
+Total: 2.406500 ms (FindLiveObjects: 0.205200 ms CreateObjectMapping: 0.094900 ms MarkObjects: 2.062300 ms  DeleteObjects: 0.043100 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/PuerTSTest.cs: 03bcd7c39b979757bb05d244810c1a25 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:scripting/monoscript/fileName/PuerTsTest.cs: 03bcd7c39b979757bb05d244810c1a25 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/precompiled-assembly-types:Assembly-CSharp: 3631b7fce5c19a9ab2738fdbce78022c -> 
+========================================================================
+Received Import Request.
+  Time since last request: 6.725091 seconds.
+  path: Assets/Script/PuerTsTest.cs
+  artifactKey: Guid(5c3d8c3e4f824c44f861aad861cc09b3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Script/PuerTsTest.cs using Guid(5c3d8c3e4f824c44f861aad861cc09b3) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: '4f8da27c5edffe4ee1b5adbf6d16e488') in 0.001675 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Prepare
+Caller must complete domain reload
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.421 seconds
+Native extension for WindowsStandalone target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.708 seconds
+Domain Reload Profiling: 1129ms
+	BeginReloadAssembly (130ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (4ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (31ms)
+	RebuildCommonClasses (26ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (26ms)
+	LoadAllAssembliesAndSetupDomain (230ms)
+		LoadAssemblies (230ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (70ms)
+			TypeCache.Refresh (56ms)
+				TypeCache.ScanAssembly (42ms)
+			ScanForSourceGeneratedMonoScriptInfo (9ms)
+			ResolveRequiredComponents (4ms)
+	FinalizeReload (708ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (374ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (5ms)
+			SetLoadedEditorAssemblies (5ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (67ms)
+			ProcessInitializeOnLoadAttributes (272ms)
+			ProcessInitializeOnLoadMethodAttributes (22ms)
+			AfterProcessingInitializeOnLoad (3ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (7ms)
+Refreshing native plugins compatible for Editor in 3.86 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3133 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 15 unused Assets / (29.0 KB). Loaded Objects now: 3615.
+Memory consumption went from 118.0 MB to 118.0 MB.
+Total: 2.211600 ms (FindLiveObjects: 0.211400 ms CreateObjectMapping: 0.097300 ms MarkObjects: 1.857700 ms  DeleteObjects: 0.044100 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/JsEnv.cs: 7e55a4ddbc227b83b06553d601d6de37 -> 
+  custom:scripting/monoscript/fileName/UnityMenu.cs: b7b1412a41f8d3932e3dbf87d7da1252 -> 
+  custom:scripting/monoscript/fileName/LuaImporter.cs: 785264d0a611aa32e0b3d3a2a709ed26 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:scripting/monoscript/fileName/StaticWrapperMenu.cs: f52b6082723446f1b502f6ad1ac9cb86 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.v8.Editor: c9cc3e46aa7fc752d86483dbd904a801 -> 
+  custom:scripting/monoscript/fileName/ArrayBuffer.cs: 2bd2954853bbf31284a7e62a2b42fb0c -> 
+  custom:scripting/monoscript/fileName/Utils.cs: dfcab60272f80959421cf8bc67e7aa04 -> 40c528c300bfc0733192292a788cb076
+  custom:scripting/monoscript/fileName/PapiV8Native.cs: aa45fcf9c195f6d4a0c32c36afd055c3 -> 
+  custom:scripting/monoscript/fileName/GenerateChecker.cs: 84e6a68c51dd1cc8cb5f1afa22d52f6b -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/ScriptEnv.cs: dfb3df5d3df1c4d1ec817b61ace68b5d -> 
+  custom:scripting/monoscript/fileName/PuerTSTest.cs: 03bcd7c39b979757bb05d244810c1a25 -> 
+  custom:scripting/monoscript/fileName/InstructionsFilter.cs: 92e58ef2d44c90485c94a741ce16d338 -> 
+  custom:scripting/monoscript/fileName/ArrayExtension.cs: 41bbf97a80a3e18d8b6d787250a4862c -> 
+  custom:scripting/monoscript/fileName/PuertsDLL.cs: 215e1564daf0f0b3f8a46bdf29f26058 -> 
+  custom:scripting/monoscript/fileName/ScriptObject.cs: 13455a8c32197075bc7e6cf0f0a25a0a -> 
+  custom:scripting/precompiled-assembly-types:Mono.Reflection: 6e5d7b01e7549cdfc60f5b299ea95645 -> 
+  custom:scripting/monoscript/fileName/U2018Compatible.cs: 468e4c60ac8883c1601ad59c096c3979 -> 
+  custom:scripting/monoscript/fileName/ExtensionMethodInfos_Gen_Internal.cs: a415b2756e671b2643b93fafbf3010f1 -> 
+  custom:scripting/monoscript/fileName/CSharpFileExporter.cs: d116687670494a351b271b7a8728a538 -> 
+  custom:scripting/monoscript/fileName/FAQHelper.cs: e225fb449f9082b824715036e8a32a12 -> 
+  custom:scripting/monoscript/fileName/PuertsNative.cs: 31d5428f137eeca027328a8b57357f9c -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/BackendJs.cs: bb1b5d186e02070e77b6057e72faff82 -> 
+  custom:scripting/monoscript/fileName/ObjectPool.cs: 103ebbd2b6e5f74b1b6d91febb00352a -> 
+  custom:scripting/monoscript/fileName/ExpressionToCSharpVisitor.cs: a6c5a7084850ba51405ce6505b6f05ff -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/Configure.cs: 98a56260bbb4bf3117facc60ad8f21b3 -> 
+  custom:scripting/monoscript/fileName/NativeAPI.cs: e12a6ed10592e8f30367caeb8202632e -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:scripting/monoscript/fileName/Backend.cs: 73291730f3e5739f49810494885292ea -> 
+  custom:scripting/monoscript/fileName/TypeExtensions.cs: 65bbde9f08d8cc2c2e1cf87c81892b9b -> dcfbda865fe8349225c494951670deb0
+  custom:scripting/monoscript/fileName/TypeRegister.cs: 16b2e5dc78ac63bc0e45f8dfa0bd40fc -> 
+  custom:scripting/monoscript/fileName/WSPPAddonNative.cs: 68dc1b7be139c8b552ea4e0fffc7726e -> 
+  custom:scripting/monoscript/fileName/MarshalExtensions.cs: f0a7f5bdd13a1f9f5d78f93344afc951 -> 
+  custom:scripting/monoscript/fileName/TypeUtils.cs: 8bfd4dabaeb1bdd3655a16670b53e363 -> 
+  custom:scripting/monoscript/fileName/ExpressionsWrap.cs: 8d89c631021979e253cb0a6f22cb7857 -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.core.Editor: 58301de35153c8ad178c6bd0a404c25c -> 
+  custom:scripting/monoscript/fileName/Loader.cs: 222946a706678b6fa7664e4336cdac03 -> 
+  custom:scripting/monoscript/fileName/PuerTsTest.cs: d6a7022275bbab6274cfd0d91bcad2e3 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/BackendV8.cs: 53fc9d3d76a676c332980ee87d799c87 -> 
+  custom:scripting/monoscript/fileName/DocResolver.cs: ca42b7550f81379b6c692d0df9857c92 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/StaticWrapperGenerator.cs: dc9003bd692bccd269aaadf4f4e8462b -> 
+  custom:scripting/monoscript/fileName/DTSUnityMenu.cs: 61e85cab5575c47d5930817fe529426b -> 
+  custom:scripting/monoscript/fileName/MJSImporter.cs: f265803032731d4d36f0df8320ba98a0 -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.core: 132481c1f1fa8b0f3d77ba101d2de4c7 -> 
+  custom:scripting/monoscript/fileName/DTS.cs: 2ed5669d552f8bf26af00de208eed94b -> 
+  custom:scripting/monoscript/fileName/RegisterInfoManager.cs: 9a3f0f4b63d5db4cf5849d76aa907812 -> 
+  custom:scripting/monoscript/fileName/RegisterInfo.cs: 8affb3491b4bf4d164eaeaf65153757b -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/CJSImporter.cs: 82b681d124ffdea6bf5ddb00963634b8 -> 
+  custom:scripting/monoscript/fileName/CSharpCodeGen.cs: fdca55e92a33ac171ea5cead1edcbf65 -> 
+  custom:scripting/monoscript/fileName/PathHelper.cs: 140ba4e1ea47eceb686c6e54095c307a -> 
+  custom:scripting/precompiled-assembly-types:Assembly-CSharp: bd2a91421d61a8676bce337512c6f3e9 -> 
+  custom:scripting/monoscript/fileName/TypedValue.cs: 783cff2646c3be7749e47c99acb529ad -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.v8: 1ca93d3db160bb00336d8405e0116734 -> 
+========================================================================
+Received Prepare
+Caller must complete domain reload
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.346 seconds
+Native extension for WindowsStandalone target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.726 seconds
+Domain Reload Profiling: 1071ms
+	BeginReloadAssembly (120ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (5ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (25ms)
+	RebuildCommonClasses (33ms)
+	RebuildNativeTypeToScriptingClass (12ms)
+	initialDomainReloadingComplete (22ms)
+	LoadAllAssembliesAndSetupDomain (158ms)
+		LoadAssemblies (210ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (11ms)
+			TypeCache.Refresh (5ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (4ms)
+	FinalizeReload (726ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (388ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (4ms)
+			SetLoadedEditorAssemblies (3ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (66ms)
+			ProcessInitializeOnLoadAttributes (296ms)
+			ProcessInitializeOnLoadMethodAttributes (17ms)
+			AfterProcessingInitializeOnLoad (1ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (5ms)
+Refreshing native plugins compatible for Editor in 4.42 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3134 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 15 unused Assets / (29.0 KB). Loaded Objects now: 3618.
+Memory consumption went from 118.3 MB to 118.2 MB.
+Total: 2.522900 ms (FindLiveObjects: 0.220300 ms CreateObjectMapping: 0.106800 ms MarkObjects: 2.152200 ms  DeleteObjects: 0.042400 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/JsEnv.cs: 7e55a4ddbc227b83b06553d601d6de37 -> 
+  custom:scripting/monoscript/fileName/UnityMenu.cs: b7b1412a41f8d3932e3dbf87d7da1252 -> 
+  custom:scripting/monoscript/fileName/LuaImporter.cs: 785264d0a611aa32e0b3d3a2a709ed26 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:scripting/monoscript/fileName/StaticWrapperMenu.cs: f52b6082723446f1b502f6ad1ac9cb86 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.v8.Editor: c9cc3e46aa7fc752d86483dbd904a801 -> 
+  custom:scripting/monoscript/fileName/ArrayBuffer.cs: 2bd2954853bbf31284a7e62a2b42fb0c -> 
+  custom:scripting/monoscript/fileName/Utils.cs: dfcab60272f80959421cf8bc67e7aa04 -> 40c528c300bfc0733192292a788cb076
+  custom:scripting/monoscript/fileName/PapiV8Native.cs: aa45fcf9c195f6d4a0c32c36afd055c3 -> 
+  custom:scripting/monoscript/fileName/GenerateChecker.cs: 84e6a68c51dd1cc8cb5f1afa22d52f6b -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/ScriptEnv.cs: dfb3df5d3df1c4d1ec817b61ace68b5d -> 
+  custom:scripting/monoscript/fileName/PuerTSTest.cs: 03bcd7c39b979757bb05d244810c1a25 -> 
+  custom:scripting/monoscript/fileName/InstructionsFilter.cs: 92e58ef2d44c90485c94a741ce16d338 -> 
+  custom:scripting/monoscript/fileName/ArrayExtension.cs: 41bbf97a80a3e18d8b6d787250a4862c -> 
+  custom:scripting/monoscript/fileName/PuertsDLL.cs: 215e1564daf0f0b3f8a46bdf29f26058 -> 
+  custom:scripting/monoscript/fileName/ScriptObject.cs: 13455a8c32197075bc7e6cf0f0a25a0a -> 
+  custom:scripting/precompiled-assembly-types:Mono.Reflection: 6e5d7b01e7549cdfc60f5b299ea95645 -> 
+  custom:scripting/monoscript/fileName/U2018Compatible.cs: 468e4c60ac8883c1601ad59c096c3979 -> 
+  custom:scripting/monoscript/fileName/ExtensionMethodInfos_Gen_Internal.cs: a415b2756e671b2643b93fafbf3010f1 -> 
+  custom:scripting/monoscript/fileName/CSharpFileExporter.cs: d116687670494a351b271b7a8728a538 -> 
+  custom:scripting/monoscript/fileName/FAQHelper.cs: e225fb449f9082b824715036e8a32a12 -> 
+  custom:scripting/monoscript/fileName/PuertsNative.cs: 31d5428f137eeca027328a8b57357f9c -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/BackendJs.cs: bb1b5d186e02070e77b6057e72faff82 -> 
+  custom:scripting/monoscript/fileName/ObjectPool.cs: 103ebbd2b6e5f74b1b6d91febb00352a -> 
+  custom:scripting/monoscript/fileName/ExpressionToCSharpVisitor.cs: a6c5a7084850ba51405ce6505b6f05ff -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/Configure.cs: 98a56260bbb4bf3117facc60ad8f21b3 -> 
+  custom:scripting/monoscript/fileName/NativeAPI.cs: e12a6ed10592e8f30367caeb8202632e -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:scripting/monoscript/fileName/Backend.cs: 73291730f3e5739f49810494885292ea -> 
+  custom:scripting/monoscript/fileName/TypeExtensions.cs: 65bbde9f08d8cc2c2e1cf87c81892b9b -> dcfbda865fe8349225c494951670deb0
+  custom:scripting/monoscript/fileName/TypeRegister.cs: 16b2e5dc78ac63bc0e45f8dfa0bd40fc -> 
+  custom:scripting/monoscript/fileName/WSPPAddonNative.cs: 68dc1b7be139c8b552ea4e0fffc7726e -> 
+  custom:scripting/monoscript/fileName/MarshalExtensions.cs: f0a7f5bdd13a1f9f5d78f93344afc951 -> 
+  custom:scripting/monoscript/fileName/TypeUtils.cs: 8bfd4dabaeb1bdd3655a16670b53e363 -> 
+  custom:scripting/monoscript/fileName/ExpressionsWrap.cs: 8d89c631021979e253cb0a6f22cb7857 -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.core.Editor: 58301de35153c8ad178c6bd0a404c25c -> 
+  custom:scripting/monoscript/fileName/Loader.cs: 222946a706678b6fa7664e4336cdac03 -> 
+  custom:scripting/monoscript/fileName/PuerTsTest.cs: d6a7022275bbab6274cfd0d91bcad2e3 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/BackendV8.cs: 53fc9d3d76a676c332980ee87d799c87 -> 
+  custom:scripting/monoscript/fileName/DocResolver.cs: ca42b7550f81379b6c692d0df9857c92 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/StaticWrapperGenerator.cs: dc9003bd692bccd269aaadf4f4e8462b -> 
+  custom:scripting/monoscript/fileName/DTSUnityMenu.cs: 61e85cab5575c47d5930817fe529426b -> 
+  custom:scripting/monoscript/fileName/MJSImporter.cs: f265803032731d4d36f0df8320ba98a0 -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.core: 132481c1f1fa8b0f3d77ba101d2de4c7 -> 
+  custom:scripting/monoscript/fileName/DTS.cs: 2ed5669d552f8bf26af00de208eed94b -> 
+  custom:scripting/monoscript/fileName/RegisterInfoManager.cs: 9a3f0f4b63d5db4cf5849d76aa907812 -> 
+  custom:scripting/monoscript/fileName/RegisterInfo.cs: 8affb3491b4bf4d164eaeaf65153757b -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/CJSImporter.cs: 82b681d124ffdea6bf5ddb00963634b8 -> 
+  custom:scripting/monoscript/fileName/CSharpCodeGen.cs: fdca55e92a33ac171ea5cead1edcbf65 -> 
+  custom:scripting/monoscript/fileName/PathHelper.cs: 140ba4e1ea47eceb686c6e54095c307a -> 
+  custom:scripting/precompiled-assembly-types:Assembly-CSharp: bd2a91421d61a8676bce337512c6f3e9 -> 
+  custom:scripting/monoscript/fileName/TypedValue.cs: 783cff2646c3be7749e47c99acb529ad -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.v8: 1ca93d3db160bb00336d8405e0116734 -> 
+========================================================================
+Received Prepare
+Caller must complete domain reload
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.355 seconds
+Native extension for WindowsStandalone target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.728 seconds
+Domain Reload Profiling: 1083ms
+	BeginReloadAssembly (118ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (4ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (26ms)
+	RebuildCommonClasses (30ms)
+	RebuildNativeTypeToScriptingClass (10ms)
+	initialDomainReloadingComplete (22ms)
+	LoadAllAssembliesAndSetupDomain (175ms)
+		LoadAssemblies (223ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (16ms)
+			TypeCache.Refresh (7ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (7ms)
+	FinalizeReload (728ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (381ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (4ms)
+			SetLoadedEditorAssemblies (4ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (70ms)
+			ProcessInitializeOnLoadAttributes (282ms)
+			ProcessInitializeOnLoadMethodAttributes (19ms)
+			AfterProcessingInitializeOnLoad (2ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (6ms)
+Refreshing native plugins compatible for Editor in 4.12 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3134 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 15 unused Assets / (29.0 KB). Loaded Objects now: 3621.
+Memory consumption went from 118.3 MB to 118.2 MB.
+Total: 2.181800 ms (FindLiveObjects: 0.203800 ms CreateObjectMapping: 0.096800 ms MarkObjects: 1.843900 ms  DeleteObjects: 0.036700 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/JsEnv.cs: 7e55a4ddbc227b83b06553d601d6de37 -> 
+  custom:scripting/monoscript/fileName/UnityMenu.cs: b7b1412a41f8d3932e3dbf87d7da1252 -> 
+  custom:scripting/monoscript/fileName/LuaImporter.cs: 785264d0a611aa32e0b3d3a2a709ed26 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:scripting/monoscript/fileName/StaticWrapperMenu.cs: f52b6082723446f1b502f6ad1ac9cb86 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.v8.Editor: c9cc3e46aa7fc752d86483dbd904a801 -> 
+  custom:scripting/monoscript/fileName/ArrayBuffer.cs: 2bd2954853bbf31284a7e62a2b42fb0c -> 
+  custom:scripting/monoscript/fileName/Utils.cs: dfcab60272f80959421cf8bc67e7aa04 -> 40c528c300bfc0733192292a788cb076
+  custom:scripting/monoscript/fileName/PapiV8Native.cs: aa45fcf9c195f6d4a0c32c36afd055c3 -> 
+  custom:scripting/monoscript/fileName/GenerateChecker.cs: 84e6a68c51dd1cc8cb5f1afa22d52f6b -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/ScriptEnv.cs: dfb3df5d3df1c4d1ec817b61ace68b5d -> 
+  custom:scripting/monoscript/fileName/PuerTSTest.cs: 03bcd7c39b979757bb05d244810c1a25 -> 
+  custom:scripting/monoscript/fileName/InstructionsFilter.cs: 92e58ef2d44c90485c94a741ce16d338 -> 
+  custom:scripting/monoscript/fileName/ArrayExtension.cs: 41bbf97a80a3e18d8b6d787250a4862c -> 
+  custom:scripting/monoscript/fileName/PuertsDLL.cs: 215e1564daf0f0b3f8a46bdf29f26058 -> 
+  custom:scripting/monoscript/fileName/ScriptObject.cs: 13455a8c32197075bc7e6cf0f0a25a0a -> 
+  custom:scripting/precompiled-assembly-types:Mono.Reflection: 6e5d7b01e7549cdfc60f5b299ea95645 -> 
+  custom:scripting/monoscript/fileName/U2018Compatible.cs: 468e4c60ac8883c1601ad59c096c3979 -> 
+  custom:scripting/monoscript/fileName/ExtensionMethodInfos_Gen_Internal.cs: a415b2756e671b2643b93fafbf3010f1 -> 
+  custom:scripting/monoscript/fileName/CSharpFileExporter.cs: d116687670494a351b271b7a8728a538 -> 
+  custom:scripting/monoscript/fileName/FAQHelper.cs: e225fb449f9082b824715036e8a32a12 -> 
+  custom:scripting/monoscript/fileName/PuertsNative.cs: 31d5428f137eeca027328a8b57357f9c -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/BackendJs.cs: bb1b5d186e02070e77b6057e72faff82 -> 
+  custom:scripting/monoscript/fileName/ObjectPool.cs: 103ebbd2b6e5f74b1b6d91febb00352a -> 
+  custom:scripting/monoscript/fileName/ExpressionToCSharpVisitor.cs: a6c5a7084850ba51405ce6505b6f05ff -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/Configure.cs: 98a56260bbb4bf3117facc60ad8f21b3 -> 
+  custom:scripting/monoscript/fileName/NativeAPI.cs: e12a6ed10592e8f30367caeb8202632e -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:scripting/monoscript/fileName/Backend.cs: 73291730f3e5739f49810494885292ea -> 
+  custom:scripting/monoscript/fileName/TypeExtensions.cs: 65bbde9f08d8cc2c2e1cf87c81892b9b -> dcfbda865fe8349225c494951670deb0
+  custom:scripting/monoscript/fileName/TypeRegister.cs: 16b2e5dc78ac63bc0e45f8dfa0bd40fc -> 
+  custom:scripting/monoscript/fileName/WSPPAddonNative.cs: 68dc1b7be139c8b552ea4e0fffc7726e -> 
+  custom:scripting/monoscript/fileName/MarshalExtensions.cs: f0a7f5bdd13a1f9f5d78f93344afc951 -> 
+  custom:scripting/monoscript/fileName/TypeUtils.cs: 8bfd4dabaeb1bdd3655a16670b53e363 -> 
+  custom:scripting/monoscript/fileName/ExpressionsWrap.cs: 8d89c631021979e253cb0a6f22cb7857 -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.core.Editor: 58301de35153c8ad178c6bd0a404c25c -> 
+  custom:scripting/monoscript/fileName/Loader.cs: 222946a706678b6fa7664e4336cdac03 -> 
+  custom:scripting/monoscript/fileName/PuerTsTest.cs: d6a7022275bbab6274cfd0d91bcad2e3 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/BackendV8.cs: 53fc9d3d76a676c332980ee87d799c87 -> 
+  custom:scripting/monoscript/fileName/DocResolver.cs: ca42b7550f81379b6c692d0df9857c92 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/StaticWrapperGenerator.cs: dc9003bd692bccd269aaadf4f4e8462b -> 
+  custom:scripting/monoscript/fileName/DTSUnityMenu.cs: 61e85cab5575c47d5930817fe529426b -> 
+  custom:scripting/monoscript/fileName/MJSImporter.cs: f265803032731d4d36f0df8320ba98a0 -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.core: 132481c1f1fa8b0f3d77ba101d2de4c7 -> 
+  custom:scripting/monoscript/fileName/DTS.cs: 2ed5669d552f8bf26af00de208eed94b -> 
+  custom:scripting/monoscript/fileName/RegisterInfoManager.cs: 9a3f0f4b63d5db4cf5849d76aa907812 -> 
+  custom:scripting/monoscript/fileName/RegisterInfo.cs: 8affb3491b4bf4d164eaeaf65153757b -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/CJSImporter.cs: 82b681d124ffdea6bf5ddb00963634b8 -> 
+  custom:scripting/monoscript/fileName/CSharpCodeGen.cs: fdca55e92a33ac171ea5cead1edcbf65 -> 
+  custom:scripting/monoscript/fileName/PathHelper.cs: 140ba4e1ea47eceb686c6e54095c307a -> 
+  custom:scripting/precompiled-assembly-types:Assembly-CSharp: bd2a91421d61a8676bce337512c6f3e9 -> 
+  custom:scripting/monoscript/fileName/TypedValue.cs: 783cff2646c3be7749e47c99acb529ad -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.v8: 1ca93d3db160bb00336d8405e0116734 -> 
+========================================================================
+Received Prepare
+Caller must complete domain reload
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.479 seconds
+Native extension for WindowsStandalone target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.860 seconds
+Domain Reload Profiling: 1338ms
+	BeginReloadAssembly (165ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (8ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (38ms)
+	RebuildCommonClasses (40ms)
+	RebuildNativeTypeToScriptingClass (15ms)
+	initialDomainReloadingComplete (32ms)
+	LoadAllAssembliesAndSetupDomain (226ms)
+		LoadAssemblies (292ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (26ms)
+			TypeCache.Refresh (10ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (9ms)
+			ResolveRequiredComponents (4ms)
+	FinalizeReload (860ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (461ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (4ms)
+			SetLoadedEditorAssemblies (3ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (73ms)
+			ProcessInitializeOnLoadAttributes (350ms)
+			ProcessInitializeOnLoadMethodAttributes (26ms)
+			AfterProcessingInitializeOnLoad (2ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (7ms)
+Refreshing native plugins compatible for Editor in 7.75 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3134 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 15 unused Assets / (29.1 KB). Loaded Objects now: 3624.
+Memory consumption went from 118.3 MB to 118.2 MB.
+Total: 3.949400 ms (FindLiveObjects: 0.215700 ms CreateObjectMapping: 0.112600 ms MarkObjects: 3.567600 ms  DeleteObjects: 0.052200 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/JsEnv.cs: 7e55a4ddbc227b83b06553d601d6de37 -> 
+  custom:scripting/monoscript/fileName/UnityMenu.cs: b7b1412a41f8d3932e3dbf87d7da1252 -> 
+  custom:scripting/monoscript/fileName/LuaImporter.cs: 785264d0a611aa32e0b3d3a2a709ed26 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:scripting/monoscript/fileName/StaticWrapperMenu.cs: f52b6082723446f1b502f6ad1ac9cb86 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.v8.Editor: c9cc3e46aa7fc752d86483dbd904a801 -> 
+  custom:scripting/monoscript/fileName/ArrayBuffer.cs: 2bd2954853bbf31284a7e62a2b42fb0c -> 
+  custom:scripting/monoscript/fileName/Utils.cs: dfcab60272f80959421cf8bc67e7aa04 -> 40c528c300bfc0733192292a788cb076
+  custom:scripting/monoscript/fileName/PapiV8Native.cs: aa45fcf9c195f6d4a0c32c36afd055c3 -> 
+  custom:scripting/monoscript/fileName/GenerateChecker.cs: 84e6a68c51dd1cc8cb5f1afa22d52f6b -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/ScriptEnv.cs: dfb3df5d3df1c4d1ec817b61ace68b5d -> 
+  custom:scripting/monoscript/fileName/PuerTSTest.cs: 03bcd7c39b979757bb05d244810c1a25 -> 
+  custom:scripting/monoscript/fileName/InstructionsFilter.cs: 92e58ef2d44c90485c94a741ce16d338 -> 
+  custom:scripting/monoscript/fileName/ArrayExtension.cs: 41bbf97a80a3e18d8b6d787250a4862c -> 
+  custom:scripting/monoscript/fileName/PuertsDLL.cs: 215e1564daf0f0b3f8a46bdf29f26058 -> 
+  custom:scripting/monoscript/fileName/ScriptObject.cs: 13455a8c32197075bc7e6cf0f0a25a0a -> 
+  custom:scripting/precompiled-assembly-types:Mono.Reflection: 6e5d7b01e7549cdfc60f5b299ea95645 -> 
+  custom:scripting/monoscript/fileName/U2018Compatible.cs: 468e4c60ac8883c1601ad59c096c3979 -> 
+  custom:scripting/monoscript/fileName/ExtensionMethodInfos_Gen_Internal.cs: a415b2756e671b2643b93fafbf3010f1 -> 
+  custom:scripting/monoscript/fileName/CSharpFileExporter.cs: d116687670494a351b271b7a8728a538 -> 
+  custom:scripting/monoscript/fileName/FAQHelper.cs: e225fb449f9082b824715036e8a32a12 -> 
+  custom:scripting/monoscript/fileName/PuertsNative.cs: 31d5428f137eeca027328a8b57357f9c -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/BackendJs.cs: bb1b5d186e02070e77b6057e72faff82 -> 
+  custom:scripting/monoscript/fileName/ObjectPool.cs: 103ebbd2b6e5f74b1b6d91febb00352a -> 
+  custom:scripting/monoscript/fileName/ExpressionToCSharpVisitor.cs: a6c5a7084850ba51405ce6505b6f05ff -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/Configure.cs: 98a56260bbb4bf3117facc60ad8f21b3 -> 
+  custom:scripting/monoscript/fileName/NativeAPI.cs: e12a6ed10592e8f30367caeb8202632e -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:scripting/monoscript/fileName/Backend.cs: 73291730f3e5739f49810494885292ea -> 
+  custom:scripting/monoscript/fileName/TypeExtensions.cs: 65bbde9f08d8cc2c2e1cf87c81892b9b -> dcfbda865fe8349225c494951670deb0
+  custom:scripting/monoscript/fileName/TypeRegister.cs: 16b2e5dc78ac63bc0e45f8dfa0bd40fc -> 
+  custom:scripting/monoscript/fileName/WSPPAddonNative.cs: 68dc1b7be139c8b552ea4e0fffc7726e -> 
+  custom:scripting/monoscript/fileName/MarshalExtensions.cs: f0a7f5bdd13a1f9f5d78f93344afc951 -> 
+  custom:scripting/monoscript/fileName/TypeUtils.cs: 8bfd4dabaeb1bdd3655a16670b53e363 -> 
+  custom:scripting/monoscript/fileName/ExpressionsWrap.cs: 8d89c631021979e253cb0a6f22cb7857 -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.core.Editor: 58301de35153c8ad178c6bd0a404c25c -> 
+  custom:scripting/monoscript/fileName/Loader.cs: 222946a706678b6fa7664e4336cdac03 -> 
+  custom:scripting/monoscript/fileName/PuerTsTest.cs: d6a7022275bbab6274cfd0d91bcad2e3 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/BackendV8.cs: 53fc9d3d76a676c332980ee87d799c87 -> 
+  custom:scripting/monoscript/fileName/DocResolver.cs: ca42b7550f81379b6c692d0df9857c92 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/StaticWrapperGenerator.cs: dc9003bd692bccd269aaadf4f4e8462b -> 
+  custom:scripting/monoscript/fileName/DTSUnityMenu.cs: 61e85cab5575c47d5930817fe529426b -> 
+  custom:scripting/monoscript/fileName/MJSImporter.cs: f265803032731d4d36f0df8320ba98a0 -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.core: 132481c1f1fa8b0f3d77ba101d2de4c7 -> 
+  custom:scripting/monoscript/fileName/DTS.cs: 2ed5669d552f8bf26af00de208eed94b -> 
+  custom:scripting/monoscript/fileName/RegisterInfoManager.cs: 9a3f0f4b63d5db4cf5849d76aa907812 -> 
+  custom:scripting/monoscript/fileName/RegisterInfo.cs: 8affb3491b4bf4d164eaeaf65153757b -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/CJSImporter.cs: 82b681d124ffdea6bf5ddb00963634b8 -> 
+  custom:scripting/monoscript/fileName/CSharpCodeGen.cs: fdca55e92a33ac171ea5cead1edcbf65 -> 
+  custom:scripting/monoscript/fileName/PathHelper.cs: 140ba4e1ea47eceb686c6e54095c307a -> 
+  custom:scripting/precompiled-assembly-types:Assembly-CSharp: bd2a91421d61a8676bce337512c6f3e9 -> 
+  custom:scripting/monoscript/fileName/TypedValue.cs: 783cff2646c3be7749e47c99acb529ad -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.v8: 1ca93d3db160bb00336d8405e0116734 -> 
+========================================================================
+Received Prepare
+Caller must complete domain reload
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.366 seconds
+Native extension for WindowsStandalone target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.702 seconds
+Domain Reload Profiling: 1067ms
+	BeginReloadAssembly (122ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (4ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (26ms)
+	RebuildCommonClasses (30ms)
+	RebuildNativeTypeToScriptingClass (9ms)
+	initialDomainReloadingComplete (23ms)
+	LoadAllAssembliesAndSetupDomain (181ms)
+		LoadAssemblies (236ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (13ms)
+			TypeCache.Refresh (7ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (5ms)
+	FinalizeReload (702ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (374ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (4ms)
+			SetLoadedEditorAssemblies (3ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (66ms)
+			ProcessInitializeOnLoadAttributes (281ms)
+			ProcessInitializeOnLoadMethodAttributes (18ms)
+			AfterProcessingInitializeOnLoad (2ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (5ms)
+Refreshing native plugins compatible for Editor in 4.47 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3134 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 15 unused Assets / (29.0 KB). Loaded Objects now: 3627.
+Memory consumption went from 118.3 MB to 118.2 MB.
+Total: 2.264900 ms (FindLiveObjects: 0.217800 ms CreateObjectMapping: 0.123300 ms MarkObjects: 1.886500 ms  DeleteObjects: 0.036300 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/JsEnv.cs: 7e55a4ddbc227b83b06553d601d6de37 -> 
+  custom:scripting/monoscript/fileName/UnityMenu.cs: b7b1412a41f8d3932e3dbf87d7da1252 -> 
+  custom:scripting/monoscript/fileName/LuaImporter.cs: 785264d0a611aa32e0b3d3a2a709ed26 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:scripting/monoscript/fileName/StaticWrapperMenu.cs: f52b6082723446f1b502f6ad1ac9cb86 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.v8.Editor: c9cc3e46aa7fc752d86483dbd904a801 -> 
+  custom:scripting/monoscript/fileName/ArrayBuffer.cs: 2bd2954853bbf31284a7e62a2b42fb0c -> 
+  custom:scripting/monoscript/fileName/Utils.cs: dfcab60272f80959421cf8bc67e7aa04 -> 40c528c300bfc0733192292a788cb076
+  custom:scripting/monoscript/fileName/PapiV8Native.cs: aa45fcf9c195f6d4a0c32c36afd055c3 -> 
+  custom:scripting/monoscript/fileName/GenerateChecker.cs: 84e6a68c51dd1cc8cb5f1afa22d52f6b -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/ScriptEnv.cs: dfb3df5d3df1c4d1ec817b61ace68b5d -> 
+  custom:scripting/monoscript/fileName/PuerTSTest.cs: 03bcd7c39b979757bb05d244810c1a25 -> 
+  custom:scripting/monoscript/fileName/InstructionsFilter.cs: 92e58ef2d44c90485c94a741ce16d338 -> 
+  custom:scripting/monoscript/fileName/ArrayExtension.cs: 41bbf97a80a3e18d8b6d787250a4862c -> 
+  custom:scripting/monoscript/fileName/PuertsDLL.cs: 215e1564daf0f0b3f8a46bdf29f26058 -> 
+  custom:scripting/monoscript/fileName/ScriptObject.cs: 13455a8c32197075bc7e6cf0f0a25a0a -> 
+  custom:scripting/precompiled-assembly-types:Mono.Reflection: 6e5d7b01e7549cdfc60f5b299ea95645 -> 
+  custom:scripting/monoscript/fileName/U2018Compatible.cs: 468e4c60ac8883c1601ad59c096c3979 -> 
+  custom:scripting/monoscript/fileName/ExtensionMethodInfos_Gen_Internal.cs: a415b2756e671b2643b93fafbf3010f1 -> 
+  custom:scripting/monoscript/fileName/CSharpFileExporter.cs: d116687670494a351b271b7a8728a538 -> 
+  custom:scripting/monoscript/fileName/FAQHelper.cs: e225fb449f9082b824715036e8a32a12 -> 
+  custom:scripting/monoscript/fileName/PuertsNative.cs: 31d5428f137eeca027328a8b57357f9c -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/BackendJs.cs: bb1b5d186e02070e77b6057e72faff82 -> 
+  custom:scripting/monoscript/fileName/ObjectPool.cs: 103ebbd2b6e5f74b1b6d91febb00352a -> 
+  custom:scripting/monoscript/fileName/ExpressionToCSharpVisitor.cs: a6c5a7084850ba51405ce6505b6f05ff -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/Configure.cs: 98a56260bbb4bf3117facc60ad8f21b3 -> 
+  custom:scripting/monoscript/fileName/NativeAPI.cs: e12a6ed10592e8f30367caeb8202632e -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:scripting/monoscript/fileName/Backend.cs: 73291730f3e5739f49810494885292ea -> 
+  custom:scripting/monoscript/fileName/TypeExtensions.cs: 65bbde9f08d8cc2c2e1cf87c81892b9b -> dcfbda865fe8349225c494951670deb0
+  custom:scripting/monoscript/fileName/TypeRegister.cs: 16b2e5dc78ac63bc0e45f8dfa0bd40fc -> 
+  custom:scripting/monoscript/fileName/WSPPAddonNative.cs: 68dc1b7be139c8b552ea4e0fffc7726e -> 
+  custom:scripting/monoscript/fileName/MarshalExtensions.cs: f0a7f5bdd13a1f9f5d78f93344afc951 -> 
+  custom:scripting/monoscript/fileName/TypeUtils.cs: 8bfd4dabaeb1bdd3655a16670b53e363 -> 
+  custom:scripting/monoscript/fileName/ExpressionsWrap.cs: 8d89c631021979e253cb0a6f22cb7857 -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.core.Editor: 58301de35153c8ad178c6bd0a404c25c -> 
+  custom:scripting/monoscript/fileName/Loader.cs: 222946a706678b6fa7664e4336cdac03 -> 
+  custom:scripting/monoscript/fileName/PuerTsTest.cs: d6a7022275bbab6274cfd0d91bcad2e3 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/BackendV8.cs: 53fc9d3d76a676c332980ee87d799c87 -> 
+  custom:scripting/monoscript/fileName/DocResolver.cs: ca42b7550f81379b6c692d0df9857c92 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/StaticWrapperGenerator.cs: dc9003bd692bccd269aaadf4f4e8462b -> 
+  custom:scripting/monoscript/fileName/DTSUnityMenu.cs: 61e85cab5575c47d5930817fe529426b -> 
+  custom:scripting/monoscript/fileName/MJSImporter.cs: f265803032731d4d36f0df8320ba98a0 -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.core: 132481c1f1fa8b0f3d77ba101d2de4c7 -> 
+  custom:scripting/monoscript/fileName/DTS.cs: 2ed5669d552f8bf26af00de208eed94b -> 
+  custom:scripting/monoscript/fileName/RegisterInfoManager.cs: 9a3f0f4b63d5db4cf5849d76aa907812 -> 
+  custom:scripting/monoscript/fileName/RegisterInfo.cs: 8affb3491b4bf4d164eaeaf65153757b -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/CJSImporter.cs: 82b681d124ffdea6bf5ddb00963634b8 -> 
+  custom:scripting/monoscript/fileName/CSharpCodeGen.cs: fdca55e92a33ac171ea5cead1edcbf65 -> 
+  custom:scripting/monoscript/fileName/PathHelper.cs: 140ba4e1ea47eceb686c6e54095c307a -> 
+  custom:scripting/precompiled-assembly-types:Assembly-CSharp: bd2a91421d61a8676bce337512c6f3e9 -> 
+  custom:scripting/monoscript/fileName/TypedValue.cs: 783cff2646c3be7749e47c99acb529ad -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.v8: 1ca93d3db160bb00336d8405e0116734 -> 
+========================================================================
+Received Prepare
+Caller must complete domain reload
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.366 seconds
+Native extension for WindowsStandalone target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.722 seconds
+Domain Reload Profiling: 1088ms
+	BeginReloadAssembly (130ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (4ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (26ms)
+	RebuildCommonClasses (27ms)
+	RebuildNativeTypeToScriptingClass (9ms)
+	initialDomainReloadingComplete (19ms)
+	LoadAllAssembliesAndSetupDomain (180ms)
+		LoadAssemblies (235ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (21ms)
+			TypeCache.Refresh (8ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (6ms)
+			ResolveRequiredComponents (5ms)
+	FinalizeReload (722ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (396ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (5ms)
+			SetLoadedEditorAssemblies (3ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (75ms)
+			ProcessInitializeOnLoadAttributes (293ms)
+			ProcessInitializeOnLoadMethodAttributes (17ms)
+			AfterProcessingInitializeOnLoad (2ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (6ms)
+Refreshing native plugins compatible for Editor in 3.79 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3134 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 15 unused Assets / (29.1 KB). Loaded Objects now: 3630.
+Memory consumption went from 118.3 MB to 118.2 MB.
+Total: 2.363200 ms (FindLiveObjects: 0.276500 ms CreateObjectMapping: 0.117600 ms MarkObjects: 1.919000 ms  DeleteObjects: 0.047900 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/JsEnv.cs: 7e55a4ddbc227b83b06553d601d6de37 -> 
+  custom:scripting/monoscript/fileName/UnityMenu.cs: b7b1412a41f8d3932e3dbf87d7da1252 -> 
+  custom:scripting/monoscript/fileName/LuaImporter.cs: 785264d0a611aa32e0b3d3a2a709ed26 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:scripting/monoscript/fileName/StaticWrapperMenu.cs: f52b6082723446f1b502f6ad1ac9cb86 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.v8.Editor: c9cc3e46aa7fc752d86483dbd904a801 -> 
+  custom:scripting/monoscript/fileName/ArrayBuffer.cs: 2bd2954853bbf31284a7e62a2b42fb0c -> 
+  custom:scripting/monoscript/fileName/Utils.cs: dfcab60272f80959421cf8bc67e7aa04 -> 40c528c300bfc0733192292a788cb076
+  custom:scripting/monoscript/fileName/PapiV8Native.cs: aa45fcf9c195f6d4a0c32c36afd055c3 -> 
+  custom:scripting/monoscript/fileName/GenerateChecker.cs: 84e6a68c51dd1cc8cb5f1afa22d52f6b -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/ScriptEnv.cs: dfb3df5d3df1c4d1ec817b61ace68b5d -> 
+  custom:scripting/monoscript/fileName/PuerTSTest.cs: 03bcd7c39b979757bb05d244810c1a25 -> 
+  custom:scripting/monoscript/fileName/InstructionsFilter.cs: 92e58ef2d44c90485c94a741ce16d338 -> 
+  custom:scripting/monoscript/fileName/ArrayExtension.cs: 41bbf97a80a3e18d8b6d787250a4862c -> 
+  custom:scripting/monoscript/fileName/PuertsDLL.cs: 215e1564daf0f0b3f8a46bdf29f26058 -> 
+  custom:scripting/monoscript/fileName/ScriptObject.cs: 13455a8c32197075bc7e6cf0f0a25a0a -> 
+  custom:scripting/precompiled-assembly-types:Mono.Reflection: 6e5d7b01e7549cdfc60f5b299ea95645 -> 
+  custom:scripting/monoscript/fileName/U2018Compatible.cs: 468e4c60ac8883c1601ad59c096c3979 -> 
+  custom:scripting/monoscript/fileName/ExtensionMethodInfos_Gen_Internal.cs: a415b2756e671b2643b93fafbf3010f1 -> 
+  custom:scripting/monoscript/fileName/CSharpFileExporter.cs: d116687670494a351b271b7a8728a538 -> 
+  custom:scripting/monoscript/fileName/FAQHelper.cs: e225fb449f9082b824715036e8a32a12 -> 
+  custom:scripting/monoscript/fileName/PuertsNative.cs: 31d5428f137eeca027328a8b57357f9c -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/BackendJs.cs: bb1b5d186e02070e77b6057e72faff82 -> 
+  custom:scripting/monoscript/fileName/ObjectPool.cs: 103ebbd2b6e5f74b1b6d91febb00352a -> 
+  custom:scripting/monoscript/fileName/ExpressionToCSharpVisitor.cs: a6c5a7084850ba51405ce6505b6f05ff -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/Configure.cs: 98a56260bbb4bf3117facc60ad8f21b3 -> 
+  custom:scripting/monoscript/fileName/NativeAPI.cs: e12a6ed10592e8f30367caeb8202632e -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:scripting/monoscript/fileName/Backend.cs: 73291730f3e5739f49810494885292ea -> 
+  custom:scripting/monoscript/fileName/TypeExtensions.cs: 65bbde9f08d8cc2c2e1cf87c81892b9b -> dcfbda865fe8349225c494951670deb0
+  custom:scripting/monoscript/fileName/TypeRegister.cs: 16b2e5dc78ac63bc0e45f8dfa0bd40fc -> 
+  custom:scripting/monoscript/fileName/WSPPAddonNative.cs: 68dc1b7be139c8b552ea4e0fffc7726e -> 
+  custom:scripting/monoscript/fileName/MarshalExtensions.cs: f0a7f5bdd13a1f9f5d78f93344afc951 -> 
+  custom:scripting/monoscript/fileName/TypeUtils.cs: 8bfd4dabaeb1bdd3655a16670b53e363 -> 
+  custom:scripting/monoscript/fileName/ExpressionsWrap.cs: 8d89c631021979e253cb0a6f22cb7857 -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.core.Editor: 58301de35153c8ad178c6bd0a404c25c -> 
+  custom:scripting/monoscript/fileName/Loader.cs: 222946a706678b6fa7664e4336cdac03 -> 
+  custom:scripting/monoscript/fileName/PuerTsTest.cs: d6a7022275bbab6274cfd0d91bcad2e3 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/BackendV8.cs: 53fc9d3d76a676c332980ee87d799c87 -> 
+  custom:scripting/monoscript/fileName/DocResolver.cs: ca42b7550f81379b6c692d0df9857c92 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/StaticWrapperGenerator.cs: dc9003bd692bccd269aaadf4f4e8462b -> 
+  custom:scripting/monoscript/fileName/DTSUnityMenu.cs: 61e85cab5575c47d5930817fe529426b -> 
+  custom:scripting/monoscript/fileName/MJSImporter.cs: f265803032731d4d36f0df8320ba98a0 -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.core: 132481c1f1fa8b0f3d77ba101d2de4c7 -> 
+  custom:scripting/monoscript/fileName/DTS.cs: 2ed5669d552f8bf26af00de208eed94b -> 
+  custom:scripting/monoscript/fileName/RegisterInfoManager.cs: 9a3f0f4b63d5db4cf5849d76aa907812 -> 
+  custom:scripting/monoscript/fileName/RegisterInfo.cs: 8affb3491b4bf4d164eaeaf65153757b -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/CJSImporter.cs: 82b681d124ffdea6bf5ddb00963634b8 -> 
+  custom:scripting/monoscript/fileName/CSharpCodeGen.cs: fdca55e92a33ac171ea5cead1edcbf65 -> 
+  custom:scripting/monoscript/fileName/PathHelper.cs: 140ba4e1ea47eceb686c6e54095c307a -> 
+  custom:scripting/precompiled-assembly-types:Assembly-CSharp: bd2a91421d61a8676bce337512c6f3e9 -> 
+  custom:scripting/monoscript/fileName/TypedValue.cs: 783cff2646c3be7749e47c99acb529ad -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.v8: 1ca93d3db160bb00336d8405e0116734 -> 
+========================================================================
+Received Prepare
+Caller must complete domain reload
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.360 seconds
+Native extension for WindowsStandalone target not found
+[Package Manager] Server::EnsureServerProcessIsRunning -- launch failed, reason: Unity was launched with the -noUpm command-line argument
+[Package Manager] UpmClient::Send -- Unable to send message (not connected to UPM process).
+[Package Manager] Cannot connect to Unity Package Manager local server
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.733 seconds
+Domain Reload Profiling: 1092ms
+	BeginReloadAssembly (123ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (7ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (28ms)
+	RebuildCommonClasses (27ms)
+	RebuildNativeTypeToScriptingClass (10ms)
+	initialDomainReloadingComplete (25ms)
+	LoadAllAssembliesAndSetupDomain (174ms)
+		LoadAssemblies (218ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (19ms)
+			TypeCache.Refresh (7ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (5ms)
+			ResolveRequiredComponents (5ms)
+	FinalizeReload (734ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (377ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (5ms)
+			SetLoadedEditorAssemblies (3ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (77ms)
+			ProcessInitializeOnLoadAttributes (272ms)
+			ProcessInitializeOnLoadMethodAttributes (18ms)
+			AfterProcessingInitializeOnLoad (2ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (7ms)
+Refreshing native plugins compatible for Editor in 4.26 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3134 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 15 unused Assets / (29.0 KB). Loaded Objects now: 3633.
+Memory consumption went from 118.3 MB to 118.2 MB.
+Total: 2.118700 ms (FindLiveObjects: 0.202200 ms CreateObjectMapping: 0.090900 ms MarkObjects: 1.772400 ms  DeleteObjects: 0.051400 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/JsEnv.cs: 7e55a4ddbc227b83b06553d601d6de37 -> 
+  custom:scripting/monoscript/fileName/UnityMenu.cs: b7b1412a41f8d3932e3dbf87d7da1252 -> 
+  custom:scripting/monoscript/fileName/LuaImporter.cs: 785264d0a611aa32e0b3d3a2a709ed26 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:scripting/monoscript/fileName/StaticWrapperMenu.cs: f52b6082723446f1b502f6ad1ac9cb86 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.v8.Editor: c9cc3e46aa7fc752d86483dbd904a801 -> 
+  custom:scripting/monoscript/fileName/ArrayBuffer.cs: 2bd2954853bbf31284a7e62a2b42fb0c -> 
+  custom:scripting/monoscript/fileName/Utils.cs: dfcab60272f80959421cf8bc67e7aa04 -> 40c528c300bfc0733192292a788cb076
+  custom:scripting/monoscript/fileName/PapiV8Native.cs: aa45fcf9c195f6d4a0c32c36afd055c3 -> 
+  custom:scripting/monoscript/fileName/GenerateChecker.cs: 84e6a68c51dd1cc8cb5f1afa22d52f6b -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/ScriptEnv.cs: dfb3df5d3df1c4d1ec817b61ace68b5d -> 
+  custom:scripting/monoscript/fileName/PuerTSTest.cs: 03bcd7c39b979757bb05d244810c1a25 -> 
+  custom:scripting/monoscript/fileName/InstructionsFilter.cs: 92e58ef2d44c90485c94a741ce16d338 -> 
+  custom:scripting/monoscript/fileName/ArrayExtension.cs: 41bbf97a80a3e18d8b6d787250a4862c -> 
+  custom:scripting/monoscript/fileName/PuertsDLL.cs: 215e1564daf0f0b3f8a46bdf29f26058 -> 
+  custom:scripting/monoscript/fileName/ScriptObject.cs: 13455a8c32197075bc7e6cf0f0a25a0a -> 
+  custom:scripting/precompiled-assembly-types:Mono.Reflection: 6e5d7b01e7549cdfc60f5b299ea95645 -> 
+  custom:scripting/monoscript/fileName/U2018Compatible.cs: 468e4c60ac8883c1601ad59c096c3979 -> 
+  custom:scripting/monoscript/fileName/ExtensionMethodInfos_Gen_Internal.cs: a415b2756e671b2643b93fafbf3010f1 -> 
+  custom:scripting/monoscript/fileName/CSharpFileExporter.cs: d116687670494a351b271b7a8728a538 -> 
+  custom:scripting/monoscript/fileName/FAQHelper.cs: e225fb449f9082b824715036e8a32a12 -> 
+  custom:scripting/monoscript/fileName/PuertsNative.cs: 31d5428f137eeca027328a8b57357f9c -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/BackendJs.cs: bb1b5d186e02070e77b6057e72faff82 -> 
+  custom:scripting/monoscript/fileName/ObjectPool.cs: 103ebbd2b6e5f74b1b6d91febb00352a -> 
+  custom:scripting/monoscript/fileName/ExpressionToCSharpVisitor.cs: a6c5a7084850ba51405ce6505b6f05ff -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/Configure.cs: 98a56260bbb4bf3117facc60ad8f21b3 -> 
+  custom:scripting/monoscript/fileName/NativeAPI.cs: e12a6ed10592e8f30367caeb8202632e -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:scripting/monoscript/fileName/Backend.cs: 73291730f3e5739f49810494885292ea -> 
+  custom:scripting/monoscript/fileName/TypeExtensions.cs: 65bbde9f08d8cc2c2e1cf87c81892b9b -> dcfbda865fe8349225c494951670deb0
+  custom:scripting/monoscript/fileName/TypeRegister.cs: 16b2e5dc78ac63bc0e45f8dfa0bd40fc -> 
+  custom:scripting/monoscript/fileName/WSPPAddonNative.cs: 68dc1b7be139c8b552ea4e0fffc7726e -> 
+  custom:scripting/monoscript/fileName/MarshalExtensions.cs: f0a7f5bdd13a1f9f5d78f93344afc951 -> 
+  custom:scripting/monoscript/fileName/TypeUtils.cs: 8bfd4dabaeb1bdd3655a16670b53e363 -> 
+  custom:scripting/monoscript/fileName/ExpressionsWrap.cs: 8d89c631021979e253cb0a6f22cb7857 -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.core.Editor: 58301de35153c8ad178c6bd0a404c25c -> 
+  custom:scripting/monoscript/fileName/Loader.cs: 222946a706678b6fa7664e4336cdac03 -> 
+  custom:scripting/monoscript/fileName/PuerTsTest.cs: d6a7022275bbab6274cfd0d91bcad2e3 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/BackendV8.cs: 53fc9d3d76a676c332980ee87d799c87 -> 
+  custom:scripting/monoscript/fileName/DocResolver.cs: ca42b7550f81379b6c692d0df9857c92 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/StaticWrapperGenerator.cs: dc9003bd692bccd269aaadf4f4e8462b -> 
+  custom:scripting/monoscript/fileName/DTSUnityMenu.cs: 61e85cab5575c47d5930817fe529426b -> 
+  custom:scripting/monoscript/fileName/MJSImporter.cs: f265803032731d4d36f0df8320ba98a0 -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.core: 132481c1f1fa8b0f3d77ba101d2de4c7 -> 
+  custom:scripting/monoscript/fileName/DTS.cs: 2ed5669d552f8bf26af00de208eed94b -> 
+  custom:scripting/monoscript/fileName/RegisterInfoManager.cs: 9a3f0f4b63d5db4cf5849d76aa907812 -> 
+  custom:scripting/monoscript/fileName/RegisterInfo.cs: 8affb3491b4bf4d164eaeaf65153757b -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/CJSImporter.cs: 82b681d124ffdea6bf5ddb00963634b8 -> 
+  custom:scripting/monoscript/fileName/CSharpCodeGen.cs: fdca55e92a33ac171ea5cead1edcbf65 -> 
+  custom:scripting/monoscript/fileName/PathHelper.cs: 140ba4e1ea47eceb686c6e54095c307a -> 
+  custom:scripting/precompiled-assembly-types:Assembly-CSharp: bd2a91421d61a8676bce337512c6f3e9 -> 
+  custom:scripting/monoscript/fileName/TypedValue.cs: 783cff2646c3be7749e47c99acb529ad -> 
+  custom:scripting/precompiled-assembly-types:com.tencent.puerts.v8: 1ca93d3db160bb00336d8405e0116734 -> 

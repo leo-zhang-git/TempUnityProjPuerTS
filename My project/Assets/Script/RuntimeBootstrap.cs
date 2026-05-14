@@ -10,6 +10,7 @@ public sealed class RuntimeBootstrap : MonoBehaviour
 	private const string BootSceneName = "Boot";
 	private const string MainSceneName = "Main";
 	private const int TypeScriptDebugPort = 9230;
+	private const bool WaitForTypeScriptDebugger = false;
 
 	private static RuntimeBootstrap instance;
 
@@ -109,8 +110,11 @@ public sealed class RuntimeBootstrap : MonoBehaviour
 		}
 
 		var loader = new TsProjFileLoader();
+		EnsureTypeScriptDebugPortAvailable();
 		env = new ScriptEnv(new BackendV8(loader), TypeScriptDebugPort);
 		env.ExecuteModule("puerts/module.mjs");
+		InstallEvalScriptDebugPathSupport();
+		WaitForDebuggerIfNeeded();
 		runtimeModule = env.Eval<ScriptObject>(
 			"puer.module.createRequire('main.js')('main.js', true)",
 			"load main.js");
@@ -123,6 +127,112 @@ public sealed class RuntimeBootstrap : MonoBehaviour
 		lateUpdateRuntime = runtimeModule.Get<Action<float>>("lateUpdate");
 
 		Debug.Log("PuerTS runtime loaded from TsProj/dist/main.js");
+	}
+
+	private void InstallEvalScriptDebugPathSupport()
+	{
+		env.Eval(
+			@"(function () {
+				if (puer.__tsProjEvalScriptDebugPathInstalled) {
+					return;
+				}
+
+				function toFileUrl(path) {
+					if (!path) {
+						return '';
+					}
+
+					var normalized = String(path).replace(/\\/g, '/');
+					if (/^[a-zA-Z]:\//.test(normalized)) {
+						return 'file:///' + normalized;
+					}
+
+					if (normalized.charAt(0) === '/') {
+						return 'file://' + normalized;
+					}
+
+					return normalized;
+				}
+
+				function dirname(path) {
+					var normalized = String(path || '').replace(/\\/g, '/');
+					var index = normalized.lastIndexOf('/');
+					return index >= 0 ? normalized.substring(0, index) : '';
+				}
+
+				function resolveSourceMapUrl(debugPath, sourceMapUrl) {
+					if (!sourceMapUrl || /^(data:|file:|https?:)/.test(sourceMapUrl)) {
+						return sourceMapUrl;
+					}
+
+					var base = dirname(debugPath);
+					return toFileUrl(base ? base + '/' + sourceMapUrl : sourceMapUrl);
+				}
+
+				puer.evalScript = function (script, debugPath) {
+					if (typeof script !== 'string') {
+						return eval(script);
+					}
+
+					var sourceMapUrl = '';
+					script = script.replace(/(?:\r?\n)?\/\/# sourceMappingURL=([^\r\n]+)\s*$/, function (_, url) {
+						sourceMapUrl = url;
+						return '';
+					});
+
+					var debugUrl = toFileUrl(debugPath);
+					if (sourceMapUrl) {
+						script += '\n//# sourceMappingURL=' + resolveSourceMapUrl(debugPath, sourceMapUrl);
+					}
+					if (debugUrl) {
+						script += '\n//# sourceURL=' + debugUrl;
+					}
+
+					return eval(script);
+				};
+
+				puer.__tsProjEvalScriptDebugPathInstalled = true;
+			}());",
+			"install evalScript debug path support");
+	}
+
+	private static void EnsureTypeScriptDebugPortAvailable()
+	{
+		if (!IsTcpPortInUse(TypeScriptDebugPort))
+		{
+			return;
+		}
+
+		throw new InvalidOperationException(
+			$"PuerTS debugger port {TypeScriptDebugPort} is already in use. Stop the previous Unity Play session or the process using this port before starting.");
+	}
+
+	private void WaitForDebuggerIfNeeded()
+	{
+		if (!WaitForTypeScriptDebugger)
+		{
+			return;
+		}
+
+		Debug.Log($"Waiting for VS Code PuerTS debugger on port {TypeScriptDebugPort} before loading main.js.");
+		env.WaitDebugger();
+		Debug.Log("VS Code PuerTS debugger attached.");
+	}
+
+	private static bool IsTcpPortInUse(int port)
+	{
+		try
+		{
+			using (var client = new System.Net.Sockets.TcpClient())
+			{
+				client.Connect("127.0.0.1", port);
+				return true;
+			}
+		}
+		catch
+		{
+			return false;
+		}
 	}
 
 	private static IEnumerator LoadSceneAsync(string sceneName)

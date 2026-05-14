@@ -5,16 +5,11 @@
       "name": "Attach PuerTS Runtime",
       "type": "pwa-node",
       "request": "attach",
-      "address": "localhost",
       "port": 9230,
-      "sourceMaps": true,
-      "outFiles": [
-        "${workspaceFolder}/dist/**/*.js"
+      "skipFiles": [
+        "<node_internals>/**"
       ],
-      "resolveSourceMapLocations": [
-        "${workspaceFolder}/dist/**/*.js",
-        "${workspaceFolder}/dist/**/*.js.map"
-      ]
+      "localRoot": "${workspaceFolder}\\dist"
     }
   ]
 }

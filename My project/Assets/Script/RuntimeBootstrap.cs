@@ -10,6 +10,7 @@ public sealed class RuntimeBootstrap : MonoBehaviour
 	private const string BootSceneName = "Boot";
 	private const string MainSceneName = "Main";
 	private const int TypeScriptDebugPort = 9230;
+	private const int TypeScriptDebugPortSearchCount = 10;
 	private const bool WaitForTypeScriptDebugger = false;
 
 	private static RuntimeBootstrap instance;
@@ -24,6 +25,7 @@ public sealed class RuntimeBootstrap : MonoBehaviour
 	private Action<float> lateUpdateRuntime;
 	private bool isBootstrapping;
 	private bool isRuntimeActive;
+	private int activeTypeScriptDebugPort = -1;
 
 	[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
 	private static void CreateRuntimeBootstrap()
@@ -110,8 +112,9 @@ public sealed class RuntimeBootstrap : MonoBehaviour
 		}
 
 		var loader = new TsProjFileLoader();
-		EnsureTypeScriptDebugPortAvailable();
-		env = new ScriptEnv(new BackendV8(loader), TypeScriptDebugPort);
+		activeTypeScriptDebugPort = GetAvailableTypeScriptDebugPort();
+		env = new ScriptEnv(new BackendV8(loader), activeTypeScriptDebugPort);
+		Debug.Log($"PuerTS debugger listening on port {activeTypeScriptDebugPort}.");
 		env.ExecuteModule("puerts/module.mjs");
 		InstallEvalScriptDebugPathSupport();
 		WaitForDebuggerIfNeeded();
@@ -196,15 +199,23 @@ public sealed class RuntimeBootstrap : MonoBehaviour
 			"install evalScript debug path support");
 	}
 
-	private static void EnsureTypeScriptDebugPortAvailable()
+	private static int GetAvailableTypeScriptDebugPort()
 	{
-		if (!IsTcpPortInUse(TypeScriptDebugPort))
+		for (var port = TypeScriptDebugPort; port < TypeScriptDebugPort + TypeScriptDebugPortSearchCount; port++)
 		{
-			return;
+			if (!IsTcpPortInUse(port))
+			{
+				if (port != TypeScriptDebugPort)
+				{
+					Debug.LogWarning($"PuerTS debugger port {TypeScriptDebugPort} is already in use. Using {port} instead.");
+				}
+
+				return port;
+			}
 		}
 
 		throw new InvalidOperationException(
-			$"PuerTS debugger port {TypeScriptDebugPort} is already in use. Stop the previous Unity Play session or the process using this port before starting.");
+			$"PuerTS debugger ports {TypeScriptDebugPort}-{TypeScriptDebugPort + TypeScriptDebugPortSearchCount - 1} are already in use. Stop previous Unity Play sessions or processes using these ports before starting.");
 	}
 
 	private void WaitForDebuggerIfNeeded()
@@ -214,7 +225,7 @@ public sealed class RuntimeBootstrap : MonoBehaviour
 			return;
 		}
 
-		Debug.Log($"Waiting for VS Code PuerTS debugger on port {TypeScriptDebugPort} before loading main.js.");
+		Debug.Log($"Waiting for VS Code PuerTS debugger on port {activeTypeScriptDebugPort} before loading main.js.");
 		env.WaitDebugger();
 		Debug.Log("VS Code PuerTS debugger attached.");
 	}
@@ -263,6 +274,21 @@ public sealed class RuntimeBootstrap : MonoBehaviour
 			instance = null;
 		}
 
+		DisposeRuntime();
+	}
+
+	private void OnDisable()
+	{
+		DisposeRuntime();
+	}
+
+	private void OnApplicationQuit()
+	{
+		DisposeRuntime();
+	}
+
+	private void DisposeRuntime()
+	{
 		disposeRuntime?.Invoke();
 		isRuntimeActive = false;
 		disposeRuntime = null;
@@ -277,6 +303,7 @@ public sealed class RuntimeBootstrap : MonoBehaviour
 
 		env?.Dispose();
 		env = null;
+		activeTypeScriptDebugPort = -1;
 	}
 
 	private sealed class TsProjFileLoader : ILoader, IModuleChecker

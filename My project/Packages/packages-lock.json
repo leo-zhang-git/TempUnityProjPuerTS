@@ -1,23 +1,39 @@
 {
   "dependencies": {
     "com.tencent.puerts.agent": {
-      "version": "file:../Assets/Package/agent",
+      "version": "file:agent",
       "depth": 0,
-      "source": "local",
+      "source": "embedded",
       "dependencies": {
         "com.tencent.puerts.v8": "3.0.2"
       }
     },
     "com.tencent.puerts.core": {
-      "version": "file:../Assets/Package/core",
+      "version": "file:core",
       "depth": 0,
-      "source": "local",
+      "source": "embedded",
       "dependencies": {}
     },
-    "com.tencent.puerts.v8": {
-      "version": "file:../Assets/Package/v8",
+    "com.tencent.puerts.mcp": {
+      "version": "file:mcp",
       "depth": 0,
-      "source": "local",
+      "source": "embedded",
+      "dependencies": {
+        "com.tencent.puerts.nodejs": "3.0.2"
+      }
+    },
+    "com.tencent.puerts.nodejs": {
+      "version": "file:nodejs",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.tencent.puerts.core": "3.0.2"
+      }
+    },
+    "com.tencent.puerts.v8": {
+      "version": "file:v8",
+      "depth": 0,
+      "source": "embedded",
       "dependencies": {
         "com.tencent.puerts.core": "3.0.2"
       }

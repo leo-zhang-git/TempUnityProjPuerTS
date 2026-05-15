@@ -60,32 +60,32 @@
     <Analyzer Include="F:\Unity 2022.3.45f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Package\core\Editor\Src\Generator\FAQHelper.cs" />
-    <Compile Include="Assets\Package\core\Editor\Src\Generator\StaticWrapperMenu.cs" />
-    <Compile Include="Assets\Package\core\Editor\Src\DocResolver.cs" />
-    <Compile Include="Assets\Package\core\Editor\Src\Generator\GenerateChecker.cs" />
-    <Compile Include="Assets\Package\core\Editor\Src\Generator\Utils.cs" />
-    <Compile Include="Assets\Package\core\Editor\Src\U2018Compatible.cs" />
-    <Compile Include="Assets\Package\core\Editor\Src\MJSImporter.cs" />
-    <Compile Include="Assets\Package\core\Editor\Src\Generator\CSharpFileExporter.cs" />
-    <Compile Include="Assets\Package\core\Editor\Src\iOS\IOSPreprocessorFix.cs" />
-    <Compile Include="Assets\Package\core\Editor\Src\Generator\InstructionsFilter.cs" />
-    <Compile Include="Assets\Package\core\Editor\Src\LuaImporter.cs" />
-    <Compile Include="Assets\Package\core\Editor\Src\Generator\PathHelper.cs" />
-    <Compile Include="Assets\Package\core\Editor\Src\Generator\UnityMenu.cs" />
-    <Compile Include="Assets\Package\core\Editor\Src\Configure.cs" />
-    <Compile Include="Assets\Package\core\Editor\Src\Generator\CSharpCodeGen.cs" />
-    <Compile Include="Assets\Package\core\Editor\Src\Generator\RegisterInfo.cs" />
-    <Compile Include="Assets\Package\core\Editor\Src\CJSImporter.cs" />
+    <Compile Include="Packages\core\Editor\Src\DocResolver.cs" />
+    <Compile Include="Packages\core\Editor\Src\Generator\Utils.cs" />
+    <Compile Include="Packages\core\Editor\Src\Generator\CSharpCodeGen.cs" />
+    <Compile Include="Packages\core\Editor\Src\U2018Compatible.cs" />
+    <Compile Include="Packages\core\Editor\Src\Generator\FAQHelper.cs" />
+    <Compile Include="Packages\core\Editor\Src\Generator\CSharpFileExporter.cs" />
+    <Compile Include="Packages\core\Editor\Src\CJSImporter.cs" />
+    <Compile Include="Packages\core\Editor\Src\Generator\StaticWrapperMenu.cs" />
+    <Compile Include="Packages\core\Editor\Src\Generator\PathHelper.cs" />
+    <Compile Include="Packages\core\Editor\Src\Generator\InstructionsFilter.cs" />
+    <Compile Include="Packages\core\Editor\Src\MJSImporter.cs" />
+    <Compile Include="Packages\core\Editor\Src\LuaImporter.cs" />
+    <Compile Include="Packages\core\Editor\Src\Generator\GenerateChecker.cs" />
+    <Compile Include="Packages\core\Editor\Src\Generator\UnityMenu.cs" />
+    <Compile Include="Packages\core\Editor\Src\Configure.cs" />
+    <Compile Include="Packages\core\Editor\Src\iOS\IOSPreprocessorFix.cs" />
+    <Compile Include="Packages\core\Editor\Src\Generator\RegisterInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Package\core\Editor\Resources\puerts\xil2cpp\pesapi.h.txt" />
-    <None Include="Assets\Package\core\Editor\com.tencent.puerts.core.Editor.asmdef" />
-    <None Include="Assets\Package\core\Editor\Src\Generator\Mono.Reflection.dll" />
-    <None Include="Assets\Package\core\Editor\Resources\puerts\xil2cpp\TDataTrans.h.txt" />
-    <None Include="Assets\Package\core\Editor\Resources\puerts\xil2cpp\Puerts_il2cpp.cpp.txt" />
-    <None Include="Assets\Package\core\Editor\Resources\puerts\xil2cpp\pesapi_webgl.cpp.txt" />
-    <None Include="Assets\Package\core\Editor\Resources\puerts\xil2cpp\pesapi_webgl.h.txt" />
+    <None Include="Packages\core\Editor\Src\Generator\Mono.Reflection.dll" />
+    <None Include="Packages\core\Editor\Resources\puerts\xil2cpp\pesapi_webgl.h.txt" />
+    <None Include="Packages\core\Editor\Resources\puerts\xil2cpp\Puerts_il2cpp.cpp.txt" />
+    <None Include="Packages\core\Editor\Resources\puerts\xil2cpp\pesapi.h.txt" />
+    <None Include="Packages\core\Editor\com.tencent.puerts.core.Editor.asmdef" />
+    <None Include="Packages\core\Editor\Resources\puerts\xil2cpp\pesapi_webgl.cpp.txt" />
+    <None Include="Packages\core\Editor\Resources\puerts\xil2cpp\TDataTrans.h.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -452,6 +452,10 @@
       <HintPath>Library\PackageCache\com.unity.collab-proxy@2.4.4\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Mono.Reflection">
+      <HintPath>Packages\core\Editor\Src\Generator\Mono.Reflection.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.Plastic.Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@2.4.4\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
@@ -462,10 +466,6 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.IonicZip">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Mono.Reflection">
-      <HintPath>Assets\Package\core\Editor\Src\Generator\Mono.Reflection.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">

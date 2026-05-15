@@ -63,13 +63,6 @@
     <Compile Include="Assets\Script\RuntimeBootstrap.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Package\core\Plugins\x86_64\PuertsCore.dll" />
-    <None Include="Assets\Package\agent\Resources\LLMAgent\editor-assistant\system-prompt.md.txt" />
-    <None Include="Assets\Package\v8\Plugins\x86_64\PapiV8.dll" />
-    <None Include="Assets\Package\agent\Resources\LLMAgent\editor-assistant\skills\puerts-interop.md.txt" />
-    <None Include="Assets\Package\core\Plugins\x86_64\WSPPAddon.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="UnityEngine">
       <HintPath>F:\Unity 2022.3.45f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
       <Private>False</Private>
@@ -922,16 +915,16 @@
       <HintPath>Library\ScriptAssemblies\Unity.Performance.Profile-Analyzer.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.TestTools.CodeCoverage.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Unity.TestTools.CodeCoverage.Editor.OpenCover.Model">
       <HintPath>Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.PlasticSCM.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.TestTools.CodeCoverage.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.VisualScripting.State.Editor">
@@ -1008,13 +1001,13 @@
       <Project>{FBF08F72-C1FF-FAF0-C138-814CE7D6D047}</Project>
       <Name>com.tencent.puerts.core</Name>
     </ProjectReference>
-    <ProjectReference Include="com.tencent.puerts.core.Editor.csproj">
-      <Project>{E493CFE2-D826-CD00-08C4-7AD35B9A4253}</Project>
-      <Name>com.tencent.puerts.core.Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="com.tencent.puerts.v8.csproj">
       <Project>{2CABD349-E0B9-81E3-5A90-F1815A126282}</Project>
       <Name>com.tencent.puerts.v8</Name>
+    </ProjectReference>
+    <ProjectReference Include="com.tencent.puerts.core.Editor.csproj">
+      <Project>{E493CFE2-D826-CD00-08C4-7AD35B9A4253}</Project>
+      <Name>com.tencent.puerts.core.Editor</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

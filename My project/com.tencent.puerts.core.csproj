@@ -60,38 +60,38 @@
     <Analyzer Include="F:\Unity 2022.3.45f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Package\core\Runtime\Src\Loader.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\MarshalExtensions.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\PathHelper.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\PInvoke\ScriptEnv.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\Backends\BackendJs.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\Native\PuertsNative.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\Utils.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\PInvoke\Wrapper\ExpressionsWrap.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\JsEnv.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\TypeExtensions.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\PInvoke\Wrapper\ExpressionToCSharpVisitor.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\IL2Cpp\ArrayExtension.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\IL2Cpp\TypeRegister.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\IL2Cpp\ScriptEnv.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\IL2Cpp\ObjectPool.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\PInvoke\TypeRegister.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\PInvoke\Wrapper\StaticWrapperGenerator.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\RegisterInfoManager.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\ArrayBuffer.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\PInvoke\JSType\ScriptObject.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\IL2Cpp\TypeUtils.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\PInvoke\Native\PuertsDLL.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\PInvoke\ObjectPool.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\Native\WSPPAddonNative.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\Backend.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\TypedValue.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\IL2Cpp\Native\NativeAPI.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\IL2Cpp\ExtensionMethodInfos_Gen_Internal.cs" />
-    <Compile Include="Assets\Package\core\Runtime\Src\IL2Cpp\JSType\ScriptObject.cs" />
+    <Compile Include="Packages\core\Runtime\Src\PInvoke\Wrapper\ExpressionToCSharpVisitor.cs" />
+    <Compile Include="Packages\core\Runtime\Src\PInvoke\Native\PuertsDLL.cs" />
+    <Compile Include="Packages\core\Runtime\Src\PInvoke\ObjectPool.cs" />
+    <Compile Include="Packages\core\Runtime\Src\PInvoke\JSType\ScriptObject.cs" />
+    <Compile Include="Packages\core\Runtime\Src\Utils.cs" />
+    <Compile Include="Packages\core\Runtime\Src\PInvoke\Wrapper\StaticWrapperGenerator.cs" />
+    <Compile Include="Packages\core\Runtime\Src\Native\PuertsNative.cs" />
+    <Compile Include="Packages\core\Runtime\Src\TypedValue.cs" />
+    <Compile Include="Packages\core\Runtime\Src\PInvoke\Wrapper\ExpressionsWrap.cs" />
+    <Compile Include="Packages\core\Runtime\Src\ArrayBuffer.cs" />
+    <Compile Include="Packages\core\Runtime\Src\IL2Cpp\ExtensionMethodInfos_Gen_Internal.cs" />
+    <Compile Include="Packages\core\Runtime\Src\PathHelper.cs" />
+    <Compile Include="Packages\core\Runtime\Src\Backends\BackendJs.cs" />
+    <Compile Include="Packages\core\Runtime\Src\IL2Cpp\Native\NativeAPI.cs" />
+    <Compile Include="Packages\core\Runtime\Src\IL2Cpp\TypeUtils.cs" />
+    <Compile Include="Packages\core\Runtime\Src\MarshalExtensions.cs" />
+    <Compile Include="Packages\core\Runtime\Src\RegisterInfoManager.cs" />
+    <Compile Include="Packages\core\Runtime\Src\JsEnv.cs" />
+    <Compile Include="Packages\core\Runtime\Src\Backend.cs" />
+    <Compile Include="Packages\core\Runtime\Src\IL2Cpp\ObjectPool.cs" />
+    <Compile Include="Packages\core\Runtime\Src\PInvoke\TypeRegister.cs" />
+    <Compile Include="Packages\core\Runtime\Src\IL2Cpp\ArrayExtension.cs" />
+    <Compile Include="Packages\core\Runtime\Src\IL2Cpp\ScriptEnv.cs" />
+    <Compile Include="Packages\core\Runtime\Src\PInvoke\ScriptEnv.cs" />
+    <Compile Include="Packages\core\Runtime\Src\IL2Cpp\TypeRegister.cs" />
+    <Compile Include="Packages\core\Runtime\Src\Loader.cs" />
+    <Compile Include="Packages\core\Runtime\Src\Native\WSPPAddonNative.cs" />
+    <Compile Include="Packages\core\Runtime\Src\IL2Cpp\JSType\ScriptObject.cs" />
+    <Compile Include="Packages\core\Runtime\Src\TypeExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Package\core\Runtime\com.tencent.puerts.core.asmdef" />
+    <None Include="Packages\core\Runtime\com.tencent.puerts.core.asmdef" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -454,6 +454,10 @@
       <HintPath>Library\PackageCache\com.unity.collab-proxy@2.4.4\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Mono.Reflection">
+      <HintPath>Packages\core\Editor\Src\Generator\Mono.Reflection.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.Plastic.Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@2.4.4\Lib\Editor\PlasticSCM\Unity.Plastic.Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
@@ -464,10 +468,6 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.IonicZip">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.9.4\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Mono.Reflection">
-      <HintPath>Assets\Package\core\Editor\Src\Generator\Mono.Reflection.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">

@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.tencent.puerts.agent": "file:../Assets/Package/agent",
     "com.tencent.puerts.core": "file:../Assets/Package/core",
     "com.tencent.puerts.v8": "file:../Assets/Package/v8",
     "com.unity.collab-proxy": "2.4.4",

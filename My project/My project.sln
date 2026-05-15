@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.tencent.puerts.v8.Edito
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.tencent.puerts.core.Editor", "com.tencent.puerts.core.Editor.csproj", "{E493CFE2-D826-CD00-08C4-7AD35B9A4253}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.puerts.agent.Editor", "com.puerts.agent.Editor.csproj", "{A331420E-613A-CAFD-86F5-5252080FAE47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.puerts.agent", "com.puerts.agent.csproj", "{A153353C-2773-8A9F-0EAB-CDDFF837740C}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{32C3BDE6-E125-3128-82C1-25D0441455A3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "com.tencent.puerts.v8", "com.tencent.puerts.v8.csproj", "{2CABD349-E0B9-81E3-5A90-F1815A126282}"
@@ -29,6 +33,14 @@ Global
 		{E493CFE2-D826-CD00-08C4-7AD35B9A4253}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E493CFE2-D826-CD00-08C4-7AD35B9A4253}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E493CFE2-D826-CD00-08C4-7AD35B9A4253}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A331420E-613A-CAFD-86F5-5252080FAE47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A331420E-613A-CAFD-86F5-5252080FAE47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A331420E-613A-CAFD-86F5-5252080FAE47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A331420E-613A-CAFD-86F5-5252080FAE47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A153353C-2773-8A9F-0EAB-CDDFF837740C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A153353C-2773-8A9F-0EAB-CDDFF837740C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A153353C-2773-8A9F-0EAB-CDDFF837740C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A153353C-2773-8A9F-0EAB-CDDFF837740C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{32C3BDE6-E125-3128-82C1-25D0441455A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{32C3BDE6-E125-3128-82C1-25D0441455A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32C3BDE6-E125-3128-82C1-25D0441455A3}.Release|Any CPU.ActiveCfg = Release|Any CPU

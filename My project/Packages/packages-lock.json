@@ -1,5 +1,13 @@
 {
   "dependencies": {
+    "com.tencent.puerts.agent": {
+      "version": "file:../Assets/Package/agent",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.tencent.puerts.v8": "3.0.2"
+      }
+    },
     "com.tencent.puerts.core": {
       "version": "file:../Assets/Package/core",
       "depth": 0,

@@ -64,7 +64,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Package\core\Plugins\x86_64\PuertsCore.dll" />
+    <None Include="Assets\Package\agent\Resources\LLMAgent\editor-assistant\system-prompt.md.txt" />
     <None Include="Assets\Package\v8\Plugins\x86_64\PapiV8.dll" />
+    <None Include="Assets\Package\agent\Resources\LLMAgent\editor-assistant\skills\puerts-interop.md.txt" />
     <None Include="Assets\Package\core\Plugins\x86_64\WSPPAddon.dll" />
   </ItemGroup>
   <ItemGroup>
@@ -993,6 +995,14 @@
     <ProjectReference Include="com.tencent.puerts.v8.Editor.csproj">
       <Project>{A34994ED-1C3D-FEAA-C9D4-89209A876244}</Project>
       <Name>com.tencent.puerts.v8.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="com.puerts.agent.Editor.csproj">
+      <Project>{A331420E-613A-CAFD-86F5-5252080FAE47}</Project>
+      <Name>com.puerts.agent.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="com.puerts.agent.csproj">
+      <Project>{A153353C-2773-8A9F-0EAB-CDDFF837740C}</Project>
+      <Name>com.puerts.agent</Name>
     </ProjectReference>
     <ProjectReference Include="com.tencent.puerts.core.csproj">
       <Project>{FBF08F72-C1FF-FAF0-C138-814CE7D6D047}</Project>

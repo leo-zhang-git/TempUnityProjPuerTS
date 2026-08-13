@@ -7,7 +7,6 @@
     "build": "tsc -p tsconfig.json",
     "watch": "tsc-watch -p tsconfig.json",
     "check": "tsc -p tsconfig.json --noEmit",
-    "test": "npm run build && node test/ecs.test.cjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },

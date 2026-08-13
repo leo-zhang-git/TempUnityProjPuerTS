@@ -1,5 +1,6 @@
 import { ComponentType } from "./component";
-import { EntityId } from "./entity";
+import { defaultGuidGenerator, GuidGenerator } from "../core/guid";
+import { EntityGuid } from "./entity-guid";
 
 type AnyComponentType = ComponentType<object>;
 type ComponentValues<TTypes extends readonly AnyComponentType[]> = {
@@ -8,81 +9,86 @@ type ComponentValues<TTypes extends readonly AnyComponentType[]> = {
     : never;
 };
 type QueryResult<TTypes extends readonly AnyComponentType[]> = [
-  EntityId,
+  EntityGuid,
   ...ComponentValues<TTypes>
 ];
 
 export class World {
-  private static nextEntityId = 1;
-
-  private readonly aliveEntities = new Set<EntityId>();
-  private readonly components = new Map<AnyComponentType, Map<EntityId, object>>();
+  private readonly aliveEntities = new Set<EntityGuid>();
+  private readonly issuedEntityGuids = new Set<EntityGuid>();
+  private readonly components = new Map<AnyComponentType, Map<EntityGuid, object>>();
   private disposed = false;
 
-  createEntity(): EntityId {
+  constructor(private readonly guidGenerator: GuidGenerator = defaultGuidGenerator) {}
+
+  createEntity(): EntityGuid {
     this.assertActive();
 
-    const entity = World.nextEntityId as EntityId;
-    World.nextEntityId += 1;
-    this.aliveEntities.add(entity);
-    return entity;
+    const entityGuid = this.guidGenerator.generate() as EntityGuid;
+    if (this.issuedEntityGuids.has(entityGuid)) {
+      throw new Error(`GUID generator produced duplicate entity GUID ${entityGuid}.`);
+    }
+
+    this.issuedEntityGuids.add(entityGuid);
+    this.aliveEntities.add(entityGuid);
+    return entityGuid;
   }
 
-  isAlive(entity: EntityId): boolean {
-    return !this.disposed && this.aliveEntities.has(entity);
+  isAlive(entityGuid: EntityGuid): boolean {
+    return !this.disposed && this.aliveEntities.has(entityGuid);
   }
 
-  destroyEntity(entity: EntityId): void {
-    this.assertEntityAlive(entity);
+  destroyEntity(entityGuid: EntityGuid): void {
+    this.assertEntityAlive(entityGuid);
 
     for (const store of this.components.values()) {
-      store.delete(entity);
+      store.delete(entityGuid);
     }
 
-    this.aliveEntities.delete(entity);
+    this.aliveEntities.delete(entityGuid);
   }
 
-  add<T extends object>(entity: EntityId, type: ComponentType<T>, component: T): void {
-    this.assertEntityAlive(entity);
+  add<T extends object>(entityGuid: EntityGuid, type: ComponentType<T>, component: T): void {
+    this.assertEntityAlive(entityGuid);
 
     const store = this.getOrCreateStore(type);
-    if (store.has(entity)) {
-      throw new Error(`Entity ${entity} already has component ${type.name}.`);
+    if (store.has(entityGuid)) {
+      throw new Error(`Entity ${entityGuid} already has component ${type.name}.`);
     }
 
-    store.set(entity, component);
+    store.set(entityGuid, component);
   }
 
-  emplace<T extends object>(entity: EntityId, type: ComponentType<T>): T {
+  emplace<T extends object>(entityGuid: EntityGuid, type: ComponentType<T>): T {
     const component = type.create();
-    this.add(entity, type, component);
+    this.add(entityGuid, type, component);
     return component;
   }
 
-  get<T extends object>(entity: EntityId, type: ComponentType<T>): T {
-    this.assertEntityAlive(entity);
+  get<T extends object>(entityGuid: EntityGuid, type: ComponentType<T>): T {
+    this.assertEntityAlive(entityGuid);
 
     const store = this.getStore(type);
-    if (!store?.has(entity)) {
-      throw new Error(`Entity ${entity} does not have component ${type.name}.`);
+    if (!store?.has(entityGuid)) {
+      throw new Error(`Entity ${entityGuid} does not have component ${type.name}.`);
     }
 
-    return store.get(entity) as T;
+    return store.get(entityGuid) as T;
   }
 
-  tryGet<T extends object>(entity: EntityId, type: ComponentType<T>): T | undefined {
-    this.assertEntityAlive(entity);
-    return this.getStore(type)?.get(entity);
+  tryGet<T extends object>(entityGuid: EntityGuid, type: ComponentType<T>): T | undefined {
+    this.assertEntityAlive(entityGuid);
+    return this.getStore(type)?.get(entityGuid);
   }
 
-  has<T extends object>(entity: EntityId, type: ComponentType<T>): boolean {
-    this.assertEntityAlive(entity);
-    return this.getStore(type)?.has(entity) ?? false;
+  has<T extends object>(entityGuid: EntityGuid, type: ComponentType<T>): boolean {
+    this.assertEntityAlive(entityGuid);
+    return this.getStore(type)?.has(entityGuid) ?? false;
   }
 
-  remove<T extends object>(entity: EntityId, type: ComponentType<T>): boolean {
-    this.assertEntityAlive(entity);
-    return this.getStore(type)?.delete(entity) ?? false;
+  remove<T extends object>(entityGuid: EntityGuid, type: ComponentType<T>): boolean {
+    this.assertEntityAlive(entityGuid);
+    return this.getStore(type)?.delete(entityGuid) ?? false;
   }
 
   query<TTypes extends readonly [AnyComponentType, ...AnyComponentType[]]>(
@@ -95,7 +101,7 @@ export class World {
       return [];
     }
 
-    const availableStores = stores as Array<Map<EntityId, object>>;
+    const availableStores = stores as Array<Map<EntityGuid, object>>;
     let primaryStore = availableStores[0];
     for (const store of availableStores) {
       if (store.size < primaryStore.size) {
@@ -105,11 +111,11 @@ export class World {
 
     const result: Array<QueryResult<TTypes>> = [];
 
-    for (const entity of primaryStore.keys()) {
+    for (const entityGuid of primaryStore.keys()) {
       const componentValues: object[] = [];
 
       for (const store of availableStores) {
-        const component = store.get(entity);
+        const component = store.get(entityGuid);
         if (component === undefined) {
           componentValues.length = 0;
           break;
@@ -120,7 +126,7 @@ export class World {
 
       if (componentValues.length === types.length) {
         result.push(
-          [entity, ...componentValues] as unknown as QueryResult<TTypes>
+          [entityGuid, ...componentValues] as unknown as QueryResult<TTypes>
         );
       }
     }
@@ -135,21 +141,22 @@ export class World {
 
     this.components.clear();
     this.aliveEntities.clear();
+    this.issuedEntityGuids.clear();
     this.disposed = true;
   }
 
   private getStore<T extends object>(
     type: ComponentType<T>
-  ): Map<EntityId, T> | undefined {
-    return this.components.get(type) as Map<EntityId, T> | undefined;
+  ): Map<EntityGuid, T> | undefined {
+    return this.components.get(type) as Map<EntityGuid, T> | undefined;
   }
 
   private getOrCreateStore<T extends object>(
     type: ComponentType<T>
-  ): Map<EntityId, T> {
+  ): Map<EntityGuid, T> {
     let store = this.getStore(type);
     if (!store) {
-      store = new Map<EntityId, T>();
+      store = new Map<EntityGuid, T>();
       this.components.set(type, store);
     }
 
@@ -162,10 +169,10 @@ export class World {
     }
   }
 
-  private assertEntityAlive(entity: EntityId): void {
+  private assertEntityAlive(entityGuid: EntityGuid): void {
     this.assertActive();
-    if (!this.aliveEntities.has(entity)) {
-      throw new Error(`Entity ${entity} is not alive in this world.`);
+    if (!this.aliveEntities.has(entityGuid)) {
+      throw new Error(`Entity ${entityGuid} is not alive in this world.`);
     }
   }
 }

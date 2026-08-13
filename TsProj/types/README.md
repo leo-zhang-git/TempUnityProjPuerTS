@@ -7,6 +7,7 @@
 | 文件 | 作用 |
 | --- | --- |
 | `globals.d.ts` | 声明全局 `console` 对象的 `log`、`warn`、`error` 方法。 |
+| `unity-minimal.d.ts` | 声明当前 TypeScript UI/表现层实际使用到的最小 Unity 与 PuerTS API。 |
 
 ## 使用场景
 
@@ -19,5 +20,5 @@
 - 只声明运行时确实存在的全局对象，不要为了绕过类型错误虚构 API。
 - 优先使用具体类型，避免无边界的 `any`。
 - 如果某个类型来自 Unity/PuerTS 生成的官方声明，优先引用生成声明，不要在这里重复定义。
+- `unity-minimal.d.ts` 是尚未生成正式 PuerTS DTS 时的过渡声明；项目接入 `Assets/Gen/Typing` 等生成声明后，应以生成结果替换它，而不是持续扩写成全量 Unity API 声明。
 - 修改后运行 `npm run check`，确认声明不会破坏严格类型检查。
-

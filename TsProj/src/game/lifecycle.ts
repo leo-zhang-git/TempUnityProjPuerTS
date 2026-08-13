@@ -1,21 +1,21 @@
-import { EntityId } from "../ecs/entity";
+import { EntityGuid } from "../ecs/entity-guid";
 import { World } from "../ecs/world";
 import {
   EnvironmentStateComponent,
   SceneStateComponent
 } from "./components";
 
-export function markBootResourcesCleaned(world: World, stateEntity: EntityId): void {
-  const scene = world.get(stateEntity, SceneStateComponent);
-  const environment = world.get(stateEntity, EnvironmentStateComponent);
+export function markBootResourcesCleaned(world: World, stateEntityGuid: EntityGuid): void {
+  const scene = world.get(stateEntityGuid, SceneStateComponent);
+  const environment = world.get(stateEntityGuid, EnvironmentStateComponent);
 
   scene.current = "Boot";
   environment.resourcesCleaned = true;
   console.log("Boot resource cleanup completed.");
 }
 
-export function initializeEnvironment(world: World, stateEntity: EntityId): void {
-  const environment = world.get(stateEntity, EnvironmentStateComponent);
+export function initializeEnvironment(world: World, stateEntityGuid: EntityGuid): void {
+  const environment = world.get(stateEntityGuid, EnvironmentStateComponent);
 
   if (!environment.resourcesCleaned) {
     throw new Error("Environment initialization requires resource cleanup first.");
@@ -25,9 +25,9 @@ export function initializeEnvironment(world: World, stateEntity: EntityId): void
   console.log("Boot environment initialization completed.");
 }
 
-export function activateMainScene(world: World, stateEntity: EntityId): void {
-  const scene = world.get(stateEntity, SceneStateComponent);
-  const environment = world.get(stateEntity, EnvironmentStateComponent);
+export function activateMainScene(world: World, stateEntityGuid: EntityGuid): void {
+  const scene = world.get(stateEntityGuid, SceneStateComponent);
+  const environment = world.get(stateEntityGuid, EnvironmentStateComponent);
 
   if (!environment.initialized) {
     throw new Error("Main scene cannot start before Boot initialization.");

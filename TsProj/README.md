@@ -7,8 +7,11 @@
 | 路径 | 作用 |
 | --- | --- |
 | `src/` | TypeScript 源码目录，包含 Unity 调用入口、游戏运行时和轻量 ECS 框架。 |
-| `src/ecs/` | 通用 ECS 基础设施，包括实体 ID、组件类型、World 容器和 System 调度。 |
+| `src/core/` | 通用 GUID 等不依赖游戏和 ECS 的基础能力。 |
+| `src/ecs/` | 通用 ECS 基础设施，包括实体 GUID、组件类型、World 容器和 System 调度。 |
 | `src/game/` | 当前示例游戏逻辑，负责构建 `GameRuntime`、注册系统、保存运行时状态。 |
+| `src/save/` | 通用本地存盘接口、版本化 JSON 槽和 Unity PlayerPrefs 适配器。 |
+| `src/ui/` | TypeScript 直接创建和操作 Unity uGUI 的通用工具。 |
 | `types/` | 额外的 TypeScript 全局类型声明，用来补齐当前 PuerTS/JS 运行环境可用的全局对象。 |
 | `.vscode/` | VS Code 任务和调试配置。 |
 | `dist/` | `tsc` 生成的 JavaScript 输出目录。不要手写修改。 |
@@ -43,6 +46,8 @@ Unity/PuerTS 侧应优先通过 `src/main.ts` 暴露的函数进入 TypeScript �
 
 `src/main.ts` 内部维护一个模块级 `runtime`。首次调用 `initializeBoot()` 或 `enterMain()` 时会创建 `GameRuntime`，`dispose()` 后会清空它。
 
+`RuntimeBootstrap.cs` 只绑定通用生命周期函数。三轨闪避的输入、uGUI 页面和表现同步由 TypeScript 中的 `UnityLaneDodgePresentation` 完成，不需要游戏专用 C# 桥接。
+
 ## 生命周期边界
 
 当前项目里的 `World` 是 TypeScript 侧 ECS 数据容器，不等同于 Unity Scene。它现在作为 `GameRuntime` 的私有字段存在，因此生命周期默认跟 `GameRuntime` 一致。
@@ -70,4 +75,3 @@ Unity/PuerTS 侧应优先通过 `src/main.ts` 暴露的函数进入 TypeScript �
 3. 读 `src/main.ts` 确认 Unity 调用入口。
 4. 读 `src/game/game-runtime.ts` 确认运行时生命周期。
 5. 涉及 ECS 时再读 `src/ecs/README.md` 和对应源码。
-

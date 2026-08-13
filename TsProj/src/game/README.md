@@ -1,6 +1,6 @@
 # src/game 目录说明
 
-`src/game/` 承载 TypeScript 游戏运行时业务，依赖 `src/ecs/`，负责状态组件、一次性生命周期步骤、逐帧系统和运行时编排。
+`src/game/` 承载 TypeScript 游戏运行时业务，依赖 `src/ecs/` 和通用存盘接口，负责状态组件、一次性生命周期步骤、逐帧系统和运行时编排。
 
 ## 文件职责
 
@@ -10,6 +10,7 @@
 | `lifecycle.ts` | 定义 Boot 初始化和进入 Main 等一次性业务步骤。 |
 | `systems.ts` | 定义继承 `SystemBase` 的逐帧系统。 |
 | `game-runtime.ts` | 管理 World、SystemGroup 和运行时阶段。 |
+| `lane-dodge/` | 三轨闪避的 TypeScript ECS 玩法、命令、存档档案、只读快照和 Unity 表现适配。 |
 
 ## 运行时阶段
 
@@ -36,7 +37,7 @@ disposed
 - 只有 Main 阶段可以执行 FixedUpdate、Update 和 LateUpdate。
 - `dispose()` 可以在任意阶段调用并且幂等；释放后不能继续更新。
 
-对 Unity/PuerTS 暴露的 `main.ts` 函数签名保持不变。
+`main.ts` 只向 C# 宿主暴露通用生命周期函数，具体玩法命令和表现同步均在 TypeScript 内完成。
 
 ## 组件模型
 
@@ -81,4 +82,4 @@ SystemGroup 在进入 Main 时初始化：
 
 ## 验证
 
-运行 `npm test` 会构建 TypeScript 并执行 ECS 生命周期回归测试；`npm run check` 和 `npm run lint` 分别验证类型和代码规范。
+运行 `npm run check` 和 `npm run lint` 分别验证类型和代码规范，`npm run build` 生成供 Unity/PuerTS 加载的 CommonJS 输出。

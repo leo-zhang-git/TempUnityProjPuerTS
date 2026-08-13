@@ -6,20 +6,22 @@
 
 | 文件 | 作用 |
 | --- | --- |
-| `entity.ts` | 定义带品牌标记的 `EntityId`。 |
+| `entity-guid.ts` | 定义基于通用 `Guid` 的品牌类型 `EntityGuid`。 |
 | `component.ts` | 定义具有唯一运行时身份和默认工厂的 `ComponentType<T>`。 |
 | `world.ts` | 管理实体生命周期、组件存储、增删和类型安全查询。 |
 | `system.ts` | 定义 `SystemBase` 和统一管理生命周期的 `SystemGroup`。 |
 
 ## Entity
 
-实体 ID 只能由 `World.createEntity()` 创建。`World` 会维护实体存活状态：
+实体 GUID 只能由 `World.createEntity()` 创建。`World` 会维护实体存活状态：
 
 - 不允许给未创建、已销毁或属于其他 World 的实体添加组件。
 - `destroyEntity()` 会从所有组件存储中删除该实体。
 - `dispose()` 会清空整个 World；释放后调用其他操作会抛错。
 
-`EntityId` 在类型层使用品牌标记，减少普通数字被误当作实体 ID 的情况；运行时仍由 `World` 校验。
+`EntityGuid` 是带品牌标记的字符串类型，减少普通字符串被误当作实体 GUID 的情况。`World` 默认使用通用 UUIDv7 生成器，也允许通过构造函数注入 `GuidGenerator`，以支持确定性测试或平台专用实现。
+
+通用 GUID 能力位于 `src/core/guid.ts`。需要稳定唯一标识的其他对象也应依赖 `GuidGenerator`，不要自行维护递增序号或另外实现随机字符串。
 
 ## Component
 

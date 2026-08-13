@@ -1,71 +1,84 @@
 # src/game 目录说明
 
-`src/game/` 承载当前 TypeScript 游戏运行时的业务逻辑。这里依赖 `src/ecs/`，负责定义游戏状态组件、系统工厂和运行时编排。
+`src/game/` 承载 TypeScript 游戏运行时业务，依赖 `src/ecs/`，负责状态组件、一次性生命周期步骤、逐帧系统和运行时编排。
 
 ## 文件职责
 
 | 文件 | 作用 |
 | --- | --- |
-| `components.ts` | 定义当前游戏逻辑使用的状态接口和组件类型。 |
-| `systems.ts` | 定义系统工厂，系统通过 `World` 读写组件状态。 |
-| `game-runtime.ts` | 创建 `World`、初始化状态实体、注册系统列表，并向 `main.ts` 提供生命周期方法。 |
+| `components.ts` | 定义纯数据组件接口、唯一组件类型及其默认工厂。 |
+| `lifecycle.ts` | 定义 Boot 初始化和进入 Main 等一次性业务步骤。 |
+| `systems.ts` | 定义继承 `SystemBase` 的逐帧系统。 |
+| `game-runtime.ts` | 管理 World、SystemGroup 和运行时阶段。 |
 
-## 当前运行时模型
+## 运行时阶段
 
-`GameRuntime` 构造时会：
+`GameRuntime` 使用显式状态机约束外部调用：
 
-1. 创建一个私有 `World`。
-2. 创建一个 `stateEntity`。
-3. 给 `stateEntity` 添加场景状态、环境状态、运行时状态三个组件。
-4. 构建 Boot、Main、FixedUpdate、Update、LateUpdate 等系统列表。
+```text
+created
+   |
+initializeBoot()
+   v
+bootInitialized
+   |
+enterMain()
+   v
+main
+   |
+dispose()
+   v
+disposed
+```
 
-当前状态组件包括：
+- 不能跳过 Boot 直接进入 Main。
+- Boot 和 Main 不能重复进入。
+- 只有 Main 阶段可以执行 FixedUpdate、Update 和 LateUpdate。
+- `dispose()` 可以在任意阶段调用并且幂等；释放后不能继续更新。
+
+对 Unity/PuerTS 暴露的 `main.ts` 函数签名保持不变。
+
+## 组件模型
+
+构造 `GameRuntime` 时创建一个状态实体，通过 `World.emplace()` 挂载：
 
 | 组件 | 数据 | 作用 |
 | --- | --- | --- |
-| `SceneStateComponent` | `{ current: "Boot" | "Main" }` | 记录当前逻辑场景状态。 |
-| `EnvironmentStateComponent` | `{ resourcesCleaned: boolean; initialized: boolean }` | 记录 Boot 初始化阶段的环境准备状态。 |
-| `RuntimeStateComponent` | `{ elapsedSeconds: number }` | 记录运行时累计时间。 |
+| `SceneStateComponent` | `{ current: "Boot" | "Main" }` | 当前逻辑场景。 |
+| `EnvironmentStateComponent` | `{ resourcesCleaned; initialized }` | Boot 环境准备状态。 |
+| `RuntimeStateComponent` | `{ elapsedSeconds }` | 运行时累计时间。 |
 
-## 生命周期方法
+这些组件是纯数据，不继承基类。默认值由各自的 `ComponentType` 工厂集中定义。
 
-| 方法 | 执行内容 |
-| --- | --- |
-| `initializeBoot()` | 运行 Boot 系统列表，完成资源清理标记和环境初始化标记。 |
-| `enterMain()` | 运行 Main 进入系统，要求环境已经初始化。 |
-| `fixedUpdate(deltaTime)` | 运行固定帧系统列表。当前为空。 |
-| `update(deltaTime)` | 运行普通帧系统列表。当前会累计运行时间。 |
-| `lateUpdate(deltaTime)` | 运行 LateUpdate 系统列表。当前为空。 |
-| `dispose()` | 当前只输出日志；后续可在这里释放 TS 侧引用和订阅。 |
+## 生命周期与系统边界
 
-## 系统顺序
-
-系统列表的顺序就是执行顺序。当前 Boot 阶段依赖顺序：
+`lifecycle.ts` 中的函数只执行一次，由 `GameRuntime` 按阶段显式编排：
 
 ```text
-createBootCleanupSystem -> createEnvironmentInitializeSystem
+markBootResourcesCleaned
+   -> initializeEnvironment
+   -> activateMainScene
 ```
 
-`createEnvironmentInitializeSystem` 会检查 `environment.resourcesCleaned`，因此不能放到清理系统之前。
+`systems.ts` 只放可被 SystemGroup 调度的逐帧系统。当前 `RuntimeUpdateSystem` 通过查询 `RuntimeStateComponent` 累加时间，不捕获固定实体。
 
-Main 阶段依赖 Boot 初始化：
+SystemGroup 在进入 Main 时初始化：
 
-```text
-createMainEnterSystem
-```
+- `fixedUpdateSystems`
+- `updateSystems`
+- `lateUpdateSystems`
 
-该系统会检查 `environment.initialized`。如果 Unity 侧绕过 `initializeBoot()` 直接进入 Main，会抛出错误。
+释放时按照相反顺序关闭系统组，每个组内部也按系统初始化的相反顺序释放，最后释放 World。
 
 ## 扩展约定
 
-- 新增游戏状态：在 `components.ts` 定义接口和组件类型，并在 `GameRuntime` 初始化。
-- 新增系统：在 `systems.ts` 添加系统工厂，并在 `GameRuntime` 的对应生命周期系统列表中注册。
-- 跨系统共享状态：优先通过组件表达，不要让系统之间互相持有引用。
-- 涉及 Unity 对象引用的组件：必须设计清理时机，通常在场景卸载、实体销毁或 `dispose()` 中移除。
+- 新增组件：在 `components.ts` 定义纯数据类型、组件类型和默认工厂。
+- 新增逐帧逻辑：继承 `SystemBase`，使用 `World.query()` 处理匹配实体，并注册到对应 SystemGroup。
+- 新增一次性流程：放入 `lifecycle.ts` 或专门的业务模块，由 `GameRuntime` 显式编排。
+- 新增运行阶段：同步更新 `RuntimePhase`、状态转换、释放逻辑、`main.ts` 和 Unity 调用方。
+- 涉及 Unity 对象、订阅或句柄的系统：在 `onInitialize` 获取，在 `onDispose` 释放。
+- 不要让组件持有行为或互相调用；跨系统共享状态通过组件表达。
 
-## Agent 修改提示
+## 验证
 
-- 修改初始化流程时，要保持 Boot 到 Main 的前置条件清楚可查。
-- 新增生命周期阶段时，需要同时考虑 `GameRuntime`、`src/main.ts` 导出函数和 Unity 侧调用点。
-- 当前 `dispose()` 尚未真正清理 `World` 内部数据；因为 `main.ts` 会把整个 `GameRuntime` 置空，所以通常足够。若后续有外部订阅、计时器或 Unity 对象引用，需要在这里显式释放。
-
+运行 `npm test` 会构建 TypeScript 并执行 ECS 生命周期回归测试；`npm run check` 和 `npm run lint` 分别验证类型和代码规范。

@@ -34,7 +34,7 @@ main.ts -> game -> ecs
 
 ## 修改提示
 
-- 需要新增系统时，通常先在 `src/game/systems.ts` 添加系统工厂，再在 `GameRuntime` 的对应系统列表中注册。
-- 需要新增状态时，通常先在 `src/game/components.ts` 定义接口和组件类型，再在 `GameRuntime` 构造函数中初始化。
+- 需要新增逐帧系统时，在 `src/game/systems.ts` 继承 `SystemBase`，再注册到 `GameRuntime` 对应的 `SystemGroup`。
+- Boot、场景切换等一次性步骤放在 `src/game/lifecycle.ts`，由 `GameRuntime` 按运行阶段显式调用。
+- 需要新增状态时，在 `src/game/components.ts` 定义纯数据类型和带默认工厂的组件类型，再由 `GameRuntime` 通过 `emplace` 初始化。
 - 需要扩展 ECS 能力时，修改 `src/ecs/`，同时检查所有已有系统调用方式是否仍然兼容。
-

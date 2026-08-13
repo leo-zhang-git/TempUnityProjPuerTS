@@ -1,80 +1,171 @@
 import { ComponentType } from "./component";
 import { EntityId } from "./entity";
 
+type AnyComponentType = ComponentType<object>;
+type ComponentValues<TTypes extends readonly AnyComponentType[]> = {
+  [Index in keyof TTypes]: TTypes[Index] extends ComponentType<infer TValue>
+    ? TValue
+    : never;
+};
+type QueryResult<TTypes extends readonly AnyComponentType[]> = [
+  EntityId,
+  ...ComponentValues<TTypes>
+];
+
 export class World {
-  private nextEntityId = 1;
-  private readonly components = new Map<string, Map<EntityId, unknown>>();
+  private static nextEntityId = 1;
+
+  private readonly aliveEntities = new Set<EntityId>();
+  private readonly components = new Map<AnyComponentType, Map<EntityId, object>>();
+  private disposed = false;
 
   createEntity(): EntityId {
-    const entity = this.nextEntityId;
-    this.nextEntityId += 1;
+    this.assertActive();
+
+    const entity = World.nextEntityId as EntityId;
+    World.nextEntityId += 1;
+    this.aliveEntities.add(entity);
     return entity;
   }
 
-  add<T>(entity: EntityId, type: ComponentType<T>, component: T): void {
-    this.storeFor(type).set(entity, component);
+  isAlive(entity: EntityId): boolean {
+    return !this.disposed && this.aliveEntities.has(entity);
   }
 
-  get<T>(entity: EntityId, type: ComponentType<T>): T {
-    const component = this.storeFor(type).get(entity);
-    if (component === undefined) {
+  destroyEntity(entity: EntityId): void {
+    this.assertEntityAlive(entity);
+
+    for (const store of this.components.values()) {
+      store.delete(entity);
+    }
+
+    this.aliveEntities.delete(entity);
+  }
+
+  add<T extends object>(entity: EntityId, type: ComponentType<T>, component: T): void {
+    this.assertEntityAlive(entity);
+
+    const store = this.getOrCreateStore(type);
+    if (store.has(entity)) {
+      throw new Error(`Entity ${entity} already has component ${type.name}.`);
+    }
+
+    store.set(entity, component);
+  }
+
+  emplace<T extends object>(entity: EntityId, type: ComponentType<T>): T {
+    const component = type.create();
+    this.add(entity, type, component);
+    return component;
+  }
+
+  get<T extends object>(entity: EntityId, type: ComponentType<T>): T {
+    this.assertEntityAlive(entity);
+
+    const store = this.getStore(type);
+    if (!store?.has(entity)) {
       throw new Error(`Entity ${entity} does not have component ${type.name}.`);
     }
 
-    return component as T;
+    return store.get(entity) as T;
   }
 
-  tryGet<T>(entity: EntityId, type: ComponentType<T>): T | undefined {
-    return this.storeFor(type).get(entity) as T | undefined;
+  tryGet<T extends object>(entity: EntityId, type: ComponentType<T>): T | undefined {
+    this.assertEntityAlive(entity);
+    return this.getStore(type)?.get(entity);
   }
 
-  has<T>(entity: EntityId, type: ComponentType<T>): boolean {
-    return this.storeFor(type).has(entity);
+  has<T extends object>(entity: EntityId, type: ComponentType<T>): boolean {
+    this.assertEntityAlive(entity);
+    return this.getStore(type)?.has(entity) ?? false;
   }
 
-  remove<T>(entity: EntityId, type: ComponentType<T>): void {
-    this.storeFor(type).delete(entity);
+  remove<T extends object>(entity: EntityId, type: ComponentType<T>): boolean {
+    this.assertEntityAlive(entity);
+    return this.getStore(type)?.delete(entity) ?? false;
   }
 
-  query<T1>(type1: ComponentType<T1>): Array<[EntityId, T1]>;
-  query<T1, T2>(type1: ComponentType<T1>, type2: ComponentType<T2>): Array<[EntityId, T1, T2]>;
-  query(...types: Array<ComponentType<unknown>>): Array<[EntityId, ...unknown[]]> {
-    if (types.length === 0) {
+  query<TTypes extends readonly [AnyComponentType, ...AnyComponentType[]]>(
+    ...types: TTypes
+  ): Array<QueryResult<TTypes>> {
+    this.assertActive();
+
+    const stores = types.map((type) => this.components.get(type));
+    if (stores.some((store) => store === undefined)) {
       return [];
     }
 
-    const primaryStore = this.storeFor(types[0]);
-    const result: Array<[EntityId, ...unknown[]]> = [];
+    const availableStores = stores as Array<Map<EntityId, object>>;
+    let primaryStore = availableStores[0];
+    for (const store of availableStores) {
+      if (store.size < primaryStore.size) {
+        primaryStore = store;
+      }
+    }
 
-    for (const [entity, firstComponent] of primaryStore) {
-      const components: unknown[] = [firstComponent];
-      let matches = true;
+    const result: Array<QueryResult<TTypes>> = [];
 
-      for (let index = 1; index < types.length; index += 1) {
-        const component = this.storeFor(types[index]).get(entity);
+    for (const entity of primaryStore.keys()) {
+      const componentValues: object[] = [];
+
+      for (const store of availableStores) {
+        const component = store.get(entity);
         if (component === undefined) {
-          matches = false;
+          componentValues.length = 0;
           break;
         }
 
-        components.push(component);
+        componentValues.push(component);
       }
 
-      if (matches) {
-        result.push([entity, ...components]);
+      if (componentValues.length === types.length) {
+        result.push(
+          [entity, ...componentValues] as unknown as QueryResult<TTypes>
+        );
       }
     }
 
     return result;
   }
 
-  private storeFor<T>(type: ComponentType<T>): Map<EntityId, unknown> {
-    let store = this.components.get(type.name);
+  dispose(): void {
+    if (this.disposed) {
+      return;
+    }
+
+    this.components.clear();
+    this.aliveEntities.clear();
+    this.disposed = true;
+  }
+
+  private getStore<T extends object>(
+    type: ComponentType<T>
+  ): Map<EntityId, T> | undefined {
+    return this.components.get(type) as Map<EntityId, T> | undefined;
+  }
+
+  private getOrCreateStore<T extends object>(
+    type: ComponentType<T>
+  ): Map<EntityId, T> {
+    let store = this.getStore(type);
     if (!store) {
-      store = new Map<EntityId, unknown>();
-      this.components.set(type.name, store);
+      store = new Map<EntityId, T>();
+      this.components.set(type, store);
     }
 
     return store;
+  }
+
+  private assertActive(): void {
+    if (this.disposed) {
+      throw new Error("World has been disposed.");
+    }
+  }
+
+  private assertEntityAlive(entity: EntityId): void {
+    this.assertActive();
+    if (!this.aliveEntities.has(entity)) {
+      throw new Error(`Entity ${entity} is not alive in this world.`);
+    }
   }
 }

@@ -27,4 +27,17 @@ export default tseslint.config(
       ],
     },
   },
+  {
+    files: ["test/**/*.cjs"],
+    languageOptions: {
+      ecmaVersion: 2020,
+      sourceType: "commonjs",
+      globals: {
+        ...globals.node,
+      },
+    },
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+    },
+  },
 );

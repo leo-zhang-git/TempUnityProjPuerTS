@@ -15,6 +15,18 @@ export interface RuntimeState {
   elapsedSeconds: number;
 }
 
-export const SceneStateComponent = defineComponent<SceneState>("game.sceneState");
-export const EnvironmentStateComponent = defineComponent<EnvironmentState>("game.environmentState");
-export const RuntimeStateComponent = defineComponent<RuntimeState>("game.runtimeState");
+export const SceneStateComponent = defineComponent<SceneState>(
+  "game.sceneState",
+  () => ({ current: "Boot" })
+);
+export const EnvironmentStateComponent = defineComponent<EnvironmentState>(
+  "game.environmentState",
+  () => ({
+    resourcesCleaned: false,
+    initialized: false
+  })
+);
+export const RuntimeStateComponent = defineComponent<RuntimeState>(
+  "game.runtimeState",
+  () => ({ elapsedSeconds: 0 })
+);

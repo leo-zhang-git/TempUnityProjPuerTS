@@ -1,5 +1,5 @@
 import { EntityId } from "../ecs/entity";
-import { runSystems, System } from "../ecs/system";
+import { SystemGroup } from "../ecs/system";
 import { World } from "../ecs/world";
 import {
   EnvironmentStateComponent,
@@ -7,63 +7,132 @@ import {
   SceneStateComponent
 } from "./components";
 import {
-  createEnvironmentInitializeSystem,
-  createBootCleanupSystem,
-  createMainEnterSystem,
-  createRuntimeUpdateSystem
-} from "./systems";
+  activateMainScene,
+  initializeEnvironment,
+  markBootResourcesCleaned
+} from "./lifecycle";
+import { RuntimeUpdateSystem } from "./systems";
+
+type RuntimePhase = "created" | "bootInitialized" | "main" | "disposed";
 
 export class GameRuntime {
   private readonly world = new World();
   private readonly stateEntity: EntityId;
-  private readonly bootSystems: readonly System[];
-  private readonly mainEnterSystems: readonly System[];
-  private readonly fixedUpdateSystems: readonly System[];
-  private readonly updateSystems: readonly System[];
-  private readonly lateUpdateSystems: readonly System[];
+  private readonly fixedUpdateSystems = new SystemGroup("fixedUpdate", []);
+  private readonly updateSystems = new SystemGroup("update", [
+    new RuntimeUpdateSystem()
+  ]);
+  private readonly lateUpdateSystems = new SystemGroup("lateUpdate", []);
+  private phase: RuntimePhase = "created";
 
   constructor() {
     this.stateEntity = this.world.createEntity();
-    this.world.add(this.stateEntity, SceneStateComponent, { current: "Boot" });
-    this.world.add(this.stateEntity, EnvironmentStateComponent, {
-      resourcesCleaned: false,
-      initialized: false
-    });
-    this.world.add(this.stateEntity, RuntimeStateComponent, { elapsedSeconds: 0 });
-
-    this.bootSystems = [
-      createBootCleanupSystem(this.stateEntity),
-      createEnvironmentInitializeSystem(this.stateEntity)
-    ];
-    this.mainEnterSystems = [createMainEnterSystem(this.stateEntity)];
-    this.fixedUpdateSystems = [];
-    this.updateSystems = [createRuntimeUpdateSystem(this.stateEntity)];
-    this.lateUpdateSystems = [];
+    this.world.emplace(this.stateEntity, SceneStateComponent);
+    this.world.emplace(this.stateEntity, EnvironmentStateComponent);
+    this.world.emplace(this.stateEntity, RuntimeStateComponent);
   }
 
   initializeBoot(): string {
-    runSystems(this.world, this.bootSystems);
+    this.assertPhase("created", "initialize Boot");
+
+    markBootResourcesCleaned(this.world, this.stateEntity);
+    initializeEnvironment(this.world, this.stateEntity);
+    this.phase = "bootInitialized";
     return "Boot initialized.";
   }
 
   enterMain(): string {
-    runSystems(this.world, this.mainEnterSystems);
+    this.assertPhase("bootInitialized", "enter Main");
+
+    activateMainScene(this.world, this.stateEntity);
+    try {
+      this.initializeSystemGroups();
+    } catch (error) {
+      this.dispose();
+      throw error;
+    }
+
+    this.phase = "main";
     return "Main entered.";
   }
 
   fixedUpdate(deltaTime: number): void {
-    runSystems(this.world, this.fixedUpdateSystems, deltaTime);
+    this.assertPhase("main", "run FixedUpdate");
+    this.fixedUpdateSystems.update(this.world, deltaTime);
   }
 
   update(deltaTime: number): void {
-    runSystems(this.world, this.updateSystems, deltaTime);
+    this.assertPhase("main", "run Update");
+    this.updateSystems.update(this.world, deltaTime);
   }
 
   lateUpdate(deltaTime: number): void {
-    runSystems(this.world, this.lateUpdateSystems, deltaTime);
+    this.assertPhase("main", "run LateUpdate");
+    this.lateUpdateSystems.update(this.world, deltaTime);
   }
 
   dispose(): void {
+    if (this.phase === "disposed") {
+      return;
+    }
+
+    this.phase = "disposed";
+
+    let firstError: unknown;
+    for (const group of [
+      this.lateUpdateSystems,
+      this.updateSystems,
+      this.fixedUpdateSystems
+    ]) {
+      try {
+        group.dispose(this.world);
+      } catch (error) {
+        firstError ??= error;
+      }
+    }
+
+    this.world.dispose();
     console.log("Game runtime disposed.");
+
+    if (firstError !== undefined) {
+      throw firstError;
+    }
+  }
+
+  private initializeSystemGroups(): void {
+    const groups = [
+      this.fixedUpdateSystems,
+      this.updateSystems,
+      this.lateUpdateSystems
+    ];
+    let initializedCount = 0;
+
+    try {
+      for (const group of groups) {
+        group.initialize(this.world);
+        initializedCount += 1;
+      }
+    } catch (error) {
+      for (let index = initializedCount - 1; index >= 0; index -= 1) {
+        groupDisposeIgnoringError(groups[index], this.world);
+      }
+      throw error;
+    }
+  }
+
+  private assertPhase(expected: RuntimePhase, operation: string): void {
+    if (this.phase !== expected) {
+      throw new Error(
+        `Cannot ${operation} while runtime phase is ${this.phase}; expected ${expected}.`
+      );
+    }
+  }
+}
+
+function groupDisposeIgnoringError(group: SystemGroup, world: World): void {
+  try {
+    group.dispose(world);
+  } catch (error) {
+    console.error(`Failed to dispose system group ${group.name}.`, error);
   }
 }

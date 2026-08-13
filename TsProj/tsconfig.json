@@ -17,7 +17,8 @@
   "include": [
     "src/**/*.ts",
     "types/**/*.d.ts",
-    "../My project/Assets/Package/core/Typing/**/*.d.ts"
+    "../My project/Packages/core/Typing/**/*.d.ts",
+    "../My project/Assets/Gen/Typing/**/*.d.ts"
   ],
   "exclude": [
     "dist",

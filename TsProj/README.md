@@ -70,8 +70,9 @@ Unity/PuerTS 侧应优先通过 `src/main.ts` 暴露的函数进入 TypeScript �
 
 处理任务时建议按下面顺序建立上下文：
 
-1. 读本文件了解项目边界。
-2. 读 `src/README.md` 了解源码层职责。
-3. 读 `src/main.ts` 确认 Unity 调用入口。
-4. 读 `src/game/game-runtime.ts` 确认运行时生命周期。
-5. 涉及 ECS 时再读 `src/ecs/README.md` 和对应源码。
+1. 读 `AGENTS.md` 确认代码范围规则与 owner 路由。
+2. 按任务读取 `doc/` 中对应 owner，再用本文件了解目录概览。
+3. 读 `src/README.md` 了解源码层职责。
+4. 读 `src/main.ts` 确认 Unity 调用入口。
+5. 读 `src/game/game-runtime.ts` 确认运行时生命周期。
+6. 涉及 ECS 时再读 `src/ecs/README.md` 和对应源码。

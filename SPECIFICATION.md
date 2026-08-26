@@ -8,7 +8,7 @@
 
 ## 默认技术前提
 
-- Unity 工程位于 `My project/`，当前编辑器版本为 Unity `2022.3.45f1`。
+- Unity 工程位于 `My project/`，当前编辑器版本为 Unity `6000.6.0b2`。
 - TypeScript 工程位于 `TsProj/`，通过 PuerTS 由 Unity 加载；源码和 Unity 工程保持为工作区内的兄弟目录。
 - TypeScript 编译目标为 ES2020 CommonJS，源码位于 `TsProj/src/`，生成 JavaScript 位于被 Git 忽略的 `TsProj/dist/`。
 - Unity 拥有 Scene、GameObject、物理、渲染和 PuerTS 环境生命周期；游戏规则和 ECS 状态由 TypeScript 承载。

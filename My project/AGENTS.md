@@ -8,7 +8,7 @@
 
 ## 工程边界
 
-- 本目录是 Unity `2022.3.45f1` 工程，持有场景、GameObject、Prefab、序列化资源、物理、UI 和 C# 引擎桥接。
+- 本目录是 Unity `6000.6.0b2` 工程，持有场景、GameObject、Prefab、序列化资源、物理、UI 和 C# 引擎桥接。
 - `Assets/Script/RuntimeBootstrap.cs` 负责 PuerTS 环境、Boot/Main 场景流和通用生命周期转发。
 - 游戏运行时、ECS 和存档逻辑位于兄弟目录 `../TsProj/`；C# 不复制 TypeScript 的游戏结论。
 - `Assets/Scenes/Boot.unity` 是启动与环境准备场景，`Assets/Scenes/Main.unity` 是当前示例运行场景。

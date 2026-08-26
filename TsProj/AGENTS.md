@@ -25,7 +25,9 @@
 | `src/ecs/` | 通用 ECS 原语和系统调度 |
 | `src/game/` | 示例游戏运行时与玩法模块 |
 | `src/save/` | 存储抽象、版本化存档和命名明确的 Unity 适配 |
-| `src/ui/` | 通用 Unity uGUI 操作，不持有具体玩法规则 |
+| `src/ui/common/` | 通用 UIManager、节点生命周期和 Unity uGUI 操作，不依赖具体玩法 |
+| `src/ui/canvas/` | CanvasBase 与具体顶层 Canvas 表现 owner |
+| `src/ui/widgets/` | WidgetBase 与具体运行时 Widget 表现 owner |
 | `types/` | PuerTS/Unity 环境所需的补充类型声明 |
 | `dist/` | TypeScript 生成输出，不手写修改 |
 

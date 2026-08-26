@@ -6,12 +6,7 @@
 
 | 路径 | 作用 |
 | --- | --- |
-| `src/` | TypeScript 源码目录，包含 Unity 调用入口、游戏运行时和轻量 ECS 框架。 |
-| `src/core/` | 通用 GUID 等不依赖游戏和 ECS 的基础能力。 |
-| `src/ecs/` | 通用 ECS 基础设施，包括实体 GUID、组件类型、World 容器和 System 调度。 |
-| `src/game/` | 当前示例游戏逻辑，负责构建 `GameRuntime`、注册系统、保存运行时状态。 |
-| `src/save/` | 通用本地存盘接口、版本化 JSON 槽和 Unity PlayerPrefs 适配器。 |
-| `src/ui/` | TypeScript 直接创建和操作 Unity uGUI 的通用工具。 |
+| `src/` | TypeScript 源码；局部目录职责由 [src/README.md](src/README.md) 路由。 |
 | `types/` | 额外的 TypeScript 全局类型声明，用来补齐当前 PuerTS/JS 运行环境可用的全局对象。 |
 | `.vscode/` | VS Code 任务和调试配置。 |
 | `dist/` | `tsc` 生成的 JavaScript 输出目录。不要手写修改。 |
@@ -31,48 +26,12 @@
 
 `1.watch.bat` 会在当前目录执行 `npm run watch`，VS Code 的 `1.watch` 任务会在打开工作区时自动运行它。
 
-## Unity 侧调用入口
+## Unity 侧入口
 
-Unity/PuerTS 侧应优先通过 `src/main.ts` 暴露的函数进入 TypeScript 运行时：
+Unity 的 `RuntimeBootstrap.cs` 加载 `dist/main.js`，并调用 `src/main.ts` 暴露的 Boot、Main、三类 Update 和 Dispose 生命周期。导出契约、运行阶段与跨层依赖由 [运行时架构](doc/runtime-architecture.md) 持有。
 
-| 导出函数 | 语义 |
-| --- | --- |
-| `initializeBoot()` | 确保 `GameRuntime` 存在并执行 Boot 初始化系统。 |
-| `enterMain()` | 进入 Main 状态。 |
-| `fixedUpdate(deltaTime)` | 转发 Unity 固定帧更新。 |
-| `update(deltaTime)` | 转发 Unity 普通帧更新。 |
-| `lateUpdate(deltaTime)` | 转发 Unity LateUpdate。 |
-| `dispose()` | 释放当前 TypeScript 运行时实例。 |
+## 文档路由
 
-`src/main.ts` 内部维护一个模块级 `runtime`。首次调用 `initializeBoot()` 或 `enterMain()` 时会创建 `GameRuntime`，`dispose()` 后会清空它。
-
-`RuntimeBootstrap.cs` 只绑定通用生命周期函数。三轨闪避的输入、uGUI 页面和表现同步由 TypeScript 中的 `UnityLaneDodgePresentation` 完成，不需要游戏专用 C# 桥接。
-
-## 生命周期边界
-
-当前项目里的 `World` 是 TypeScript 侧 ECS 数据容器，不等同于 Unity Scene。它现在作为 `GameRuntime` 的私有字段存在，因此生命周期默认跟 `GameRuntime` 一致。
-
-推荐按数据归属决定生命周期：
-
-- 跨场景的游戏逻辑状态放在 `GameRuntime` 级别的 `World` 中。
-- 当前关卡、战斗、临时对象等场景内状态可以后续拆出局部 ECS scope，或在同一个 `World` 内显式清理。
-- 如果组件中保存 Unity 对象引用，Unity 对象销毁或场景卸载时必须同步移除相关组件或实体，避免留下失效引用。
-
-## 开发约定
-
-- 源码只改 `src/` 和必要的 `types/`，不要直接改 `dist/`。
-- 新增 TypeScript 源码后，使用 `npm run check` 或 `npm run build` 验证。
-- `tsconfig.json` 使用 `strict: true`，新增代码应保持严格类型通过。
-- 当前模块输出为 CommonJS，新增入口导出应从 `src/main.ts` 明确暴露。
-- ECS 基础能力应放在 `src/ecs/`，具体游戏业务逻辑应放在 `src/game/` 或后续业务子目录。
-
-## Agent 阅读顺序
-
-处理任务时建议按下面顺序建立上下文：
-
-1. 读 `AGENTS.md` 确认代码范围规则与 owner 路由。
-2. 按任务读取 `doc/` 中对应 owner，再用本文件了解目录概览。
-3. 读 `src/README.md` 了解源码层职责。
-4. 读 `src/main.ts` 确认 Unity 调用入口。
-5. 读 `src/game/game-runtime.ts` 确认运行时生命周期。
-6. 涉及 ECS 时再读 `src/ecs/README.md` 和对应源码。
+- TypeScript 范围、执行规则和 owner 路由见 [AGENTS.md](AGENTS.md)。
+- 编码判断见 [coding-conventions.md](doc/coding-conventions.md)，验证入口见 [testing.md](doc/testing.md)。
+- UI 生命周期、层级和布局标准见 [src/ui/README.md](src/ui/README.md)。

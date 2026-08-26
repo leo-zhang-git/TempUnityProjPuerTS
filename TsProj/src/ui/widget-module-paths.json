@@ -1,0 +1,9 @@
+{
+  "noInit": {
+    "LaneDodgeHudWidget": "ui/widgets/lane-dodge-hud-widget.js"
+  },
+  "init": {},
+  "scrollItem": {
+    "LaneDodgeResultItemWidget": "ui/widgets/lane-dodge-result-item-widget.js"
+  }
+}

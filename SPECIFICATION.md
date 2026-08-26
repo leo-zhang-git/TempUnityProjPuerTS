@@ -18,7 +18,7 @@
 
 - Unity 使用 `Boot` 和 `Main` 两个场景；`RuntimeBootstrap.cs` 创建 PuerTS 环境并转发 Boot、Main、FixedUpdate、Update、LateUpdate 和 Dispose。
 - Unity/PuerTS 从 `TsProj/dist/main.js` 加载 TypeScript 运行时。
-- TypeScript 侧已有轻量 ECS、显式运行时阶段、本地存储抽象、版本化 JSON 存档、PlayerPrefs 适配和 uGUI 工具。
+- TypeScript 侧已有轻量 ECS、显式运行时阶段、本地存储抽象、版本化 JSON 存档、PlayerPrefs 适配，以及由 `UIManager`、`CanvasBase`、`WidgetBase` 组成的 uGUI runtime。
 - `TsProj/src/main.ts` 是组合根，对 Unity 暴露 `initializeBoot`、`enterMain`、`fixedUpdate`、`update`、`lateUpdate` 和 `dispose`。
 - `TsProj/src/game/lane-dodge/` 提供可运行的三轨闪避示例，用于验证命令队列、固定帧系统顺序、快照表现和存档链。
 - `TsProj/dist/` 是生成输出，Unity 编辑器期 loader 从该目录读取 JavaScript。

@@ -19,7 +19,7 @@
 ```text
 TypeScript composition root
   -> game runtime / sample rules -> ECS -> core
-  -> Unity presentation adapters -> Unity/PuerTS
+  -> Unity presentation adapters -> UI runtime -> Unity/PuerTS
   -> save adapters -> save contracts
 
 Unity RuntimeBootstrap -> TypeScript composition root
@@ -29,6 +29,7 @@ Unity RuntimeBootstrap -> TypeScript composition root
 - `TsProj/src/ecs/` 可以依赖 core，不依赖具体游戏或 Unity。
 - 纯游戏规则可以依赖 core、ECS 和存储抽象，不直接访问 Unity API。
 - Unity 表现适配可以依赖游戏命令和只读状态；纯游戏模块不得反向依赖表现适配。
+- `TsProj/src/ui/common/` 与 Canvas/Widget 基类持有通用 UI runtime，不依赖具体游戏、ECS 或组合根；`src/ui/canvas/` 和 `src/ui/widgets/` 中的具体表现 owner 可以依赖游戏命令与只读视图契约。
 - `TsProj/src/main.ts` 是组合根，业务模块不反向依赖它。
 
 ## Unity 接入约定

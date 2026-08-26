@@ -1,9 +1,12 @@
 import { GameRuntime } from "./game/game-runtime";
-import { UnityLaneDodgePresentation } from "./game/lane-dodge/unity-presentation";
 import { UnityPlayerPrefsStorage } from "./save/unity-player-prefs-storage";
+import { LaneDodgeCanvas } from "./ui/canvas/lane-dodge-canvas";
+import { CanvasSortingLayer } from "./ui/common/ui-config";
+import { UIManager } from "./ui/common/ui-manager";
+import { WidgetFactory } from "./ui/widgets/widget-factory";
 
 let runtime: GameRuntime | undefined;
-let presentation: UnityLaneDodgePresentation | undefined;
+let uiManager: UIManager | undefined;
 
 function ensureRuntime(): GameRuntime {
   if (!runtime) {
@@ -18,16 +21,26 @@ export function initializeBoot(): string {
 }
 
 export function enterMain(): string {
-  if (presentation) {
-    throw new Error("Main presentation has already been created.");
+  if (uiManager) {
+    throw new Error("Main UI has already been created.");
   }
 
   const gameRuntime = ensureRuntime();
   const result = gameRuntime.enterMain();
+  const manager = new UIManager(new WidgetFactory());
   try {
-    presentation = new UnityLaneDodgePresentation(gameRuntime);
+    manager.openCanvas(
+      new LaneDodgeCanvas(gameRuntime),
+      CanvasSortingLayer.Scene
+    );
+    uiManager = manager;
     return result;
   } catch (error) {
+    try {
+      manager.destroy();
+    } catch (cleanupError) {
+      void cleanupError;
+    }
     gameRuntime.dispose();
     runtime = undefined;
     throw error;
@@ -40,23 +53,23 @@ export function fixedUpdate(deltaTime: number): void {
 
 export function update(deltaTime: number): void {
   runtime?.update(deltaTime);
-  presentation?.update();
+  uiManager?.update(deltaTime);
 }
 
 export function lateUpdate(deltaTime: number): void {
   runtime?.lateUpdate(deltaTime);
-  presentation?.lateUpdate();
+  uiManager?.lateUpdate(deltaTime);
 }
 
 export function dispose(): void {
   let firstError: unknown;
 
   try {
-    presentation?.dispose();
+    uiManager?.destroy();
   } catch (error) {
     firstError = error;
   }
-  presentation = undefined;
+  uiManager = undefined;
 
   try {
     runtime?.dispose();

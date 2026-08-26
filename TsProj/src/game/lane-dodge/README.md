@@ -19,7 +19,6 @@
 | `state.ts` | 定义 ECS 组件、初始化全局状态并生成快照。 |
 | `systems.ts` | 实现命令、生成、移动、碰撞、计分、难度和延迟销毁。 |
 | `profile.ts` | 定义带稳定 `profileGuid` 的玩家档案、存档校验与存取。 |
-| `unity-presentation.ts` | 通过 PuerTS 直接创建 uGUI、处理输入并同步实体表现。 |
 
 ## 固定帧顺序
 
@@ -41,13 +40,12 @@ CommandSystem
 
 命令只在下一次 `fixedUpdate()` 开始时消费，因此 UI 和输入层不会在系统执行过程中直接修改 ECS 状态。
 
-## Unity 表现
+## 表现契约
 
-- `RuntimeBootstrap.cs` 只转发 Boot、Main、FixedUpdate、Update、LateUpdate 和 Dispose。
-- `unity-presentation.ts` 通过 PuerTS 直接创建轨道、玩家、障碍物、金币和 uGUI 页面。
-- 表现对象字典使用快照中的 `entityGuid` 创建和回收 Unity UI Image。
-- TypeScript 玩法仍不创建或引用 Unity GameObject。
-- 通用 uGUI 创建能力位于 `src/ui/unity-ui.ts`。
+- 本模块不创建或引用 Unity 对象；[UI 表现层](../../ui/README.md) 只消费命令和只读快照。
+- 表现对象使用快照中的 `entityGuid` 建立稳定映射，不把 Unity 引用写回游戏状态。
+
+## 存档与确定性
+
 - 玩家档案通过通用 `VersionedJsonSlot` 和 TS `PlayerPrefs` 适配器保存，当前持久化档案 GUID、最高分和累计金币。
-- 尚未实现表现对象池；首版对象量较低，离场视图直接销毁。
-- 随机源可通过 `GameRuntimeOptions.random` 注入，以支持确定性测试。
+- 随机源可通过 `GameRuntimeOptions.random` 注入，以支持确定性验证。

@@ -5,14 +5,15 @@
 - `src/main.ts` 是 Unity/PuerTS 调用的组合根，当前导出 Boot、Main、三类 Update 和 Dispose 生命周期函数。
 - `GameRuntime` 持有 TypeScript `World`、SystemGroup 和运行阶段，阶段顺序为 `created -> bootInitialized -> main -> disposed`。
 - Unity 的 `RuntimeBootstrap.cs` 创建 PuerTS 环境、加载 `dist/main.js`、转发生命周期并拥有环境销毁责任。
-- 当前 `main.ts` 组装 `UnityLaneDodgePresentation` 作为端到端示例；正式项目可以替换该组合，不将它扩展成通用多玩法中转层。
+- 当前 `main.ts` 组装 `UIManager` 并打开示例 Canvas；正式项目可以替换该组合。
 
 ## 模块依赖
 
 ```text
 src/main.ts
   -> game composition/runtime
-  -> explicit Unity presentation adapters -> src/ui + Unity/PuerTS
+  -> UIManager -> concrete Canvas/Widget presentation -> Unity/PuerTS
+                         -> game command/read-only view contracts
 
 game rules -> src/ecs -> src/core
 save adapters -> src/save contracts
@@ -21,7 +22,8 @@ save adapters -> src/save contracts
 - `src/core/` 不依赖 ECS、game、save 或 Unity。
 - `src/ecs/` 可以依赖 core，不依赖具体玩法或 Unity。
 - 纯游戏模块可以依赖 core、ECS 和 save contract，不直接使用 Unity API。
-- Unity 表现适配可以依赖游戏只读状态、命令入口和 `src/ui/`。
+- `src/ui/common/`、`CanvasBase` 与 `WidgetBase` 不依赖具体玩法、ECS、save 或组合根。
+- `src/ui/canvas/` 与 `src/ui/widgets/` 中的具体表现 owner 可以依赖游戏只读状态和命令入口，不得反向成为游戏规则或 ECS 状态 owner。
 - `src/main.ts` 负责装配，任何下层模块不得反向导入它。
 
 ## ECS 约束
@@ -47,7 +49,7 @@ save adapters -> src/save contracts
 - TypeScript 表现适配可以持有 Unity 引用，但必须在 `dispose` 或场景卸载时释放对象并注销 callback。
 - 纯游戏层只发布命令结果、事件或只读视图所需状态，不包含 Unity 类型。
 - 表现层可以插值和缓存视觉状态，但不能重新计算伤害、碰撞资格、解锁状态或存档结论。
-- 通用 UI 工具不得依赖具体示例；示例 Widget 的业务状态由所属表现适配负责。
+- `UIManager` 是 UI root、EventSystem、Canvas registry、帧转发和整体释放的唯一全局 owner；具体节点生命周期、Canvas 层级与布局规范由 [src/ui/README.md](../src/ui/README.md) 持有。
 
 ## 模板扩展
 

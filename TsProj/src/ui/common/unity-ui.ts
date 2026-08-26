@@ -155,7 +155,12 @@ export function stretchLayout(inset = 0): RectLayout {
   };
 }
 
-export function color(r: number, g: number, b: number, a = 1): CS.UnityEngine.Color {
+export function color(
+  r: number,
+  g: number,
+  b: number,
+  a = 1
+): CS.UnityEngine.Color {
   return new Unity.Color(r, g, b, a);
 }
 

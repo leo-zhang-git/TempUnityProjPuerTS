@@ -1,20 +1,11 @@
 @echo off
 setlocal
 
-set "UNITY_EXE=F:\Unity6000.6b\Editor\Unity.exe"
-set "PROJECT_PATH=%~dp0My project"
+chcp 65001 >nul
+set "PYTHONUTF8=1"
+set "PYTHONIOENCODING=utf-8"
+cd /d "%~dp0"
 
-if not exist "%UNITY_EXE%" (
-    echo Unity editor not found: "%UNITY_EXE%"
-    pause
-    exit /b 1
-)
-
-if not exist "%PROJECT_PATH%\ProjectSettings\ProjectVersion.txt" (
-    echo Unity project not found: "%PROJECT_PATH%"
-    pause
-    exit /b 1
-)
-
-start "Unity PuerTS Template" "%UNITY_EXE%" -projectPath "%PROJECT_PATH%"
+python tools\framework_launcher.py --action unity
+if errorlevel 1 pause
 endlocal

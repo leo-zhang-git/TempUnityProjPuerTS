@@ -11,6 +11,7 @@
 | `ecs/` | 通用 ECS 基础设施。 |
 | `game/` | 游戏运行时、示例玩法逻辑、命令和只读快照契约。 |
 | `save/` | 通用字符串存储、版本化 JSON 槽和 Unity PlayerPrefs 适配。 |
+| `staticdata/generated/` | `staticdata` client target 的发布目录；由脚本生成并编译进 PuerTS 输出。 |
 | `ui/` | TypeScript UI 表现层；按 `common/`、`canvas/`、`widgets/` 分隔通用 runtime 与具体表现 owner。 |
 
 ## 入口职责

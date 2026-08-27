@@ -1,6 +1,7 @@
 import { EntityGuid } from "../../ecs/entity-guid";
 import { SystemBase } from "../../ecs/system";
 import { World } from "../../ecs/world";
+import { LaneDodgeConfig } from "./config";
 import { GameCommand, Lane } from "./model";
 import { LaneDodgeProfileStore } from "./profile";
 import {
@@ -20,19 +21,11 @@ import {
   SpawnStateComponent
 } from "./state";
 
-const PLAYER_DISTANCE = 0;
-const SPAWN_DISTANCE = 12;
-const DESPAWN_DISTANCE = -2;
-const INITIAL_SPAWN_DELAY = 0.75;
-const BASE_SPEED = 5;
-const MAX_SPEED = 10;
-const BASE_SPAWN_INTERVAL = 0.9;
-const MIN_SPAWN_INTERVAL = 0.38;
-const COIN_CHANCE = 0.2;
-const COIN_SCORE = 50;
-
 export class CommandSystem extends SystemBase {
-  constructor(private readonly stateEntityGuid: EntityGuid) {
+  constructor(
+    private readonly stateEntityGuid: EntityGuid,
+    private readonly config: LaneDodgeConfig
+  ) {
     super("laneDodge.command");
   }
 
@@ -50,12 +43,12 @@ export class CommandSystem extends SystemBase {
     switch (command.type) {
       case "start-run":
         if (flow.phase === "Menu" || flow.phase === "GameOver") {
-          startNewRun(world, this.stateEntityGuid);
+          startNewRun(world, this.stateEntityGuid, this.config);
         }
         break;
       case "restart-run":
         if (flow.phase !== "Menu") {
-          startNewRun(world, this.stateEntityGuid);
+          startNewRun(world, this.stateEntityGuid, this.config);
         }
         break;
       case "return-to-menu":
@@ -74,12 +67,12 @@ export class CommandSystem extends SystemBase {
         break;
       case "move-left":
         if (flow.phase === "Playing") {
-          movePlayer(world, -1);
+          movePlayer(world, -1, this.config.laneCount);
         }
         break;
       case "move-right":
         if (flow.phase === "Playing") {
-          movePlayer(world, 1);
+          movePlayer(world, 1, this.config.laneCount);
         }
         break;
     }
@@ -89,7 +82,8 @@ export class CommandSystem extends SystemBase {
 export class SpawnSystem extends SystemBase {
   constructor(
     private readonly stateEntityGuid: EntityGuid,
-    private readonly random: () => number
+    private readonly random: () => number,
+    private readonly config: LaneDodgeConfig
   ) {
     super("laneDodge.spawn");
   }
@@ -104,20 +98,29 @@ export class SpawnSystem extends SystemBase {
     spawn.timeUntilSpawn -= deltaTime;
 
     let spawnCount = 0;
-    while (spawn.timeUntilSpawn <= 0 && spawnCount < 32) {
-      createFallingObject(world, difficulty.objectSpeed, this.random);
+    while (
+      spawn.timeUntilSpawn <= 0 &&
+      spawnCount < this.config.maxCatchUpSpawnsPerTick
+    ) {
+      createFallingObject(world, difficulty.objectSpeed, this.random, this.config);
       spawn.timeUntilSpawn += difficulty.spawnInterval;
       spawnCount += 1;
     }
 
-    if (spawnCount === 32 && spawn.timeUntilSpawn <= 0) {
+    if (
+      spawnCount === this.config.maxCatchUpSpawnsPerTick &&
+      spawn.timeUntilSpawn <= 0
+    ) {
       spawn.timeUntilSpawn = difficulty.spawnInterval;
     }
   }
 }
 
 export class MovementSystem extends SystemBase {
-  constructor(private readonly stateEntityGuid: EntityGuid) {
+  constructor(
+    private readonly stateEntityGuid: EntityGuid,
+    private readonly config: LaneDodgeConfig
+  ) {
     super("laneDodge.movement");
   }
 
@@ -132,7 +135,7 @@ export class MovementSystem extends SystemBase {
     )) {
       position.previousDistance = position.distance;
       position.distance -= speed.unitsPerSecond * deltaTime;
-      if (position.distance < DESPAWN_DISTANCE) {
+      if (position.distance < this.config.despawnDistance) {
         markForDestroy(world, entityGuid);
       }
     }
@@ -197,7 +200,10 @@ export class CollisionSystem extends SystemBase {
 }
 
 export class RunProgressSystem extends SystemBase {
-  constructor(private readonly stateEntityGuid: EntityGuid) {
+  constructor(
+    private readonly stateEntityGuid: EntityGuid,
+    private readonly config: LaneDodgeConfig
+  ) {
     super("laneDodge.runProgress");
   }
 
@@ -206,7 +212,9 @@ export class RunProgressSystem extends SystemBase {
     if (isPlaying(world, this.stateEntityGuid)) {
       run.elapsedSeconds += deltaTime;
     }
-    run.score = Math.floor(run.elapsedSeconds * 10) + run.runCoins * COIN_SCORE;
+    run.score =
+      Math.floor(run.elapsedSeconds * this.config.survivalScorePerSecond) +
+      run.runCoins * this.config.coinScore;
   }
 }
 
@@ -241,7 +249,10 @@ export class ProfileSaveSystem extends SystemBase {
 }
 
 export class DifficultySystem extends SystemBase {
-  constructor(private readonly stateEntityGuid: EntityGuid) {
+  constructor(
+    private readonly stateEntityGuid: EntityGuid,
+    private readonly config: LaneDodgeConfig
+  ) {
     super("laneDodge.difficulty");
   }
 
@@ -252,10 +263,14 @@ export class DifficultySystem extends SystemBase {
 
     const elapsed = world.get(this.stateEntityGuid, RunStateComponent).elapsedSeconds;
     const difficulty = world.get(this.stateEntityGuid, DifficultyStateComponent);
-    difficulty.objectSpeed = Math.min(MAX_SPEED, BASE_SPEED + elapsed * 0.06);
+    difficulty.objectSpeed = Math.min(
+      this.config.maxSpeed,
+      this.config.baseSpeed + elapsed * this.config.speedIncreasePerSecond
+    );
     difficulty.spawnInterval = Math.max(
-      MIN_SPAWN_INTERVAL,
-      BASE_SPAWN_INTERVAL - elapsed * 0.006
+      this.config.minSpawnIntervalSeconds,
+      this.config.baseSpawnIntervalSeconds -
+        elapsed * this.config.spawnIntervalDecreasePerSecond
     );
 
     for (const [, speed] of world.query(MoveSpeedComponent)) {
@@ -276,7 +291,11 @@ export class PendingDestroySystem extends SystemBase {
   }
 }
 
-function startNewRun(world: World, stateEntityGuid: EntityGuid): void {
+function startNewRun(
+  world: World,
+  stateEntityGuid: EntityGuid,
+  config: LaneDodgeConfig
+): void {
   clearRunEntities(world);
 
   const flow = world.get(stateEntityGuid, GameFlowStateComponent);
@@ -287,18 +306,19 @@ function startNewRun(world: World, stateEntityGuid: EntityGuid): void {
   run.elapsedSeconds = 0;
   run.score = 0;
   run.runCoins = 0;
-  spawn.timeUntilSpawn = INITIAL_SPAWN_DELAY;
-  difficulty.objectSpeed = BASE_SPEED;
-  difficulty.spawnInterval = BASE_SPAWN_INTERVAL;
+  spawn.timeUntilSpawn = config.initialSpawnDelaySeconds;
+  difficulty.objectSpeed = config.baseSpeed;
+  difficulty.spawnInterval = config.baseSpawnIntervalSeconds;
 
   const playerEntityGuid = world.createEntity();
   world.emplace(playerEntityGuid, RunEntityComponent);
   world.emplace(playerEntityGuid, PlayerComponent);
   const position = world.emplace(playerEntityGuid, LanePositionComponent);
-  position.lane = 1;
-  position.distance = PLAYER_DISTANCE;
-  position.previousDistance = PLAYER_DISTANCE;
-  world.emplace(playerEntityGuid, CollisionSizeComponent);
+  position.lane = config.initialLane as Lane;
+  position.distance = config.playerDistance;
+  position.previousDistance = config.playerDistance;
+  const collision = world.emplace(playerEntityGuid, CollisionSizeComponent);
+  collision.radius = config.collisionRadius;
 }
 
 function clearRunEntities(world: World): void {
@@ -307,37 +327,42 @@ function clearRunEntities(world: World): void {
   }
 }
 
-function movePlayer(world: World, direction: -1 | 1): void {
+function movePlayer(world: World, direction: -1 | 1, laneCount: number): void {
   const playerResult = world.query(PlayerComponent, LanePositionComponent)[0];
   if (!playerResult) {
     throw new Error("Cannot move because the player entity does not exist.");
   }
 
-  playerResult[2].lane = clampLane(playerResult[2].lane + direction);
+  playerResult[2].lane = clampLane(playerResult[2].lane + direction, laneCount);
 }
 
-function clampLane(lane: number): Lane {
-  return Math.max(0, Math.min(2, lane)) as Lane;
+function clampLane(lane: number, laneCount: number): Lane {
+  return Math.max(0, Math.min(laneCount - 1, lane)) as Lane;
 }
 
 function createFallingObject(
   world: World,
   speedValue: number,
-  random: () => number
+  random: () => number,
+  config: LaneDodgeConfig
 ): void {
   const entityGuid = world.createEntity();
   world.emplace(entityGuid, RunEntityComponent);
 
   const position = world.emplace(entityGuid, LanePositionComponent);
-  position.lane = clampLane(Math.floor(normalizeRandom(random()) * 3));
-  position.distance = SPAWN_DISTANCE;
-  position.previousDistance = SPAWN_DISTANCE;
+  position.lane = clampLane(
+    Math.floor(normalizeRandom(random()) * config.laneCount),
+    config.laneCount
+  );
+  position.distance = config.spawnDistance;
+  position.previousDistance = config.spawnDistance;
 
   const speed = world.emplace(entityGuid, MoveSpeedComponent);
   speed.unitsPerSecond = speedValue;
-  world.emplace(entityGuid, CollisionSizeComponent);
+  const collision = world.emplace(entityGuid, CollisionSizeComponent);
+  collision.radius = config.collisionRadius;
 
-  if (normalizeRandom(random()) < COIN_CHANCE) {
+  if (normalizeRandom(random()) < config.coinChance) {
     world.emplace(entityGuid, CollectibleComponent);
   } else {
     world.emplace(entityGuid, ObstacleComponent);

@@ -1,7 +1,7 @@
 import { defineComponent } from "../../ecs/component";
 import { EntityGuid } from "../../ecs/entity-guid";
 import { World } from "../../ecs/world";
-import { LaneDodgeProfile } from "./profile";
+import { LaneDodgeConfig } from "./config";
 import {
   GameCommand,
   GamePhase,
@@ -9,6 +9,7 @@ import {
   LaneDodgeSnapshot,
   LaneObjectSnapshot
 } from "./model";
+import { LaneDodgeProfile } from "./profile";
 
 export interface GameFlowState {
   phase: GamePhase;
@@ -77,11 +78,11 @@ export const RunStateComponent = defineComponent<RunState>(
 );
 export const SpawnStateComponent = defineComponent<SpawnState>(
   "laneDodge.spawnState",
-  () => ({ timeUntilSpawn: 0.75 })
+  () => ({ timeUntilSpawn: 0 })
 );
 export const DifficultyStateComponent = defineComponent<DifficultyState>(
   "laneDodge.difficultyState",
-  () => ({ objectSpeed: 5, spawnInterval: 0.9 })
+  () => ({ objectSpeed: 0, spawnInterval: 0 })
 );
 export const CommandQueueComponent = defineComponent<CommandQueue>(
   "laneDodge.commandQueue",
@@ -89,7 +90,7 @@ export const CommandQueueComponent = defineComponent<CommandQueue>(
 );
 export const LanePositionComponent = defineComponent<LanePosition>(
   "laneDodge.lanePosition",
-  () => ({ lane: 1, distance: 0, previousDistance: 0 })
+  () => ({ lane: 0, distance: 0, previousDistance: 0 })
 );
 export const MoveSpeedComponent = defineComponent<MoveSpeed>(
   "laneDodge.moveSpeed",
@@ -97,7 +98,7 @@ export const MoveSpeedComponent = defineComponent<MoveSpeed>(
 );
 export const CollisionSizeComponent = defineComponent<CollisionSize>(
   "laneDodge.collisionSize",
-  () => ({ radius: 0.35 })
+  () => ({ radius: 0 })
 );
 export const CollectibleComponent = defineComponent<Collectible>(
   "laneDodge.collectible",
@@ -129,12 +130,16 @@ export const ProfileStateComponent = defineComponent<LaneDodgeProfile>(
 export function createLaneDodgeState(
   world: World,
   stateEntityGuid: EntityGuid,
-  profile: LaneDodgeProfile
+  profile: LaneDodgeProfile,
+  config: LaneDodgeConfig
 ): void {
   world.emplace(stateEntityGuid, GameFlowStateComponent);
   world.emplace(stateEntityGuid, RunStateComponent);
-  world.emplace(stateEntityGuid, SpawnStateComponent);
-  world.emplace(stateEntityGuid, DifficultyStateComponent);
+  const spawn = world.emplace(stateEntityGuid, SpawnStateComponent);
+  spawn.timeUntilSpawn = config.initialSpawnDelaySeconds;
+  const difficulty = world.emplace(stateEntityGuid, DifficultyStateComponent);
+  difficulty.objectSpeed = config.baseSpeed;
+  difficulty.spawnInterval = config.baseSpawnIntervalSeconds;
   world.emplace(stateEntityGuid, CommandQueueComponent);
   world.add(stateEntityGuid, ProfileStateComponent, profile);
 }

@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>demo staticdata 本地填表工作台</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand-block">
+        <h1>demo staticdata 本地填表工作台</h1>
+        <p>高密度浏览与单条编辑共用同一条 TypeScript 语义链。</p>
+        <div id="launch-info" class="launch-info warning">正在读取启动身份…</div>
+      </div>
+      <div class="topbar-utility">
+        <div class="topbar-actions">
+          <button id="save-current-button" type="button" disabled>保存当前表</button>
+          <button id="validate-button" type="button">全量校验</button>
+          <button id="build-button" type="button">全量构建</button>
+          <button id="verify-button" type="button">全量验证</button>
+        </div>
+        <div id="status" class="status topbar-status">正在加载…</div>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <nav class="view-tabs" aria-label="视图切换">
+		<button id="tab-list" class="tab-button" type="button" data-tab="list" aria-selected="false">列表视图</button>
+		<button id="tab-grid" class="tab-button active" type="button" data-tab="grid" aria-selected="true">表格工作台</button>
+        <button id="tab-search" class="tab-button" type="button" data-tab="search" aria-selected="false">全局搜索</button>
+        <button id="tab-detail" class="tab-button" type="button" data-tab="detail" aria-selected="false">详情视图</button>
+      </nav>
+
+	  <section id="list-view" class="view-panel is-hidden">
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>记录摘要表</h2>
+              <p>默认展示通用高密度摘要，后续再按表逐步演进为更强的表格工作台。</p>
+            </div>
+            <button id="refresh-list-button" type="button">刷新列表</button>
+          </div>
+          <div class="list-toolbar">
+            <div id="list-summary" class="summary-inline">尚未加载记录。</div>
+            <div class="filter-grid list-filter-grid">
+              <label class="field-stack">
+                <span>表</span>
+                <select id="table-filter"></select>
+              </label>
+              <label class="field-stack">
+                <span>分类</span>
+                <select id="category-filter"></select>
+              </label>
+              <label class="field-stack">
+                <span>问题</span>
+                <select id="status-filter">
+                  <option value="all">全部记录</option>
+                  <option value="issue">仅问题</option>
+                  <option value="ok">仅无问题</option>
+                </select>
+              </label>
+              <div class="field-stack field-stack-wide">
+                <span>查询</span>
+                <div class="search-submit-row">
+                  <input id="query-filter" type="search" placeholder="按 id / label / category 搜索" />
+                  <button id="query-filter-button" type="button">搜索</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="record-list" class="record-table-host"></div>
+        </section>
+      </section>
+
+	  <section id="grid-view" class="view-panel">
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>表格工作台</h2>
+              <p>进入逻辑表或子表后，按真实字段列进行筛选、排序和当前行编辑。</p>
+            </div>
+            <button id="refresh-grid-button" type="button">刷新表格</button>
+          </div>
+          <div id="grid-panel" class="grid-workbench">
+            <div class="empty-state">正在加载表格工作台…</div>
+          </div>
+        </section>
+	  </section>
+
+      <section id="search-view" class="view-panel is-hidden">
+        <div class="search-layout">
+          <section class="panel search-main-panel">
+            <div class="panel-head">
+              <div>
+                <h2>全局搜索</h2>
+                <p>跨表搜索 authored、resolved/default/derived 与全部 sidecar；按记录聚合命中。</p>
+              </div>
+            </div>
+            <div class="global-search-toolbar">
+              <div class="field-stack global-search-query-field">
+                <span>关键词</span>
+                <div class="search-submit-row">
+                  <input id="global-search-query" type="search" placeholder="输入字符串，按 Enter 搜索" />
+                  <button id="global-search-button" type="button">搜索</button>
+                </div>
+              </div>
+              <label class="field-stack">
+                <span>表</span>
+                <select id="global-search-table"></select>
+              </label>
+              <label class="field-stack">
+                <span>分类</span>
+                <select id="global-search-category"></select>
+              </label>
+              <label class="search-field-name-toggle global-search-field-toggle"><input id="global-search-field-names" type="checkbox" /> 同时搜索字段名</label>
+            </div>
+            <div id="global-search-results" class="global-search-results">
+              <div class="empty-state">输入关键词后按 Enter 或点击“搜索”。</div>
+            </div>
+          </section>
+          <aside class="panel search-inspector-panel">
+            <div class="panel-head">
+              <div>
+                <h2>属性检查</h2>
+                <p>只读查看属性、来源、问题与引用关系。</p>
+              </div>
+            </div>
+            <div id="global-search-inspector" class="search-inspector">
+              <div class="empty-state">从搜索结果选择一条记录。</div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="detail-view" class="view-panel is-hidden">
+        <div class="detail-layout">
+          <section class="panel">
+            <div class="panel-head">
+              <div>
+                <h2>单条记录编辑</h2>
+                <p>保留当前单条编辑能力，但把辅助信息压缩为更易读的紧凑面板。</p>
+              </div>
+            </div>
+            <div id="detail-panel" class="empty-state">先从列表视图选择一条记录。</div>
+          </section>
+
+          <aside class="detail-rail">
+            <section class="panel">
+              <div class="panel-head">
+                <div>
+                  <h2>记录检查</h2>
+                  <p>查看 resolved 快照与当前记录的变更 diff。</p>
+                </div>
+              </div>
+              <div id="preview-panel" class="empty-state">先从列表视图选择一条记录。</div>
+            </section>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <div id="navigation-loading" class="navigation-loading" role="status" aria-live="polite" hidden>
+      <div class="navigation-loading-card">
+        <div class="navigation-loading-spinner" aria-hidden="true"></div>
+        <div>
+          <div id="navigation-loading-target" class="navigation-loading-target">正在加载</div>
+          <div class="navigation-loading-meta">
+            <span id="navigation-loading-phase">请求中</span>
+            <span id="navigation-loading-elapsed">0 ms</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
+

@@ -1,0 +1,6 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": { "declaration": false, "noEmit": true },
+  "include": ["tools/test/**/*.ts"],
+  "exclude": []
+}

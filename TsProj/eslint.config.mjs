@@ -4,7 +4,15 @@ import tseslint from "typescript-eslint";
 
 export default tseslint.config(
   {
-    ignores: ["dist/**", "node_modules/**"],
+    ignores: [
+      "dist/**",
+      "node_modules/**",
+      "staticdata/dist/**",
+      "staticdata/dist-web/**",
+      "staticdata/generated/**",
+      "staticdata/targets/**",
+      "src/staticdata/generated/**",
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
@@ -25,6 +33,22 @@ export default tseslint.config(
           varsIgnorePattern: "^_",
         },
       ],
+    },
+  },
+  {
+    files: ["staticdata/**/*.ts", "staticdata/**/*.mjs"],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+        ...globals.browser,
+      },
+    },
+    rules: {
+      "@typescript-eslint/no-empty-object-type": "off",
+      "@typescript-eslint/no-unused-vars": "off",
+      "no-useless-assignment": "off",
+      "preserve-caught-error": "off",
+      "prefer-const": "off",
     },
   },
   {

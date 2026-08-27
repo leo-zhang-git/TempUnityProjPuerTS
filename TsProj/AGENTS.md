@@ -6,6 +6,7 @@
 - 涉及模板级当前事实或当前阶段时读取 `../SPECIFICATION.md`；涉及跨层边界和依赖方向时读取 `../ARCHITECTURE.md`。
 - 修改运行时、模块分层、Unity/PuerTS 契约或生命周期时，读 `doc/runtime-architecture.md`。
 - 修改 TypeScript 实现时，读 `doc/coding-conventions.md`。
+- 修改静态配表、schema、生成链或 runtime target 时，读 `doc/staticdata.md` 与 `staticdata/AGENTS.md`。
 - 修改行为、构建或验证方式时，读 `doc/testing.md`。
 - 修改 UI Prefab、Binder、generated binding 或未来 Legma authoring 时，读 `doc/ui-node-naming.md`。
 - 涉及具体模块时，继续读取该目录最近的 `README.md`；README 只说明局部代码，不覆盖 `doc/` owner。
@@ -15,6 +16,7 @@
 - `doc/runtime-architecture.md`：当前 TypeScript 运行时、依赖方向、生命周期、Unity 边界和模板扩展规则。
 - `doc/coding-conventions.md`：需要人工判断的 TypeScript、ECS、集合、错误处理和资源释放约定。
 - `doc/testing.md`：类型检查、lint、构建、纯逻辑验证和 Unity Play Mode 验收规则。
+- `doc/staticdata.md`：静态配表 owner、authoring、工具、target 生成和 PuerTS 消费边界。
 - `doc/ui-node-naming.md`：UI 节点、Binder 字段、Prefab 与 Legma 共用的命名和前缀约束。
 - `doc/AGENTS.md`：`TsProj/doc/` 的文档职责和支持资料生命周期。
 
@@ -27,6 +29,7 @@
 | `src/ecs/` | 通用 ECS 原语和系统调度 |
 | `src/game/` | 示例游戏运行时与玩法模块 |
 | `src/save/` | 存储抽象、版本化存档和命名明确的 Unity 适配 |
+| `staticdata/` | schema 驱动静态配表、校验工具和 client/server runtime target |
 | `src/ui/common/` | 通用 UIManager、节点生命周期和 Unity uGUI 操作，不依赖具体玩法 |
 | `src/ui/canvas/` | CanvasBase 与具体顶层 Canvas 表现 owner |
 | `src/ui/widgets/` | WidgetBase 与具体运行时 Widget 表现 owner |

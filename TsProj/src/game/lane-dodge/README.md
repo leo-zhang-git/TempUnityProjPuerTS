@@ -19,6 +19,7 @@
 | `state.ts` | 定义 ECS 组件、初始化全局状态并生成快照。 |
 | `systems.ts` | 实现命令、生成、移动、碰撞、计分、难度和延迟销毁。 |
 | `profile.ts` | 定义带稳定 `profileGuid` 的玩家档案、存档校验与存取。 |
+| `config.ts` | 从生成的 staticdata client target 读取 `lane-dodge-rules/default`。 |
 
 ## 固定帧顺序
 
@@ -49,3 +50,4 @@ CommandSystem
 
 - 玩家档案通过通用 `VersionedJsonSlot` 和 TS `PlayerPrefs` 适配器保存，当前持久化档案 GUID、最高分和累计金币。
 - 随机源可通过 `GameRuntimeOptions.random` 注入，以支持确定性验证。
+- 生成、难度、碰撞和计分参数由 `TsProj/staticdata/data/lane-dodge-rules/` 持有；修改后运行 `npm.cmd run build:targets:client` 发布 client target。

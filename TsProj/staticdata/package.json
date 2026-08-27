@@ -1,0 +1,41 @@
+{
+  "name": "unity-puerts-template-staticdata",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Schema-driven static data authoring and runtime targets for the Unity PuerTS template.",
+  "main": "dist/tools/src/index.js",
+  "scripts": {
+    "build": "npm run codegen && npm run build:tool && npm run build:web && npm run build:targets",
+    "build:tool": "tsc -p tsconfig.json",
+    "build:web": "tsc -p tsconfig.web.json && node tools/scripts/copy-web-assets.mjs",
+    "build:targets": "tsx tools/scripts/build-targets-pipeline.mjs && npm run publish:client",
+    "build:targets:client": "tsx tools/scripts/build-targets-pipeline.mjs --side client && npm run publish:client",
+    "build:targets:server": "tsx tools/scripts/build-targets-pipeline.mjs --side server",
+    "codegen": "tsx tools/scripts/codegen.mjs",
+    "codegen:check": "tsx tools/scripts/codegen.mjs --check",
+    "publish:client": "node tools/scripts/publish-client-target.mjs",
+    "format:data": "tsx tools/src/cli.ts format data",
+    "format:data:check": "tsx tools/src/cli.ts format data --check",
+    "typecheck": "npm run codegen && npm run build:tool -- --noEmit && tsc -p tsconfig.web.json --noEmit",
+    "validate": "tsx tools/src/cli.ts validate",
+    "build:sample": "tsx tools/src/cli.ts build --out-dir .artifacts/build --json",
+    "verify:sample": "tsx tools/src/cli.ts verify --target runtime_catalog --json",
+    "test": "npm run test:prepare && npm run test:run",
+    "test:prepare": "npm run codegen && npm run codegen:check && npm run build:web",
+    "test:run": "node tools/scripts/run-tests.mjs",
+    "preweb": "npm run build:web",
+    "web": "tsx tools/src/web-cli.ts",
+    "web:launch": "node tools/scripts/start-web.mjs",
+    "mcp": "tsx tools/src/mcp.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.2",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3"
+  }
+}

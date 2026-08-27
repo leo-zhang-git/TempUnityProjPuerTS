@@ -6,6 +6,10 @@ set "PYTHONUTF8=1"
 set "PYTHONIOENCODING=utf-8"
 cd /d "%~dp0"
 
+echo Checking framework configuration...
+python ..\init_frame_config.py
+if errorlevel 1 goto :fail
+
 echo.
 for /F "delims=" %%A in ('echo prompt $E^| cmd') do set "ESC=%%A"
 set "LOGO_BLUE=%ESC%[38;2;78;168;255m"

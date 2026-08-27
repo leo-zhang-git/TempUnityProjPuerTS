@@ -4,8 +4,12 @@
   "private": true,
   "description": "TypeScript runtime code for the Unity PuerTS template.",
   "scripts": {
+    "staticdata:prepare": "npm --prefix staticdata install --ignore-scripts --no-audit --no-fund && npm --prefix staticdata run build:targets:client",
+    "prebuild": "npm run staticdata:prepare",
     "build": "tsc -p tsconfig.json",
+    "prewatch": "npm run staticdata:prepare",
     "watch": "tsc-watch -p tsconfig.json",
+    "precheck": "npm run staticdata:prepare",
     "check": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"

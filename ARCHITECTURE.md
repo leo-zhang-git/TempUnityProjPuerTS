@@ -9,8 +9,10 @@
 
 ## 模块边界
 
-- `TsProj/` 持有 TypeScript 运行时、ECS、示例规则、状态、存档和明确命名的 Unity 表现适配。
+- `TsProj/` 持有 TypeScript 运行时、ECS、示例规则、状态、存档、静态配表 authoring/target 和明确命名的 Unity 表现适配。
 - `My project/` 持有 Unity 场景、GameObject、Prefab、序列化资源、物理、UI 和 C# 引擎桥接。
+- 根 `frame-config.json` 持有跨工具的框架默认配置；本地 `frame-config.local.json` 持有副本身份和端口槽位。工具 launcher 只能从该配置派生监听端口，不将工作区端口写入业务数据、Unity 序列化资产或 TypeScript runtime target。首选端口被占用时，launcher 按配置的备用端口数量顺序探测可用端口，只替换同一工作区的旧服务。
+- 根 `启动工具.bat` 与 `tools/framework_launcher.py` 只负责入口编排和配置编辑，不承载 Unity、Legma 或 Staticdata 的业务实现；各按钮复用对应工具的既有 BAT/脚本入口。
 - 根级文档只持有跨范围稳定事实和边界；具体系统行为进入 `TsProj/doc/`、局部 README、Unity 资产和局部入口。
 - `TsProj/dist/`、`node_modules/` 与 Unity 生成目录都是派生内容，不作为源码或文档权威。
 
@@ -19,6 +21,7 @@
 ```text
 TypeScript composition root
   -> game runtime / sample rules -> ECS -> core
+                               -> staticdata client target
   -> Unity presentation adapters -> UI runtime -> Unity/PuerTS
   -> save adapters -> save contracts
 
@@ -28,6 +31,7 @@ Unity RuntimeBootstrap -> TypeScript composition root
 - `TsProj/src/core/` 不依赖 ECS、具体游戏或 Unity。
 - `TsProj/src/ecs/` 可以依赖 core，不依赖具体游戏或 Unity。
 - 纯游戏规则可以依赖 core、ECS 和存储抽象，不直接访问 Unity API。
+- `TsProj/staticdata/` 是静态配表手写源和工具 owner；PuerTS runtime 只消费经过 codegen、validation 与端裁剪后发布到 `TsProj/src/staticdata/generated/` 的 client target。
 - Unity 表现适配可以依赖游戏命令和只读状态；纯游戏模块不得反向依赖表现适配。
 - `TsProj/src/ui/common/` 与 Canvas/Widget 基类持有通用 UI runtime，不依赖具体游戏、ECS 或组合根；`src/ui/canvas/` 和 `src/ui/widgets/` 中的具体表现 owner 可以依赖游戏命令与只读视图契约。
 - `TsProj/src/main.ts` 是组合根，业务模块不反向依赖它。

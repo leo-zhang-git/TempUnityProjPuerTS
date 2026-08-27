@@ -60,6 +60,10 @@ TsProj/yarn-debug.log*
 TsProj/yarn-error.log*
 TsProj/pnpm-debug.log*
 TsProj/*.tsbuildinfo
+TsProj/src/staticdata/generated/
+
+# Local framework tool configuration
+frame-config.local.json
 
 # Package manager caches
 .npm/

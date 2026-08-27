@@ -25,6 +25,8 @@ npm.cmd run cli -- check
 npm.cmd run cli -- <command>
 ```
 
+根目录 `frame-config.json` 持有 Legma 的稳定默认配置；`frame-config.local.json` 持有当前副本的 `workspaceId` 与 `portSlot`。首次启动前运行 `0.初始化框架配置.bat`，Legma 手动和 AI Web 端口分别按 `legmaManualBase + portSlot` 与 `legmaAiBase + portSlot` 派生；首选端口被占用时，launcher 会按 `fallbackPortCount` 扫描备用端口，只替换当前工作区的旧服务。
+
 `npm.cmd run dev` 启动或复用当前工作区的 AI server。`npm.cmd run check` 执行 lint、typecheck、TypeScript unit、架构规则与 Python unit。目标 Source 和改动位置明确时直接使用 CLI，不为常规交付启动 Web 编辑器。
 
 Web 首次读取统一使用 `bootstrap`。Source、Reference 与 Prototype 写入携带 baseline/precondition；当前文档保存只提交自身，跨文档语义 mutation 自动扩展到登记的影响闭包。`schema`、`catalog` 与 `projection` 是 CLI 能力，不构成同名 Web convenience API。

@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "hosts": {
+    "loopback": "127.0.0.1"
+  },
+  "unity": {
+    "editorPath": "F:\\Unity6000.6b\\Editor\\Unity.exe",
+    "projectPath": "My project"
+  },
+  "ports": {
+    "slotCount": 10,
+    "fallbackPortCount": 69,
+    "legmaManualBase": 14321,
+    "legmaAiBase": 4321,
+    "staticdataWebBase": 54173,
+    "legmaCoordinationBase": 8714
+  },
+  "tools": {
+    "legma": {
+      "coordinationEnabled": false
+    },
+    "staticdata": {
+      "enabled": true
+    }
+  }
+}

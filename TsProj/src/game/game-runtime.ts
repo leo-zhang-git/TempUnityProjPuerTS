@@ -29,6 +29,7 @@ import {
   RunProgressSystem,
   SpawnSystem
 } from "./lane-dodge/systems";
+import { loadLaneDodgeConfig } from "./lane-dodge/config";
 import { LaneDodgeProfileStore } from "./lane-dodge/profile";
 import { RuntimeUpdateSystem } from "./systems";
 
@@ -55,6 +56,7 @@ export class GameRuntime {
     const profileStore = new LaneDodgeProfileStore(
       options.saveStorage ?? new MemoryStringStorage()
     );
+    const laneDodgeConfig = loadLaneDodgeConfig();
     this.world = new World(guidGenerator);
     this.stateEntityGuid = this.world.createEntity();
     this.world.emplace(this.stateEntityGuid, SceneStateComponent);
@@ -63,17 +65,22 @@ export class GameRuntime {
     createLaneDodgeState(
       this.world,
       this.stateEntityGuid,
-      profileStore.loadOrCreate(guidGenerator)
+      profileStore.loadOrCreate(guidGenerator),
+      laneDodgeConfig
     );
 
     this.fixedUpdateSystems = new SystemGroup("fixedUpdate", [
-      new CommandSystem(this.stateEntityGuid),
-      new SpawnSystem(this.stateEntityGuid, options.random ?? Math.random),
-      new MovementSystem(this.stateEntityGuid),
+      new CommandSystem(this.stateEntityGuid, laneDodgeConfig),
+      new SpawnSystem(
+        this.stateEntityGuid,
+        options.random ?? Math.random,
+        laneDodgeConfig
+      ),
+      new MovementSystem(this.stateEntityGuid, laneDodgeConfig),
       new CollisionSystem(this.stateEntityGuid),
-      new RunProgressSystem(this.stateEntityGuid),
+      new RunProgressSystem(this.stateEntityGuid, laneDodgeConfig),
       new ProfileSaveSystem(this.stateEntityGuid, profileStore),
-      new DifficultySystem(this.stateEntityGuid),
+      new DifficultySystem(this.stateEntityGuid, laneDodgeConfig),
       new PendingDestroySystem()
     ]);
   }

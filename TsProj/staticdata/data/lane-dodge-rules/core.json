@@ -1,0 +1,21 @@
+{
+  "default": {
+    "laneCount": 3,
+    "initialLane": 1,
+    "playerDistance": 0,
+    "spawnDistance": 12,
+    "despawnDistance": -2,
+    "collisionRadius": 0.35,
+    "initialSpawnDelaySeconds": 0.75,
+    "baseSpeed": 5,
+    "maxSpeed": 10,
+    "speedIncreasePerSecond": 0.06,
+    "baseSpawnIntervalSeconds": 0.9,
+    "minSpawnIntervalSeconds": 0.38,
+    "spawnIntervalDecreasePerSecond": 0.006,
+    "maxCatchUpSpawnsPerTick": 32,
+    "coinChance": 0.2,
+    "coinScore": 50,
+    "survivalScorePerSecond": 10
+  }
+}

@@ -16,12 +16,14 @@ src/main.ts
                          -> game command/read-only view contracts
 
 game rules -> src/ecs -> src/core
+game rules -> src/staticdata/generated client target
 save adapters -> src/save contracts
 ```
 
 - `src/core/` 不依赖 ECS、game、save 或 Unity。
 - `src/ecs/` 可以依赖 core，不依赖具体玩法或 Unity。
 - 纯游戏模块可以依赖 core、ECS 和 save contract，不直接使用 Unity API。
+- 静态配表由 `staticdata/` authoring 和工具链持有；运行时只依赖发布到 `src/staticdata/generated/` 的纯内存 client target，不读取 Node 文件系统。
 - `src/ui/common/`、`CanvasBase` 与 `WidgetBase` 不依赖具体玩法、ECS、save 或组合根。
 - `src/ui/canvas/` 与 `src/ui/widgets/` 中的具体表现 owner 可以依赖游戏只读状态和命令入口，不得反向成为游戏规则或 ECS 状态 owner。
 - `src/main.ts` 负责装配，任何下层模块不得反向导入它。

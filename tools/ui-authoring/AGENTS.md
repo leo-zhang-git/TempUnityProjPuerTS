@@ -58,6 +58,7 @@
 ## 完成要求
 
 - Windows 人工入口 `启动UI编辑器.bat` 在构建和启动前调用仓库 `bootstrap_ui_authoring.py`；依赖与 lock 不一致时自动执行 clean `npm ci`，准备失败则停止启动。
+- Windows 人工入口同时确保根 `frame-config.json` 与本地 `frame-config.local.json` 已初始化；端口和工作区身份由该配置 owner 提供，不恢复 `program/server/etc/config.json` 作为模板前置。
 - unit、browser、visual、performance、benchmark、coordination server 和 Unity roundtrip fixture 已随通用工具能力迁移；fixture 使用当前模板路径、命名和 capability contract，不复制 longdemo 的业务 Source、产品资源或服务部署事实。
 - `npm.cmd run check` 是工具完整准入，覆盖 Biome、typecheck、unit、Python 与 coordination server 测试和 deadcode；Web、CLI、Unity 与性能类入口按 `docs/development/testing.md` 追加。
 - 当前程序 owner 是 `TsProj/src/ui/`。不得恢复 longdemo 的 `program/client`、`program/staticdata` 或其它产品目录作为生成、typecheck、Publish 或测试前提。

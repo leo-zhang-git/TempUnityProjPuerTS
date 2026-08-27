@@ -21,6 +21,12 @@ from pathlib import Path
 from typing import Any, Iterator
 from uuid import uuid4
 
+FRAME_CONFIG_TOOLS_ROOT = Path(__file__).resolve().parents[1]
+if str(FRAME_CONFIG_TOOLS_ROOT) not in sys.path:
+    sys.path.insert(0, str(FRAME_CONFIG_TOOLS_ROOT))
+
+from frame_config import FrameConfigError, load_frame_config
+
 
 AI_PORT_BASE = 4321
 MANUAL_PORT_BASE = 14321
@@ -55,6 +61,7 @@ class RunningServer:
     process: subprocess.Popen[Any]
     job: WindowsProcessJob | None
     port: int
+    host: str = "127.0.0.1"
 
 
 @dataclass(frozen=True)
@@ -158,23 +165,29 @@ def is_current_workspace_manual_process(command_line: str, tool_root: Path, port
     )
 
 
-def is_manual_listener(command_line: str, port: int, cluster_id: int) -> bool:
+def is_manual_listener(command_line: str, port: int, cluster_id: int, workspace_id: str | None = None) -> bool:
     if not is_ui_authoring_listener(command_line, port):
         return False
     if command_has_option(command_line, "launcher-role"):
-        return command_has_option(command_line, "launcher-role", "manual") and command_has_option(
+        if not command_has_option(command_line, "launcher-role", "manual") or not command_has_option(
             command_line, "cluster-id", cluster_id
-        )
+        ):
+            return False
+        return workspace_id is None or command_has_option(command_line, "workspace-id", workspace_id)
     return True
 
 
-def is_current_workspace_ai_process(command_line: str, tool_root: Path, port: int, cluster_id: int) -> bool:
+def is_current_workspace_ai_process(
+    command_line: str, tool_root: Path, port: int, cluster_id: int, workspace_id: str | None = None
+) -> bool:
     if not is_ui_authoring_listener(command_line, port, tool_root):
         return False
     if command_has_option(command_line, "launcher-role"):
-        return command_has_option(command_line, "launcher-role", "ai") and command_has_option(
+        if not command_has_option(command_line, "launcher-role", "ai") or not command_has_option(
             command_line, "cluster-id", cluster_id
-        )
+        ):
+            return False
+        return workspace_id is None or command_has_option(command_line, "workspace-id", workspace_id)
     return AI_PORT_BASE <= port < AI_FALLBACK_PORTS.stop
 
 
@@ -185,13 +198,17 @@ def is_ui_authoring_watcher(command_line: str) -> bool:
     )
 
 
-def is_manual_watcher(command_line: str, cluster_id: int, canonical_port: int) -> bool:
+def is_manual_watcher(
+    command_line: str, cluster_id: int, canonical_port: int, workspace_id: str | None = None
+) -> bool:
     if not is_ui_authoring_watcher(command_line):
         return False
     if command_has_option(command_line, "launcher-role"):
-        return command_has_option(command_line, "launcher-role", "manual") and command_has_option(
+        if not command_has_option(command_line, "launcher-role", "manual") or not command_has_option(
             command_line, "cluster-id", cluster_id
-        )
+        ):
+            return False
+        return workspace_id is None or command_has_option(command_line, "workspace-id", workspace_id)
     return command_port(command_line) == canonical_port
 
 
@@ -310,10 +327,10 @@ def watcher_root_pid(listener_pid: int, processes: list[ProcessSnapshot]) -> int
     return listener_pid
 
 
-def port_is_available(port: int) -> bool:
+def port_is_available(port: int, host: str = "127.0.0.1") -> bool:
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
         try:
-            sock.bind(("127.0.0.1", port))
+            sock.bind((host, port))
         except OSError:
             return False
     return True
@@ -328,48 +345,57 @@ def terminate_pid_tree(pid: int) -> None:
     )
 
 
-def wait_for_port_release(port: int) -> bool:
+def wait_for_port_release(port: int, host: str = "127.0.0.1") -> bool:
     deadline = time.monotonic() + PORT_RELEASE_TIMEOUT_SECONDS
     while time.monotonic() < deadline:
-        if port_is_available(port):
+        if port_is_available(port, host):
             return True
         time.sleep(0.2)
-    return port_is_available(port)
+    return port_is_available(port, host)
 
 
-def stop_existing_manual_servers(cluster_id: int, canonical_port: int) -> None:
+def stop_existing_manual_servers(
+    cluster_id: int,
+    canonical_port: int,
+    workspace_id: str | None = None,
+    host: str = "127.0.0.1",
+) -> None:
     processes = list_processes()
-    watchers = [process for process in processes if is_manual_watcher(process.command_line, cluster_id, canonical_port)]
+    watchers = [
+        process
+        for process in processes
+        if is_manual_watcher(process.command_line, cluster_id, canonical_port, workspace_id)
+    ]
     ports = {port for process in watchers if (port := command_port(process.command_line)) is not None}
     for process in watchers:
         print(f"Replacing existing manual Legma watcher (PID {process.pid}).", flush=True)
         terminate_pid_tree(process.pid)
     for port in ports:
-        if not wait_for_port_release(port):
+        if not wait_for_port_release(port, host):
             raise LauncherError(f"Port {port} was not released after stopping the previous manual server.")
 
     listener_pid = find_listening_pid(canonical_port)
     if listener_pid is None:
         return
     command_line = read_process_command_line(listener_pid)
-    if command_line is None or not is_manual_listener(command_line, canonical_port, cluster_id):
+    if command_line is None or not is_manual_listener(command_line, canonical_port, cluster_id, workspace_id):
         return
     root_pid = watcher_root_pid(listener_pid, processes)
     print(f"Replacing existing manual Legma server on port {canonical_port} (PID {root_pid}).", flush=True)
     terminate_pid_tree(root_pid)
-    if not wait_for_port_release(canonical_port):
+    if not wait_for_port_release(canonical_port, host):
         raise LauncherError(f"Port {canonical_port} was not released after stopping PID {root_pid}.")
 
 
-def server_is_ready(port: int) -> bool:
-    return read_server_health(port) is not None
+def server_is_ready(port: int, host: str = "127.0.0.1") -> bool:
+    return read_server_health(port, host=host) is not None
 
 
-def read_server_health(port: int, wait_ms: int = 0) -> dict[str, Any] | None:
+def read_server_health(port: int, wait_ms: int = 0, host: str = "127.0.0.1") -> dict[str, Any] | None:
     suffix = f"?waitMs={wait_ms}" if wait_ms > 0 else ""
     try:
         with urllib.request.urlopen(
-            f"http://127.0.0.1:{port}/api/health{suffix}",
+            f"http://{host}:{port}/api/health{suffix}",
             timeout=max(1.0, (wait_ms / 1000) + 2.0),
         ) as response:
             if response.status >= 500:
@@ -380,12 +406,12 @@ def read_server_health(port: int, wait_ms: int = 0) -> dict[str, Any] | None:
         return None
 
 
-def wait_until_health_ready(port: int) -> dict[str, Any] | None:
+def wait_until_health_ready(port: int, host: str = "127.0.0.1") -> dict[str, Any] | None:
     deadline = time.monotonic() + HEALTH_READY_TIMEOUT_SECONDS
     last_health: dict[str, Any] | None = None
     while True:
         remaining_ms = max(0, int((deadline - time.monotonic()) * 1000))
-        health = read_server_health(port, min(remaining_ms, 5000))
+        health = read_server_health(port, min(remaining_ms, 5000), host)
         if health is not None:
             last_health = health
             if health.get("phase") in {"ready", "error"}:
@@ -438,40 +464,56 @@ def print_health_summary(health: dict[str, Any] | None) -> None:
         print(styled_terminal_text(detail, severity, sys.stderr), file=sys.stderr, flush=True)
 
 
-def existing_server_is_ready(port: int) -> bool:
+def existing_server_is_ready(port: int, host: str = "127.0.0.1") -> bool:
     for _ in range(6):
-        health = read_server_health(port)
+        health = read_server_health(port, host=host)
         if isinstance(health, dict) and health.get("phase") == "ready":
             return True
         time.sleep(0.5)
     return False
 
 
-def find_reusable_ai_server(tool_root: Path, cluster_id: int) -> int | None:
+def find_reusable_ai_server(
+    tool_root: Path,
+    cluster_id: int,
+    workspace_id: str | None = None,
+    host: str = "127.0.0.1",
+    ai_base: int = AI_PORT_BASE,
+    slot_count: int = PORT_SLOT_COUNT,
+    fallback_ports: range = AI_FALLBACK_PORTS,
+) -> int | None:
     listeners = find_listening_pids()
-    candidate_ports = [*range(AI_PORT_BASE, AI_PORT_BASE + PORT_SLOT_COUNT), *AI_FALLBACK_PORTS]
+    candidate_ports = [*range(ai_base, ai_base + slot_count), *fallback_ports]
     processes = list_processes()
     for port in candidate_ports:
         pid = listeners.get(port)
         if pid is None:
             continue
         command_line = read_process_command_line(pid)
-        if command_line is None or not is_current_workspace_ai_process(command_line, tool_root, port, cluster_id):
+        if command_line is None or not is_current_workspace_ai_process(
+            command_line, tool_root, port, cluster_id, workspace_id
+        ):
             continue
-        if existing_server_is_ready(port):
+        if existing_server_is_ready(port, host):
             return port
         root_pid = watcher_root_pid(pid, processes)
         terminate_pid_tree(root_pid)
-        if not wait_for_port_release(port):
+        if not wait_for_port_release(port, host):
             raise LauncherError(f"Unhealthy AI server on port {port} could not be stopped.")
     return None
 
 
-def select_available_port(canonical_port: int, fallback_ports: range) -> int:
-    if port_is_available(canonical_port):
+def select_available_port(canonical_port: int, fallback_ports: range, host: str = "127.0.0.1") -> int:
+    canonical_available = (
+        port_is_available(canonical_port)
+        if host == "127.0.0.1"
+        else port_is_available(canonical_port, host)
+    )
+    if canonical_available:
         return canonical_port
     for port in fallback_ports:
-        if port_is_available(port):
+        fallback_available = port_is_available(port) if host == "127.0.0.1" else port_is_available(port, host)
+        if fallback_available:
             return port
     raise LauncherError(f"No available Legma port after {canonical_port}.")
 
@@ -480,10 +522,13 @@ def launcher_runtime_root() -> Path:
     return Path(tempfile.gettempdir()) / "legma-ui-authoring-locks"
 
 
-def claim_launcher_generation(role: str, cluster_id: int) -> LauncherGeneration:
+def claim_launcher_generation(
+    role: str, cluster_id: int, workspace_id: str | None = None
+) -> LauncherGeneration:
     runtime_root = launcher_runtime_root()
     runtime_root.mkdir(parents=True, exist_ok=True)
-    path = runtime_root / f"{role}-{cluster_id}.generation"
+    generation_key = workspace_id or str(cluster_id)
+    path = runtime_root / f"{role}-{generation_key}.generation"
     token = f"{os.getpid()}-{uuid4().hex}"
     generation = LauncherGeneration(path=path, token=token)
     write_launcher_generation(generation, "starting")
@@ -675,11 +720,19 @@ def assign_process_job(process: subprocess.Popen[Any]) -> WindowsProcessJob | No
         return None
 
 
-def start_server_process(tool_root: Path, port: int, role: str, cluster_id: int, development: bool) -> RunningServer:
+def start_server_process(
+    tool_root: Path,
+    port: int,
+    role: str,
+    cluster_id: int,
+    development: bool,
+    workspace_id: str | None = None,
+    host: str = "127.0.0.1",
+) -> RunningServer:
     npm = shutil.which("npm.cmd") or shutil.which("npm")
     if npm is None:
         raise LauncherError("npm was not found in PATH. Run the repository update entry first.")
-    url = f"http://127.0.0.1:{port}"
+    url = f"http://{host}:{port}"
     print(f"Starting {role} Legma at {url}", flush=True)
     script = "dev:server" if development else "start"
     try:
@@ -691,17 +744,20 @@ def start_server_process(tool_root: Path, port: int, role: str, cluster_id: int,
                 "--",
                 "--port",
                 str(port),
+                "--host",
+                host,
                 "--launcher-role",
                 role,
                 "--cluster-id",
                 str(cluster_id),
+                *( ["--workspace-id", workspace_id] if workspace_id else [] ),
                 *( ["--dev"] if development else [] ),
             ],
             cwd=tool_root,
         )
     except OSError as exc:
         raise LauncherError(f"Cannot start Legma: {exc}") from exc
-    return RunningServer(process=process, job=assign_process_job(process), port=port)
+    return RunningServer(process=process, job=assign_process_job(process), port=port, host=host)
 
 
 def wait_until_ready(running: RunningServer) -> None:
@@ -709,15 +765,15 @@ def wait_until_ready(running: RunningServer) -> None:
         exit_code = running.process.poll()
         if exit_code is not None:
             raise LauncherError(f"Legma exited with code {exit_code} before port {running.port} became ready.")
-        if server_is_ready(running.port):
-            health = wait_until_health_ready(running.port)
+        if server_is_ready(running.port, running.host):
+            health = wait_until_health_ready(running.port, running.host)
             print_health_summary(health)
             if health is not None and health.get("phase") == "error":
                 raise LauncherError(f"Fast workspace check failed: {health.get('error', 'unknown failure')}")
             return
         time.sleep(SERVER_READY_INTERVAL_SECONDS)
     terminate_pid_tree(running.process.pid)
-    raise LauncherError(f"Legma did not become ready at http://127.0.0.1:{running.port}.")
+    raise LauncherError(f"Legma did not become ready at http://{running.host}:{running.port}.")
 
 
 def wait_for_server(running: RunningServer, generation: LauncherGeneration | None = None) -> int:
@@ -751,23 +807,54 @@ def main() -> int:
 
     tool_root = Path(__file__).resolve().parent
     repo_root = tool_root.parents[1]
-    config_path = repo_root / "program" / "server" / "etc" / "config.json"
     generation: LauncherGeneration | None = None
     try:
-        cluster_id = read_cluster_id(config_path)
-        canonical_port = resolve_port(args.role, cluster_id)
-        fallback_ports = MANUAL_FALLBACK_PORTS if args.role == "manual" else AI_FALLBACK_PORTS
+        try:
+            frame_config = load_frame_config(repo_root)
+        except FrameConfigError as exc:
+            raise LauncherError(str(exc)) from exc
+        cluster_id = frame_config.port_slot
+        canonical_port = (
+            frame_config.legma_manual_port if args.role == "manual" else frame_config.legma_ai_port
+        )
+        fallback_ports = (
+            frame_config.legma_manual_fallback_ports
+            if args.role == "manual"
+            else frame_config.legma_ai_fallback_ports
+        )
+        host = frame_config.loopback_host
         with startup_lock(args.role):
             if args.role == "manual":
-                generation = claim_launcher_generation(args.role, cluster_id)
-                stop_existing_manual_servers(cluster_id, canonical_port)
+                generation = claim_launcher_generation(args.role, cluster_id, frame_config.workspace_id)
+                stop_existing_manual_servers(
+                    cluster_id,
+                    canonical_port,
+                    frame_config.workspace_id,
+                    host,
+                )
             else:
-                reusable_port = find_reusable_ai_server(tool_root, cluster_id)
+                reusable_port = find_reusable_ai_server(
+                    tool_root,
+                    cluster_id,
+                    frame_config.workspace_id,
+                    host,
+                    frame_config.legma_ai_base,
+                    frame_config.slot_count,
+                    frame_config.legma_ai_fallback_ports,
+                )
                 if reusable_port is not None:
-                    print(f"Reusing AI Legma at http://127.0.0.1:{reusable_port}", flush=True)
+                    print(f"Reusing AI Legma at http://{host}:{reusable_port}", flush=True)
                     return 0
-            port = select_available_port(canonical_port, fallback_ports)
-            running = start_server_process(tool_root, port, args.role, cluster_id, development=not args.production)
+            port = select_available_port(canonical_port, fallback_ports, host)
+            running = start_server_process(
+                tool_root,
+                port,
+                args.role,
+                cluster_id,
+                development=not args.production,
+                workspace_id=frame_config.workspace_id,
+                host=host,
+            )
             try:
                 wait_until_ready(running)
                 if generation is not None:
@@ -776,7 +863,7 @@ def main() -> int:
                 terminate_pid_tree(running.process.pid)
                 raise
 
-        url = f"http://127.0.0.1:{running.port}"
+        url = f"http://{running.host}:{running.port}"
         if args.role == "manual" and not args.no_open:
             webbrowser.open(url, new=2)
         return wait_for_server(running, generation)

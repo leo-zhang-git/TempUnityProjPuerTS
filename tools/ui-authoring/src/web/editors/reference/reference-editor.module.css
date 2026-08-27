@@ -1,0 +1,366 @@
+.reference-shell {
+  grid-template-columns: var(--tree-panel-width) minmax(0, 1fr) var(--inspector-panel-width);
+  grid-template-rows: var(--topbar-height) minmax(0, 1fr) 0 var(--statusbar-height);
+}
+
+.reference-topbar {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: var(--tree-panel-width) minmax(0, 1fr) auto;
+  align-items: center;
+  border-bottom: 1px solid var(--line-strong);
+  background: var(--surface-raised);
+}
+
+.reference-topbar .toolbar-group {
+  padding-left: 6px;
+}
+
+.reference-shell > .tree-panel {
+  grid-column: 1;
+  grid-row: 2;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.reference-workspace {
+  grid-column: 2;
+  grid-row: 2;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.reference-workspace {
+  position: relative;
+}
+
+.reference-mount-quick-add {
+  min-width: 0;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.reference-mount-quick-add [data-ui-select] {
+  width: min(150px, 18vw);
+  height: 22px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--surface-input);
+  color: var(--ink);
+  font-size: 9px;
+}
+
+.reference-mount-quick-add button {
+  height: 22px;
+  padding: 0 6px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--surface-raised);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 9px;
+}
+
+.reference-quick-edit {
+  position: absolute;
+  z-index: 45;
+  top: 36px;
+  right: 10px;
+  width: min(300px, calc(100% - 20px));
+  padding: 8px;
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  background: var(--surface-dialog);
+  box-shadow: 0 10px 28px var(--shadow-dialog);
+  display: grid;
+  gap: 6px;
+}
+
+.reference-quick-edit strong {
+  overflow: hidden;
+  color: var(--ink);
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reference-quick-edit textarea,
+.reference-quick-edit [data-ui-select] {
+  width: 100%;
+  min-width: 0;
+  min-height: 30px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--surface-input);
+  padding: 4px 5px;
+  color: var(--ink);
+  font: inherit;
+  font-size: 10px;
+}
+
+.reference-quick-edit textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+
+.reference-quick-edit > div {
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.reference-quick-edit button {
+  min-height: 24px;
+  padding: 0 8px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--surface-raised);
+  color: var(--ink);
+  cursor: pointer;
+  font-size: 9px;
+}
+
+.reference-quick-edit button:last-child {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--ink-inverse);
+}
+
+.reference-inspector {
+  grid-column: 3;
+  grid-row: 2;
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  border-left: 1px solid var(--line-strong);
+  background: var(--panel);
+}
+
+.reference-shell > .statusbar {
+  grid-column: 1 / -1;
+  grid-row: 4;
+}
+
+.reference-description-field {
+  display: grid;
+  gap: 2px;
+}
+
+.reference-description-field > span {
+  color: var(--ink-muted);
+  font-size: 9px;
+}
+
+.reference-description-field textarea {
+  width: 100%;
+  min-width: 0;
+  min-height: 52px;
+  resize: vertical;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  outline: 0;
+  background: var(--surface-input);
+  padding: 4px 5px;
+  color: var(--ink);
+  font: inherit;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.reference-description-field textarea:focus {
+  border-color: var(--line-focus);
+  box-shadow: 0 0 0 2px var(--focus-ring);
+}
+
+.reference-collection-list {
+  display: grid;
+  gap: 4px;
+}
+
+.reference-collection {
+  min-width: 0;
+  border-top: 1px solid var(--line);
+  padding-top: 4px;
+}
+
+.reference-collection > header {
+  min-width: 0;
+  height: 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 22px;
+  align-items: center;
+  gap: 4px;
+}
+
+.reference-collection > header span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--ink-muted);
+  font-size: 9px;
+  font-weight: 650;
+}
+
+.reference-collection > header button,
+.reference-collection-item-head button {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  background: var(--surface-hover);
+  display: grid;
+  place-items: center;
+  color: var(--ink-subtle);
+  cursor: pointer;
+}
+
+.reference-collection > header button:hover,
+.reference-collection-item-head button:hover {
+  background: var(--surface-active);
+  color: var(--accent-ink);
+}
+
+.reference-collection-item {
+  min-width: 0;
+  margin-top: 3px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--surface-dialog);
+}
+
+.reference-collection-item-head {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(72px, 0.8fr) minmax(90px, 1.2fr) 22px;
+  align-items: center;
+  gap: 3px;
+  margin-bottom: 3px;
+}
+
+.reference-collection-item-head input,
+.reference-collection-item-head [data-ui-select] {
+  width: 100%;
+  min-width: 0;
+  height: 24px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--surface-input);
+  padding: 0 5px;
+  color: var(--ink);
+  font-size: 9px;
+}
+
+.baseline-notice {
+  margin: 6px;
+  padding: 6px 7px;
+  border: 1px solid var(--warning);
+  border-radius: 4px;
+  background: var(--warning-soft);
+  color: var(--warning);
+  font-size: 9px;
+  line-height: 1.35;
+}
+
+.component-field input:focus,
+.component-field [data-ui-select]:focus-within,
+.component-field textarea:focus,
+.compact-field input:focus,
+.reference-field:focus-within {
+  border-color: var(--line-focus);
+  box-shadow: 0 0 0 2px var(--focus-ring);
+}
+
+.reference-field {
+  min-width: 0;
+  height: 22px;
+  padding-left: 4px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--surface-input);
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr);
+  align-items: center;
+  color: var(--ink-subtle);
+}
+
+.reference-field input {
+  height: 20px;
+  padding: 0 4px;
+  border: 0;
+  box-shadow: none;
+}
+
+.reference-field button {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  color: var(--ink-muted);
+  cursor: pointer;
+}
+
+.reference-field button:hover:not(:disabled) {
+  background: var(--surface-hover);
+}
+
+.reference-field button:disabled {
+  color: var(--ink-disabled);
+}
+
+@media (min-width: 1600px) {
+  .reference-shell {
+    grid-template-columns: var(--tree-panel-width) minmax(0, 1fr) var(--inspector-panel-width);
+    grid-template-rows: var(--topbar-height) minmax(0, 1fr) 0 var(--statusbar-height);
+  }
+  .reference-topbar {
+    grid-template-columns: var(--tree-panel-width) minmax(0, 1fr) auto;
+  }
+}
+
+@media (max-width: 760px) {
+  .reference-shell {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: 40px 160px minmax(200px, 1fr) 180px 22px;
+  }
+  .reference-topbar {
+    grid-template-columns: minmax(130px, 1fr) auto;
+  }
+  .reference-topbar .directory-topbar-meta {
+    display: none;
+  }
+  .reference-shell > .tree-panel {
+    grid-column: 1;
+    grid-row: 2;
+    border-right: 0;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .reference-workspace {
+    grid-column: 1;
+    grid-row: 3;
+  }
+  .reference-inspector {
+    grid-column: 1;
+    grid-row: 4;
+    border-left: 0;
+    border-top: 1px solid var(--line-strong);
+  }
+  .reference-shell > .statusbar {
+    grid-row: 5;
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "entry": ["scripts/**/*.ts", "tests/unit/*.test.ts", "tests/browser/*.test.ts", "tests/performance/*.ts"],
+  "project": ["src/**/*.{ts,tsx}", "scripts/**/*.ts", "tests/**/*.ts"],
+  "ignoreBinaries": ["taskkill.exe"]
+}

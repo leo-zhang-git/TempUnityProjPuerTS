@@ -8,11 +8,12 @@ interface LaneDodgeHudParent {
   dispatchHudCommand(type: GameCommand["type"]): void;
 }
 
-export interface LaneDodgeHudWidget extends LaneDodgeHudWidgetUI {}
-
 export class LaneDodgeHudWidget extends WidgetBase {
-  private selectedLane: LaneDodgeSnapshot["playerLane"] | undefined;
   private parentPort: LaneDodgeHudParent | undefined;
+
+  private get ui(): LaneDodgeHudWidgetUI {
+    return this.getBinderUI<LaneDodgeHudWidgetUI>();
+  }
 
   private readonly handlePauseClick = (): void => {
     this.dispatch("pause-run");
@@ -31,22 +32,11 @@ export class LaneDodgeHudWidget extends WidgetBase {
   }
 
   render(snapshot: LaneDodgeSnapshot): void {
-    this.scoreText.text = `SCORE  ${snapshot.score.toString().padStart(4, "0")}`;
-    this.coinText.text = `COINS  ${snapshot.runCoins}`;
-    this.laneText.text = snapshot.playerLane === null
+    this.ui.txt_score.text = `SCORE  ${snapshot.score.toString().padStart(4, "0")}`;
+    this.ui.txt_coins.text = `COINS  ${snapshot.runCoins}`;
+    this.ui.txt_lane.text = snapshot.playerLane === null
       ? "LANE  --"
       : `LANE  ${LANE_LABELS[snapshot.playerLane]}`;
-
-    if (this.selectedLane !== snapshot.playerLane) {
-      this.selectedLane = snapshot.playerLane;
-      if (snapshot.playerLane === 0) {
-        this.laneToggle.Select(0, false);
-      } else if (snapshot.playerLane === 2) {
-        this.laneToggle.Select(1, false);
-      } else {
-        this.laneToggle.DeselectAll();
-      }
-    }
   }
 
   protected override onLoaded(): void {
@@ -56,17 +46,16 @@ export class LaneDodgeHudWidget extends WidgetBase {
     }
     this.parentPort = parent as LaneDodgeHudParent;
 
-    this.pauseButton.onClick.AddListener(this.handlePauseClick);
-    this.moveLeftButton.onClick.AddListener(this.handleMoveLeftClick);
-    this.moveRightButton.onClick.AddListener(this.handleMoveRightClick);
+    this.ui.btn_pause.onClick.AddListener(this.handlePauseClick);
+    this.ui.btn_move_left.onClick.AddListener(this.handleMoveLeftClick);
+    this.ui.btn_move_right.onClick.AddListener(this.handleMoveRightClick);
   }
 
   protected override onDestroying(): void {
-    this.pauseButton.onClick.RemoveListener(this.handlePauseClick);
-    this.moveLeftButton.onClick.RemoveListener(this.handleMoveLeftClick);
-    this.moveRightButton.onClick.RemoveListener(this.handleMoveRightClick);
+    this.ui.btn_pause.onClick.RemoveListener(this.handlePauseClick);
+    this.ui.btn_move_left.onClick.RemoveListener(this.handleMoveLeftClick);
+    this.ui.btn_move_right.onClick.RemoveListener(this.handleMoveRightClick);
     this.parentPort = undefined;
-    this.selectedLane = undefined;
   }
 
   private dispatch(type: GameCommand["type"]): void {

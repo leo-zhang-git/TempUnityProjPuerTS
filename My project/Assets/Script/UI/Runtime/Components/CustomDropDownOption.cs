@@ -9,4 +9,3 @@ namespace UnityEngine.UI
         public GameObject SelectedVisual;
     }
 }
-

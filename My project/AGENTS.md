@@ -5,6 +5,7 @@
 - 先读根级 `../AGENTS.md`，确认模板定位、范围边界和完成标准。
 - 涉及 Unity/PuerTS 分工、跨层依赖或长期约束时读取 `../ARCHITECTURE.md`。
 - 涉及 TypeScript 导出、运行时阶段或表现适配时同时读取 `../TsProj/doc/runtime-architecture.md`。
+- 涉及 UI Prefab、Binder 或节点命名时同时读取 `../TsProj/doc/ui-node-naming.md`。
 
 ## 工程边界
 
@@ -18,6 +19,7 @@
 
 - 不修改 `Library/`、`Temp/`、`Logs/`、`UserSettings/` 等 Unity 生成目录。
 - 修改 `.unity`、`.prefab`、`.asset`、`.meta` 或 `ProjectSettings/` 文件时，确认序列化变更有意且对应 `.meta` 完整。
+- UI Prefab 节点和 Binder 字段遵循 `../TsProj/doc/ui-node-naming.md`；未知组件前缀先确认并更新该 owner，不在 Inspector、生成器或 Prefab 中临时猜测。
 - Unity 对象的创建与销毁、事件注册与注销、场景加载与卸载必须由明确 owner 成对处理。
 - C# 桥接保持粗粒度和稳定，不为单一按钮或示例动作增加专用跨栈函数。
 - 表现层可以缓存视觉状态和进行插值，但不能成为游戏状态或存档结论的第二权威来源。

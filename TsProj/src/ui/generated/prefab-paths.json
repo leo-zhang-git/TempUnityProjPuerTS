@@ -1,0 +1,9 @@
+{
+  "canvas": {
+    "LaneDodgeCanvas": "Assets/Resources/UI/Prefab/LaneDodgeCanvas.prefab"
+  },
+  "widget": {
+    "LaneDodgeHudWidget": "Assets/Resources/UI/Prefab/LaneDodgeHudWidget.prefab",
+    "LaneDodgeResultItemWidget": "Assets/Resources/UI/Prefab/LaneDodgeResultItemWidget.prefab"
+  }
+}

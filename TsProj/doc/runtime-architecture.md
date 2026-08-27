@@ -51,6 +51,16 @@ save adapters -> src/save contracts
 - 表现层可以插值和缓存视觉状态，但不能重新计算伤害、碰撞资格、解锁状态或存档结论。
 - `UIManager` 是 UI root、EventSystem、Canvas registry、帧转发和整体释放的唯一全局 owner；具体节点生命周期、Canvas 层级与布局规范由 [src/ui/README.md](../src/ui/README.md) 持有。
 
+## UI Prefab 与 Binder
+
+- Legma UI Authoring 位于 `tools/ui-authoring/`，Source、DeliveryState、正式 Prefab 和 generated binding 的路径契约由根级 `ARCHITECTURE.md` 与 `tools/ui-authoring/README.md` 持有；TypeScript runtime 只消费 Publish 产生的正式 Prefab 和 generated contract。
+- `CanvasBase` 通过 generated `prefab-paths.json` 和 C# `LocalUiPrefabLoader` 实例化 `Assets/Resources/UI/Prefab` 下的本地 Prefab；加载接口不承担热更、远程发布或 AssetBundle/Addressables 策略。
+- `UINodeBase` 的初始化顺序固定为设置 root、解析 effective Binder declaration、创建嵌套 Widget、执行 `onLoaded()`、进入 loaded 状态；任一步失败都销毁已创建子节点、callback 和所属 root。
+- `WidgetFactory` 以 Binder 的 effective `widgetType` 选择具体 TypeScript Widget，并把实例挂入父节点的显隐、Update 和销毁链；未知类型必须显式登记，不使用反射猜测模块。
+- Unity Editor generator 从校验通过的 Prefab 生成只读 TypeScript binding 和 Prefab path index；generated 文件不手工修改，业务 Canvas/Widget 通过 `getBinderUI<T>()` 取得类型化视图。
+- `StateRootBinding<TState>` 把 Prefab 中的字符串状态集合投影为 TypeScript 联合类型，状态配置仍由 Unity `StateRoot` 持有；`ScrollRectEx` template key 使用独立 Widget identity。
+- Binder 节点与字段命名统一由 `doc/ui-node-naming.md` 持有；Legma、Unity Prefab 和 generated binding 不建立第二套命名规则。无法确认组件前缀或无法安全写入 capability 的字段在 Authoring/Projection 阶段阻断。
+
 ## 模板扩展
 
 - 新项目先用垂直切片验证状态 owner、生命周期和 Unity 表现边界，再固化正式目录结构。

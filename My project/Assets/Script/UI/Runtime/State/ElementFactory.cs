@@ -16,7 +16,7 @@ namespace UIState
 
         #region UGUI
 
-        UAlpha, 
+        UAlpha,
 		UGray,
 		UWidth,
         UHeight,

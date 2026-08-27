@@ -181,6 +181,10 @@ export abstract class UINodeBase {
     return this.parent;
   }
 
+  protected getBinderUI<TBindings extends object>(): TBindings {
+    return this as unknown as TBindings;
+  }
+
   protected onLoaded(): void {}
 
   protected onShow(): void {}

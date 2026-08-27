@@ -190,6 +190,15 @@ namespace PuerTsTemplate.UI
                     }
 
                     declaration.Contract = contract;
+                    if (!UIBindingNamingRules.TryValidateDeclaration(
+                            declaration.Name,
+                            declaration.Value,
+                            contract,
+                            out var namingError))
+                    {
+                        AddDeclarationError(result, declaration, namingError);
+                        continue;
+                    }
                     if (effectiveByName.TryGetValue(declaration.Name, out var effective))
                     {
                         declaration.IsOverride = true;
@@ -352,5 +361,182 @@ namespace PuerTsTemplate.UI
             result.Errors.Add($"binderIndex={declaration.BinderIndex} nodeIndex={declaration.NodeIndex}: {error}.");
         }
     }
-}
 
+    public static class UIBindingNamingRules
+    {
+        public static bool TryValidateDeclaration(
+            string bindingName,
+            UnityEngine.Object value,
+            UIBindingContract contract,
+            out string error)
+        {
+            if (string.Equals(contract.Key, "UIBinder", StringComparison.Ordinal))
+            {
+                return TryValidateWidgetDeclaration(bindingName, value, out error);
+            }
+            if (!TryGetRequiredPrefix(contract, out var prefix))
+            {
+                error = $"binding type has no confirmed naming prefix type={contract.Key} name={bindingName}";
+                return false;
+            }
+            if (!IsLowerSnakeCase(bindingName))
+            {
+                error = $"binding name must use lower snake_case name={bindingName}";
+                return false;
+            }
+            if (!bindingName.StartsWith(prefix, StringComparison.Ordinal)
+                || bindingName.Length == prefix.Length)
+            {
+                error = $"binding name must use prefix={prefix} name={bindingName}";
+                return false;
+            }
+
+            var target = ResolveTargetGameObject(value);
+            if (target == null)
+            {
+                error = $"binding target has no GameObject name={bindingName}";
+                return false;
+            }
+            if (!IsLowerSnakeCase(target.name))
+            {
+                error = $"bound GameObject must use lower snake_case node={target.name} binding={bindingName}";
+                return false;
+            }
+            if (!string.Equals(bindingName, target.name, StringComparison.Ordinal)
+                && !string.Equals(bindingName, prefix + target.name, StringComparison.Ordinal))
+            {
+                error = $"binding name must equal node name or prefix the complete node name node={target.name} binding={bindingName}";
+                return false;
+            }
+
+            error = string.Empty;
+            return true;
+        }
+
+        public static bool TryGetRequiredPrefix(UIBindingContract contract, out string prefix)
+        {
+            switch (contract.Key)
+            {
+                case "TextMeshProUGUI":
+                case "TMP_Text":
+                    prefix = "txt_";
+                    return true;
+                case "Image":
+                case "RawImage":
+                    prefix = "img_";
+                    return true;
+                case "GameObject":
+                    prefix = "go_";
+                    return true;
+                case "RectTransform":
+                    prefix = "rect_";
+                    return true;
+                case "StateRoot":
+                    prefix = "sr_";
+                    return true;
+                case "ScrollRect":
+                case "ScrollRectEx":
+                    prefix = "sv_";
+                    return true;
+                case "Button":
+                    prefix = "btn_";
+                    return true;
+                default:
+                    prefix = string.Empty;
+                    return false;
+            }
+        }
+
+        public static bool HasConfirmedNamingRule(UIBindingContract contract)
+        {
+            return string.Equals(contract.Key, "UIBinder", StringComparison.Ordinal)
+                   || TryGetRequiredPrefix(contract, out _);
+        }
+
+        public static bool IsLowerSnakeCase(string value)
+        {
+            if (string.IsNullOrEmpty(value) || !IsLowerAscii(value[0]))
+            {
+                return false;
+            }
+
+            var previousWasUnderscore = false;
+            for (var index = 1; index < value.Length; index += 1)
+            {
+                var character = value[index];
+                if (character == '_')
+                {
+                    if (previousWasUnderscore || index + 1 == value.Length)
+                    {
+                        return false;
+                    }
+                    previousWasUnderscore = true;
+                    continue;
+                }
+                if (!IsLowerAscii(character) && !char.IsDigit(character))
+                {
+                    return false;
+                }
+                previousWasUnderscore = false;
+            }
+            return true;
+        }
+
+        public static bool IsPascalCaseNodeName(string value)
+        {
+            if (string.IsNullOrEmpty(value) || value[0] < 'A' || value[0] > 'Z')
+            {
+                return false;
+            }
+            for (var index = 1; index < value.Length; index += 1)
+            {
+                var character = value[index];
+                if (!char.IsLetterOrDigit(character) || character > 127)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private static GameObject ResolveTargetGameObject(UnityEngine.Object value)
+        {
+            if (value is GameObject gameObject)
+            {
+                return gameObject;
+            }
+            return value is Component component ? component.gameObject : null;
+        }
+
+        private static bool TryValidateWidgetDeclaration(
+            string bindingName,
+            UnityEngine.Object value,
+            out string error)
+        {
+            var target = ResolveTargetGameObject(value);
+            if (target == null)
+            {
+                error = $"widget binding target has no GameObject name={bindingName}";
+                return false;
+            }
+            if (!string.Equals(bindingName, target.name, StringComparison.Ordinal))
+            {
+                error = $"widget binding name must equal node name node={target.name} binding={bindingName}";
+                return false;
+            }
+            if (!IsPascalCaseNodeName(bindingName) && !IsLowerSnakeCase(bindingName))
+            {
+                error = $"widget binding must use PascalCase or lower snake_case name={bindingName}";
+                return false;
+            }
+
+            error = string.Empty;
+            return true;
+        }
+
+        private static bool IsLowerAscii(char character)
+        {
+            return character >= 'a' && character <= 'z';
+        }
+    }
+}

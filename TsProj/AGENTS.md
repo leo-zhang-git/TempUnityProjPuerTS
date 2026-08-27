@@ -7,6 +7,7 @@
 - 修改运行时、模块分层、Unity/PuerTS 契约或生命周期时，读 `doc/runtime-architecture.md`。
 - 修改 TypeScript 实现时，读 `doc/coding-conventions.md`。
 - 修改行为、构建或验证方式时，读 `doc/testing.md`。
+- 修改 UI Prefab、Binder、generated binding 或未来 Legma authoring 时，读 `doc/ui-node-naming.md`。
 - 涉及具体模块时，继续读取该目录最近的 `README.md`；README 只说明局部代码，不覆盖 `doc/` owner。
 
 ## 文档路由
@@ -14,6 +15,7 @@
 - `doc/runtime-architecture.md`：当前 TypeScript 运行时、依赖方向、生命周期、Unity 边界和模板扩展规则。
 - `doc/coding-conventions.md`：需要人工判断的 TypeScript、ECS、集合、错误处理和资源释放约定。
 - `doc/testing.md`：类型检查、lint、构建、纯逻辑验证和 Unity Play Mode 验收规则。
+- `doc/ui-node-naming.md`：UI 节点、Binder 字段、Prefab 与 Legma 共用的命名和前缀约束。
 - `doc/AGENTS.md`：`TsProj/doc/` 的文档职责和支持资料生命周期。
 
 ## 目录边界

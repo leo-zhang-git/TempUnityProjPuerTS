@@ -1,0 +1,381 @@
+.diagnostics-trigger {
+  position: fixed;
+  z-index: 120;
+  right: 18px;
+  bottom: 64px;
+  height: 31px;
+  min-width: 72px;
+  padding: 0 9px;
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  background: var(--surface-raised);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: var(--ink-muted);
+  cursor: pointer;
+  box-shadow: 0 3px 10px var(--shadow-soft);
+}
+.diagnostics-trigger.is-danger {
+  border-color: var(--danger);
+  background: var(--danger-strong);
+  color: var(--ink-inverse);
+  box-shadow: 0 5px 16px var(--shadow-medium);
+}
+.diagnostics-trigger.is-warning {
+  border-color: var(--warning);
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+.diagnostics-trigger span {
+  font-size: 10px;
+  font-weight: 700;
+}
+.diagnostics-page {
+  position: fixed;
+  z-index: 160;
+  inset: 0;
+  min-width: 0;
+  min-height: 0;
+  background: var(--panel);
+  display: grid;
+  grid-template-rows: 49px minmax(0, 1fr);
+  color: var(--ink);
+}
+.diagnostics-header {
+  min-width: 0;
+  padding: 0 9px 0 14px;
+  border-bottom: 1px solid var(--line-strong);
+  background: var(--surface-raised);
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) auto minmax(180px, 1fr);
+  align-items: center;
+  gap: 12px;
+}
+.diagnostics-header > div:first-child {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--ink-subtle);
+}
+.diagnostics-summary.is-danger {
+  color: var(--danger);
+}
+.diagnostics-summary.is-warning {
+  color: var(--warning);
+}
+.diagnostics-header > div:first-child strong {
+  color: var(--ink);
+  font-size: 13px;
+}
+.diagnostics-header > div:first-child span,
+.diagnostics-tabs small {
+  min-width: 19px;
+  padding: 2px 5px;
+  border-radius: 3px;
+  background: var(--surface-active);
+  color: var(--ink-subtle);
+  font-size: 9px;
+  text-align: center;
+}
+.diagnostics-count.is-danger,
+.diagnostics-tabs small.is-danger {
+  background: var(--danger-strong);
+  color: var(--ink-inverse);
+}
+.diagnostics-count.is-warning,
+.diagnostics-tabs small.is-warning {
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+.diagnostics-tabs {
+  height: 31px;
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--surface-input);
+  display: flex;
+}
+.diagnostics-tabs button {
+  min-width: 142px;
+  padding: 0 9px;
+  border: 0;
+  border-radius: 3px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--ink-muted);
+  font-size: 10px;
+  cursor: pointer;
+}
+.diagnostics-tabs button.is-active {
+  background: var(--surface-active);
+  color: var(--ink);
+}
+.diagnostics-actions {
+  justify-self: end;
+  display: flex;
+  gap: 4px;
+}
+.diagnostics-actions button,
+.diagnostics-actions a {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  color: var(--ink-muted);
+  cursor: pointer;
+  text-decoration: none;
+}
+.diagnostics-actions button:hover,
+.diagnostics-actions a:hover {
+  background: var(--surface-hover);
+  color: var(--ink);
+}
+.diagnostics-actions button:disabled {
+  background: transparent;
+  color: var(--ink-disabled);
+  cursor: default;
+}
+.diagnostics-layout {
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(260px, 32%) minmax(0, 1fr);
+}
+.diagnostics-list {
+  min-width: 0;
+  min-height: 0;
+  padding: 8px;
+  border-right: 1px solid var(--line);
+  overflow: auto;
+  background: var(--panel-muted);
+  display: grid;
+  align-content: start;
+  gap: 3px;
+}
+.diagnostics-list button {
+  min-width: 0;
+  min-height: 45px;
+  padding: 6px 8px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 7px;
+  color: var(--ink-muted);
+  text-align: left;
+  cursor: pointer;
+}
+.diagnostics-list button:hover {
+  background: var(--surface-hover);
+}
+.diagnostics-list button.is-active {
+  border-color: var(--danger);
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+.diagnostics-list button > span {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+.diagnostics-list strong,
+.diagnostics-list small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.diagnostics-list strong {
+  color: var(--ink);
+  font-size: 11px;
+}
+.diagnostics-list small {
+  font-size: 8px;
+}
+.diagnostics-list b {
+  min-width: 21px;
+  padding: 2px 5px;
+  border-radius: 3px;
+  background: var(--surface-active);
+  font-size: 9px;
+  text-align: center;
+}
+.diagnostics-detail {
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  background: var(--panel);
+}
+.diagnostics-detail > header {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  min-width: 0;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-raised);
+  display: grid;
+  gap: 5px;
+}
+.diagnostics-detail > header > div {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+.diagnostics-detail > header strong {
+  font-size: 14px;
+}
+.diagnostics-detail > header span {
+  color: var(--danger);
+  font-size: 9px;
+  text-transform: uppercase;
+}
+.diagnostics-detail > header code {
+  overflow: hidden;
+  color: var(--ink-muted);
+  font-size: 9px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.diagnostics-detail > div {
+  padding: 12px 16px 24px;
+  display: grid;
+  gap: 8px;
+}
+.diagnostics-detail article {
+  padding: 11px 13px;
+  border-left: 3px solid var(--danger);
+  background: var(--surface-input);
+  display: grid;
+  gap: 7px;
+}
+.diagnostics-detail article > div {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.diagnostics-detail article code {
+  color: var(--danger);
+  font-size: 9px;
+}
+.diagnostics-detail article span {
+  color: var(--ink-subtle);
+  font-size: 8px;
+  text-transform: uppercase;
+}
+.diagnostics-detail article p {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+.diagnostics-detail article small {
+  color: var(--ink-muted);
+  font-size: 9px;
+}
+.diagnostics-detail article aside {
+  padding-top: 6px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-muted);
+  font-size: 9px;
+}
+.runtime-list {
+  min-width: 0;
+  min-height: 0;
+  padding: 12px max(12px, calc((100vw - 980px) / 2));
+  overflow: auto;
+  background: var(--panel-muted);
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+.runtime-list article {
+  min-width: 0;
+  padding: 11px 13px;
+  border-left: 3px solid var(--danger);
+  background: var(--surface-input);
+  display: grid;
+  gap: 7px;
+}
+.runtime-list article header {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--ink-subtle);
+  font-size: 9px;
+}
+.runtime-list article strong {
+  color: var(--danger);
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+.runtime-list pre {
+  max-height: 300px;
+  margin: 0;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: var(--ink-muted);
+  font-size: 9px;
+  line-height: 1.5;
+}
+.render-failure {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  background: var(--panel-muted);
+  color: var(--danger);
+}
+.render-failure h1 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 16px;
+}
+.render-failure pre {
+  max-width: min(720px, 90vw);
+  margin: 0;
+  white-space: pre-wrap;
+  color: var(--ink-muted);
+  font-size: 11px;
+}
+@media (max-width: 760px) {
+  .diagnostics-header {
+    grid-template-columns: minmax(80px, 1fr) auto;
+  }
+  .diagnostics-header > div:first-child span {
+    display: none;
+  }
+  .diagnostics-tabs {
+    grid-row: 2;
+    grid-column: 1 / -1;
+    margin-bottom: 5px;
+  }
+  .diagnostics-header {
+    height: 86px;
+    grid-template-rows: 44px 37px;
+  }
+  .diagnostics-page {
+    grid-template-rows: 86px minmax(0, 1fr);
+  }
+  .diagnostics-layout {
+    grid-template-columns: minmax(170px, 42%) minmax(0, 1fr);
+  }
+  .diagnostics-tabs button {
+    min-width: 0;
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "sourceKind": "artifact",
+  "artifactKey": "ButtonExFirstBatchWidget",
+  "artifactType": "Widget",
+  "initialSize": [
+    320,
+    80
+  ],
+  "bindings": [
+    {
+      "name": "ButtonExFirstBatchWidget",
+      "target": {
+        "nodeId": "ButtonExFirstBatchWidget",
+        "componentType": "ButtonEx"
+      }
+    }
+  ],
+  "root": {
+    "id": "ButtonExFirstBatchWidget",
+    "rect": {
+      "anchorMin": [
+        0.5,
+        0.5
+      ],
+      "anchorMax": [
+        0.5,
+        0.5
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "anchoredPosition": [
+        0,
+        0
+      ],
+      "sizeDelta": [
+        320,
+        80
+      ]
+    },
+    "components": {
+      "ButtonEx": {
+        "targetGraphic": "ButtonExFirstBatchWidget"
+      },
+      "Image": {}
+    }
+  }
+}

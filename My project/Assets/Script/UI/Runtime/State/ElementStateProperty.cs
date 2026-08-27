@@ -25,4 +25,3 @@ namespace UIState
         public UnityEngine.Object objectValue = default;
     }
 }
-

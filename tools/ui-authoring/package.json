@@ -1,0 +1,59 @@
+{
+  "name": "legma-ui-authoring",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Local source editor and Unity projection kernel for project UI artifacts",
+  "scripts": {
+    "dev": "python start_ui_authoring.py --role ai --no-open",
+    "dev:server": "tsx watch --clear-screen=false src/server/main.ts --dev",
+    "start": "tsx src/server/main.ts",
+    "build:web": "vite build",
+    "capture:guide": "tsx scripts/capture-guide-assets.ts",
+    "visual:capture": "npm run build:web && tsx tests/visual/visual-cli.ts capture",
+    "visual:compare": "tsx tests/visual/visual-cli.ts compare",
+    "biome:check": "biome lint --diagnostic-level=warn --max-diagnostics=none",
+    "biome:maintain": "biome check --write --formatter-enabled=true --linter-enabled=true --assist-enabled=true --diagnostic-level=info --max-diagnostics=none",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "cli": "tsx src/cli/main.ts",
+    "test:architecture": "tsx --import ./tests/css-module-loader.mjs --test tests/unit/architecture.test.ts",
+    "test:unit": "node scripts/run-unit-tests.mjs",
+    "test:python": "python -m unittest discover -s tests -p \"test_*.py\" && python -m unittest discover -s collaboration-server -p \"test_*.py\"",
+    "test:benchmark": "python -m unittest discover -s tests -p \"workflow_benchmark_runner_test.py\"",
+    "test:browser": "npm run build:web && tsx tests/browser/run-all.ts",
+    "test:performance": "npm run build:web && tsx tests/performance/web-performance.ts",
+    "test:performance:dev": "npm run build:web && tsx tests/performance/web-performance.ts --dev",
+    "test:performance:budget": "npm run build:web && tsx tests/performance/web-performance.ts --assert",
+    "test:unity": "tsx tests/unity/all.ts",
+    "deadcode:report": "knip --no-exit-code",
+    "deadcode:check": "knip",
+    "check": "npm run biome:check && npm run typecheck && npm run test:unit && npm run test:python && npm run deadcode:check",
+    "test": "npm run typecheck && npm run test:unit && npm run test:browser"
+  },
+  "dependencies": {
+    "@sinclair/typebox": "^0.34.41",
+    "ajv": "^8.17.1",
+    "lucide-react": "^1.24.0",
+    "pinyin-match": "^1.2.10",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.5",
+    "@types/node": "^24.10.0",
+    "@types/pngjs": "^6.0.5",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@vitejs/plugin-react": "^5.1.1",
+    "knip": "^6.29.0",
+    "pixelmatch": "^7.1.0",
+    "playwright": "^1.61.1",
+    "pngjs": "^7.0.0",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3",
+    "vite": "^7.2.2"
+  },
+  "volta": {
+    "node": "24.16.0"
+  }
+}

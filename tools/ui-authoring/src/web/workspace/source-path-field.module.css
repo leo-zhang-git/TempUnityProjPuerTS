@@ -1,0 +1,102 @@
+.source-path-label {
+  min-width: 0;
+}
+.source-path-control {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 30px;
+}
+.source-path-control > input {
+  min-width: 0;
+}
+.source-path-control > button {
+  width: 30px;
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  border-left: 0;
+  border-radius: 0 3px 3px 0;
+  background: var(--surface-hover);
+  display: grid;
+  place-items: center;
+  color: var(--ink-muted);
+  cursor: pointer;
+}
+.source-path-control > input {
+  border-radius: 3px 0 0 3px;
+}
+.source-path-control > button:hover {
+  color: var(--ink);
+}
+.source-directory-backdrop {
+  z-index: 155;
+}
+.source-directory-picker {
+  width: min(620px, calc(100vw - 24px));
+  height: min(600px, calc(100vh - 24px));
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 44px 42px minmax(0, 1fr) 48px;
+}
+.source-directory-search {
+  margin: 7px 9px 5px;
+  padding: 0 9px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--surface-input);
+  display: grid;
+  grid-template-columns: 17px minmax(0, 1fr);
+  align-items: center;
+  gap: 6px;
+  color: var(--ink-muted);
+}
+.source-directory-search input {
+  min-width: 0;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+}
+.source-directory-list {
+  min-height: 0;
+  margin: 0 9px 8px;
+  border: 1px solid var(--line);
+  overflow: auto;
+  background: var(--panel);
+}
+.source-directory-list > button {
+  width: 100%;
+  min-height: 34px;
+  padding-right: 10px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  display: grid;
+  grid-template-columns: 17px minmax(100px, 1fr) minmax(120px, 1fr);
+  align-items: center;
+  gap: 7px;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+.source-directory-list > button:hover {
+  background: var(--surface-hover);
+}
+.source-directory-list > button.is-active {
+  background: var(--surface-active);
+  color: var(--accent);
+}
+.source-directory-list span,
+.source-directory-list small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.source-directory-list span {
+  font-size: 11px;
+}
+.source-directory-list small {
+  color: var(--ink-subtle);
+  font-size: 9px;
+}

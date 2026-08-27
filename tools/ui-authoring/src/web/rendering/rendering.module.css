@@ -1,0 +1,385 @@
+.canvas-root {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  overflow: hidden;
+  background-color: var(--preview-checker-a);
+  background-image:
+    linear-gradient(45deg, var(--preview-checker-b) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--preview-checker-b) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--preview-checker-b) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--preview-checker-b) 75%);
+  background-position:
+    0 0,
+    0 8px,
+    8px -8px,
+    -8px 0;
+  background-size: 16px 16px;
+}
+
+.canvas-node {
+  position: absolute;
+  transform-origin: center;
+}
+
+.shape-soft-mask-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.shape-soft-mask-layer > .canvas-node {
+  pointer-events: auto;
+}
+
+.canvas-node.is-interactive {
+  cursor: move;
+  user-select: none;
+}
+
+.canvas-node.is-selectable {
+  cursor: default;
+  user-select: none;
+}
+
+.canvas-node.is-asset-drop-target {
+  outline: 2px solid var(--selection);
+  outline-offset: 2px;
+  background-color: var(--selection-soft);
+}
+
+.canvas-node.is-asset-replace-target {
+  outline: 3px solid var(--warning);
+  outline-offset: 2px;
+}
+
+.canvas-node img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+.nested-artifact-viewport {
+  position: absolute;
+  inset: 0 auto auto 0;
+  pointer-events: none;
+}
+
+.canvas-root .nested-artifact-viewport {
+  pointer-events: auto;
+}
+
+.artifact-preview {
+  position: relative;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.artifact-preview.is-canvas {
+  overflow: hidden;
+}
+
+.artifact-preview.is-widget-overflow-visible {
+  overflow: visible;
+  box-shadow: inset 0 0 0 1px var(--accent-border);
+}
+
+.artifact-preview.is-selection-enabled,
+.artifact-preview.is-selection-enabled .artifact-preview-node {
+  pointer-events: auto;
+}
+
+.canvas-node.is-context-selected,
+.artifact-preview-node.is-context-selected,
+.prototype-node.is-context-selected {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.canvas-node.is-context-hovered,
+.artifact-preview-node.is-context-hovered,
+.prototype-node.is-context-hovered {
+  outline: 2px solid var(--info);
+  outline-offset: -2px;
+}
+
+.preview-source-authoring-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10000;
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  cursor: move;
+  pointer-events: auto;
+}
+
+.preview-source-resize-handle {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--accent-strong);
+  background: var(--surface);
+  box-sizing: border-box;
+}
+.preview-source-resize-handle.is-topLeft {
+  left: -4px;
+  top: -4px;
+  cursor: nwse-resize;
+}
+.preview-source-resize-handle.is-top {
+  left: calc(50% - 3px);
+  top: -4px;
+  cursor: ns-resize;
+}
+.preview-source-resize-handle.is-topRight {
+  right: -4px;
+  top: -4px;
+  cursor: nesw-resize;
+}
+.preview-source-resize-handle.is-right {
+  right: -4px;
+  top: calc(50% - 3px);
+  cursor: ew-resize;
+}
+.preview-source-resize-handle.is-bottomRight {
+  right: -4px;
+  bottom: -4px;
+  cursor: nwse-resize;
+}
+.preview-source-resize-handle.is-bottom {
+  left: calc(50% - 3px);
+  bottom: -4px;
+  cursor: ns-resize;
+}
+.preview-source-resize-handle.is-bottomLeft {
+  left: -4px;
+  bottom: -4px;
+  cursor: nesw-resize;
+}
+.preview-source-resize-handle.is-left {
+  left: -4px;
+  top: calc(50% - 3px);
+  cursor: ew-resize;
+}
+
+.artifact-preview-node {
+  position: absolute;
+  transform-origin: center;
+  pointer-events: none;
+}
+
+.artifact-preview-node img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: fill;
+}
+
+.prototype-canvas {
+  position: relative;
+  overflow: hidden;
+  background: var(--preview-checker-a);
+}
+
+.reference-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1);
+  opacity: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+[data-reference-backdrop="true"] > .prototype-canvas {
+  background: transparent;
+}
+
+.reference-context-background-visual {
+  position: absolute;
+  inset: 0;
+  filter: grayscale(1);
+  opacity: 0.58;
+}
+
+.prototype-canvas[data-reference-viewport="auto"] {
+  overflow: visible;
+}
+
+.prototype-node {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  transform-origin: center;
+  pointer-events: none;
+  text-align: left;
+  letter-spacing: 0;
+}
+
+.prototype-canvas.is-selection-enabled .prototype-node {
+  pointer-events: auto;
+}
+
+.prototype-node > img,
+.prototype-node img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+.capture-root {
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+}
+
+.capture-root > .artifact-preview,
+.capture-root > .prototype-canvas {
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+}
+
+.canvas-text {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  font-family: "AliPuHui", "Segoe UI", sans-serif;
+  line-height: 1.2;
+  white-space: pre-wrap;
+  pointer-events: none;
+}
+
+.image-tint-definitions {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.visual-fill-mask {
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.visual-fill-source {
+  height: 100%;
+}
+
+.visual-fill-source img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.image-solid-fill,
+.rounded-fill {
+  height: 100%;
+  pointer-events: none;
+}
+
+.image-visual {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+.image-source {
+  overflow: hidden;
+}
+.image-source img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.image-sliced {
+  background-color: transparent;
+}
+.image-tiled {
+  background-position: left top;
+}
+
+.prototype-artifact-layer {
+  position: relative;
+  overflow: visible;
+}
+
+.prototype-artifact-layer.is-canvas {
+  overflow: hidden;
+}
+
+.prototype-tap-target {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.prototype-tap-target:hover {
+  outline: 1px solid var(--accent-hover);
+  outline-offset: 1px;
+}
+
+.prototype-tap-target.is-selected {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.prototype-nested {
+  pointer-events: auto;
+}
+
+.prototype-missing {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: var(--danger);
+  background: var(--danger-soft);
+  font-size: 12px;
+}
+
+.prototype-canvas-host {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  padding: 12px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background-color: var(--workspace);
+}
+
+.prototype-canvas-stage {
+  position: relative;
+  flex: 0 0 auto;
+  box-shadow: var(--preview-stage-shadow, 0 0 0 1px var(--line-strong), 0 10px 28px var(--shadow-soft));
+}
+
+.capture-debug [data-node-id] {
+  outline: 1px solid var(--accent-hover);
+  outline-offset: -1px;
+}
+
+.capture-debug [data-node-id]::after {
+  content: attr(data-node-id) " · " attr(data-owner);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+  padding: 1px 3px;
+  background: var(--surface-overlay);
+  color: var(--presentation-ink);
+  font: 9px / 1.2 monospace;
+  pointer-events: none;
+}

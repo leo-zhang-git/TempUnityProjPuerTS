@@ -1,0 +1,132 @@
+.preview-relations {
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  display: grid;
+  align-content: start;
+}
+
+.preview-relations > header {
+  min-height: 38px;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  align-items: center;
+  gap: 2px 5px;
+}
+
+.preview-relations > header strong,
+.preview-relations > header span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.preview-relations > header strong {
+  font-size: 10px;
+}
+
+.preview-relations > header span {
+  grid-column: 2;
+  color: var(--ink-muted);
+  font-size: 8px;
+}
+
+.relation-section {
+  padding: 7px 6px;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  gap: 5px;
+}
+
+.relation-section h2 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--ink);
+  font-size: 9px;
+}
+
+.relation-section h2 span {
+  margin-left: auto;
+  min-width: 20px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: var(--surface-active);
+  color: var(--ink-muted);
+  text-align: center;
+}
+
+.relation-section p {
+  margin: 0;
+  padding: 5px;
+  color: var(--ink-muted);
+  font-size: 8px;
+}
+
+.relation-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 3px;
+}
+
+.relation-list li {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--surface-dialog);
+}
+
+.relation-list button {
+  width: 100%;
+  min-width: 0;
+  padding: 5px 6px;
+  border: 0;
+  background: transparent;
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr);
+  align-items: center;
+  gap: 2px 5px;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.relation-list button:hover {
+  background: var(--surface-hover);
+}
+
+.relation-list strong,
+.relation-list small,
+.relation-list code {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.relation-list strong {
+  font-size: 9px;
+}
+
+.relation-list small,
+.relation-list code {
+  grid-column: 2;
+  color: var(--ink-muted);
+  font-size: 8px;
+}
+
+.relation-list code {
+  color: var(--accent-strong);
+}
+
+.relation-diagnostics {
+  margin: 0;
+  padding: 6px 8px 6px 24px;
+  color: var(--warning);
+  font-size: 8px;
+}

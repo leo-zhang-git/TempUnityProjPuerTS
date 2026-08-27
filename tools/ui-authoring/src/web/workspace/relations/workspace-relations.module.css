@@ -1,0 +1,439 @@
+.relation-shell {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 48px 48px minmax(0, 1fr) 28px;
+  background: var(--workspace);
+  color: var(--ink);
+}
+
+.relation-topbar {
+  min-width: 0;
+  border-bottom: 1px solid var(--line-strong);
+  background: var(--surface-raised);
+  display: grid;
+  grid-template-columns: minmax(360px, auto) minmax(0, 1fr) 42px;
+  align-items: center;
+}
+
+.relation-brand {
+  border-right: 0;
+  gap: 8px;
+}
+
+.relation-back {
+  width: 26px;
+  height: 26px;
+  flex: 0 0 26px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--panel-muted);
+  display: grid;
+  place-items: center;
+  color: var(--ink-muted);
+  cursor: pointer;
+}
+
+.relation-back:hover {
+  border-color: var(--line-focus);
+  background: var(--surface-hover);
+  color: var(--accent-hover);
+}
+
+.relation-topbar-meta {
+  min-width: 0;
+  padding: 0 12px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  color: var(--ink-subtle);
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.relation-theme {
+  justify-self: center;
+}
+
+.relation-controls {
+  min-width: 0;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--line-strong);
+  background: var(--panel);
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  overflow-x: auto;
+}
+
+.relation-control-group {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.relation-control-group > span {
+  color: var(--ink-subtle);
+  font-size: 11px;
+}
+
+.relation-segments {
+  height: 28px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  display: flex;
+  overflow: hidden;
+}
+
+.relation-segments button {
+  min-width: 58px;
+  height: 100%;
+  padding: 0 10px;
+  border: 0;
+  border-right: 1px solid var(--line);
+  background: var(--panel-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: var(--ink-muted);
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.relation-segments button:last-child {
+  border-right: 0;
+}
+
+.relation-segments button:hover {
+  background: var(--surface-hover);
+  color: var(--ink-strong);
+}
+
+.relation-segments button.is-active {
+  background: var(--surface-active);
+  color: var(--accent-hover);
+  box-shadow: inset 0 -2px var(--accent);
+}
+
+.relation-scroll {
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  background-color: var(--workspace);
+}
+
+.relation-stage {
+  position: relative;
+  width: max(100%, 1420px);
+  min-height: var(--relation-stage-height);
+  padding: 28px 24px 42px;
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(236px, 1fr) 324px minmax(236px, 1fr) minmax(220px, 1fr);
+  gap: 22px;
+  align-items: stretch;
+}
+
+.relation-edges {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.relation-edges path:not([d^="M0"]) {
+  fill: none;
+  stroke: var(--line-focus);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.relation-edges path.is-active {
+  stroke: var(--accent);
+  stroke-width: 1.4;
+}
+
+.relation-edges marker path {
+  fill: var(--line-focus);
+}
+
+.relation-column,
+.relation-root-column {
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+  display: grid;
+  grid-template-rows: 26px minmax(0, 1fr);
+}
+
+.relation-column > header,
+.relation-root-column > header {
+  padding: 0 4px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--ink-muted);
+}
+
+.relation-column > header strong,
+.relation-root-column > header strong {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.relation-column > header span,
+.relation-root-column > header span {
+  min-width: 20px;
+  text-align: right;
+  color: var(--ink-subtle);
+  font-size: 10px;
+}
+
+.relation-column > div {
+  min-height: 0;
+  padding: 12px 0;
+  display: grid;
+  align-content: center;
+  gap: 10px;
+}
+
+.empty-column {
+  justify-self: center;
+  padding: 5px 9px;
+  border: 1px dashed var(--line);
+  border-radius: 3px;
+  color: var(--ink-disabled);
+  font-size: 11px;
+}
+
+.relation-card,
+.relation-root-card {
+  min-width: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  background: var(--panel);
+  color: var(--ink);
+  box-shadow: 0 4px 12px var(--shadow-light);
+}
+
+.relation-card {
+  width: 100%;
+  height: 148px;
+  padding: 0;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 30px 28px minmax(0, 1fr);
+  text-align: left;
+  cursor: pointer;
+}
+
+.relation-card:hover,
+.relation-card:focus-visible {
+  border-color: var(--line-focus);
+  background: var(--surface-raised);
+  outline: 0;
+}
+
+.relation-card.is-direct {
+  border-color: color-mix(in srgb, var(--accent) 46%, var(--line-strong));
+}
+
+.relation-card-heading {
+  min-width: 0;
+  padding: 0 8px;
+  border-bottom: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px;
+}
+
+.relation-card-heading > svg {
+  color: var(--info);
+}
+
+.relation-card-heading strong,
+.relation-card-heading small {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.relation-card-heading strong {
+  color: var(--ink-strong);
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.relation-card-heading small {
+  color: var(--ink-subtle);
+  font-size: 10px;
+}
+
+.relation-card-detail {
+  min-width: 0;
+  padding: 0 8px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 6px;
+  color: var(--ink-subtle);
+}
+
+.relation-card-detail span {
+  color: var(--accent-ink);
+  font-size: 10px;
+}
+
+.relation-card-detail em {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--ink-muted);
+  font-size: 11px;
+  font-style: normal;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.relation-preview,
+.missing-preview {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background-color: var(--preview-checker-a);
+  background-image:
+    linear-gradient(45deg, var(--preview-checker-b) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--preview-checker-b) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--preview-checker-b) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--preview-checker-b) 75%);
+  background-position:
+    0 0,
+    0 6px,
+    6px -6px,
+    -6px 0;
+  background-size: 12px 12px;
+  color: var(--ink-subtle);
+  --preview-stage-shadow: none;
+}
+
+.relation-preview > span,
+.relation-preview > span > span {
+  display: block;
+}
+
+.reference-preview {
+  width: 100%;
+  height: 100%;
+}
+
+.relation-root-column {
+  align-items: center;
+}
+
+.relation-root-column > header {
+  width: 100%;
+}
+
+.relation-root-card {
+  align-self: center;
+  width: 324px;
+  height: 224px;
+  overflow: hidden;
+  border-color: var(--accent);
+  display: grid;
+  grid-template-rows: 34px minmax(0, 1fr) 28px;
+  box-shadow: 0 8px 22px var(--shadow-medium);
+}
+
+.relation-root-card .relation-card-heading {
+  padding: 0 10px;
+}
+
+.relation-root-card .relation-card-heading strong {
+  font-size: 13px;
+}
+
+.relation-root-facts {
+  padding: 0 9px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--ink-subtle);
+  font-size: 10px;
+}
+
+.relation-statusbar {
+  min-width: 0;
+}
+
+.relation-legend {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink-subtle);
+}
+
+.relation-legend > span {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.relation-error-state {
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+}
+
+.relation-error-state strong {
+  font-size: 14px;
+}
+
+.relation-error-state span {
+  max-width: 640px;
+  color: var(--danger);
+  font-size: 11px;
+}
+
+.relation-error-state button {
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid var(--line-focus);
+  border-radius: 3px;
+  background: var(--surface-raised);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .relation-shell {
+    grid-template-rows: 40px 44px minmax(0, 1fr) 22px;
+  }
+
+  .relation-topbar {
+    grid-template-columns: minmax(0, 1fr) 36px;
+  }
+
+  .relation-topbar-meta,
+  .relation-legend {
+    display: none;
+  }
+
+  .relation-control-group > span {
+    display: none;
+  }
+}

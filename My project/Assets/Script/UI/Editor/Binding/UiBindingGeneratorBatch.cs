@@ -52,4 +52,3 @@ namespace PuerTsTemplate.UI.Editor
         }
     }
 }
-

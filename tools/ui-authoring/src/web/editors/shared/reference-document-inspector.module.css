@@ -1,0 +1,153 @@
+.reference-document-editor {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.reference-editor-toolbar {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  min-height: 32px;
+  padding: 2px 5px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-raised);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.inspector-section {
+  min-width: 0;
+  padding: 5px 7px 6px;
+  border-bottom: 1px solid var(--line);
+}
+
+.inspector-section h3 {
+  margin: 0 0 4px;
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 650;
+  line-height: 14px;
+}
+
+.preview-section {
+  background: var(--surface-raised);
+}
+
+.component-field {
+  min-width: 0;
+  min-height: 26px;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr);
+  align-items: center;
+  gap: 4px;
+}
+
+.component-field > span {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--ink-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 9px;
+  line-height: 1.1;
+}
+
+.component-field > input:not([type="checkbox"]),
+.component-field > [data-ui-select],
+.component-field > textarea {
+  width: 100%;
+  min-width: 0;
+  height: 22px;
+  padding: 0 4px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  outline: 0;
+  background: var(--surface-input);
+  color: var(--ink);
+  font: inherit;
+  font-size: 9px;
+}
+
+.component-field > textarea {
+  min-height: 48px;
+  padding: 3px 4px;
+  resize: vertical;
+}
+
+.component-field > input:focus,
+.component-field > [data-ui-select]:focus-within,
+.component-field > textarea:focus {
+  border-color: var(--line-focus);
+  box-shadow: 0 0 0 2px var(--focus-ring);
+}
+
+.reference-subject-block {
+  min-width: 0;
+  margin-top: 4px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--surface-dialog);
+}
+
+.reference-subject-block > div {
+  min-width: 0;
+}
+
+.reference-item-list {
+  min-width: 0;
+  margin-top: 3px;
+  display: grid;
+  gap: 3px;
+}
+
+.reference-item-list > div {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(58px, 0.8fr) minmax(0, 1.2fr) 22px;
+  align-items: center;
+  gap: 3px;
+}
+
+.reference-item-list span {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--ink-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 9px;
+}
+
+.reference-item-list [data-ui-select] {
+  width: 100%;
+  min-width: 0;
+  height: 22px;
+  padding: 0 4px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: var(--surface-input);
+  color: var(--ink);
+  font-size: 9px;
+}
+
+.reference-subject-block > div > button {
+  min-height: 22px;
+  margin-top: 3px;
+  padding: 0 6px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  background: var(--surface-raised);
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: var(--ink);
+  font-size: 9px;
+  cursor: pointer;
+}
+
+.reference-subject-block > div > button:hover {
+  background: var(--surface-hover);
+}

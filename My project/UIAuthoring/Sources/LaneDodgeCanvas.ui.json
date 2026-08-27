@@ -1,0 +1,1442 @@
+{
+  "sourceKind": "artifact",
+  "artifactKey": "LaneDodgeCanvas",
+  "artifactType": "Canvas",
+  "bindings": [
+    {
+      "name": "img_playfield",
+      "target": {
+        "componentType": "Image",
+        "nodeId": "img_playfield"
+      }
+    },
+    {
+      "name": "img_player",
+      "target": {
+        "componentType": "Image",
+        "nodeId": "img_player"
+      }
+    },
+    {
+      "name": "txt_menu_best",
+      "target": {
+        "componentType": "Text",
+        "nodeId": "txt_menu_best"
+      }
+    },
+    {
+      "name": "txt_menu_coins",
+      "target": {
+        "componentType": "Text",
+        "nodeId": "txt_menu_coins"
+      }
+    },
+    {
+      "name": "btn_start",
+      "target": {
+        "componentType": "ButtonEx",
+        "nodeId": "btn_start"
+      }
+    },
+    {
+      "name": "LaneDodgeHudWidget",
+      "target": {
+        "componentType": "PrefabRef",
+        "nodeId": "laneDodgeHudWidget"
+      }
+    },
+    {
+      "name": "btn_resume",
+      "target": {
+        "componentType": "ButtonEx",
+        "nodeId": "btn_resume"
+      }
+    },
+    {
+      "name": "btn_pause_restart",
+      "target": {
+        "componentType": "ButtonEx",
+        "nodeId": "btn_pause_restart"
+      }
+    },
+    {
+      "name": "btn_pause_menu",
+      "target": {
+        "componentType": "ButtonEx",
+        "nodeId": "btn_pause_menu"
+      }
+    },
+    {
+      "name": "txt_result_score",
+      "target": {
+        "componentType": "Text",
+        "nodeId": "txt_result_score"
+      }
+    },
+    {
+      "name": "txt_result_coins",
+      "target": {
+        "componentType": "Text",
+        "nodeId": "txt_result_coins"
+      }
+    },
+    {
+      "name": "sv_history",
+      "target": {
+        "componentType": "ScrollRectEx",
+        "nodeId": "sv_history"
+      }
+    },
+    {
+      "name": "btn_run_again",
+      "target": {
+        "componentType": "ButtonEx",
+        "nodeId": "btn_run_again"
+      }
+    },
+    {
+      "name": "btn_game_over_menu",
+      "target": {
+        "componentType": "ButtonEx",
+        "nodeId": "btn_game_over_menu"
+      }
+    },
+    {
+      "name": "sr_phase",
+      "target": {
+        "componentType": "StateRoot",
+        "nodeId": "sr_phase"
+      }
+    }
+  ],
+  "root": {
+    "id": "LaneDodgeCanvas",
+    "rect": {
+      "anchorMin": [
+        0,
+        0
+      ],
+      "anchorMax": [
+        0,
+        0
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "anchoredPosition": [
+        0,
+        0
+      ],
+      "sizeDelta": [
+        0,
+        0
+      ]
+    },
+    "children": [
+      {
+        "id": "img_playfield",
+        "name": "img_playfield",
+        "rect": {
+          "anchorMin": [
+            0,
+            0
+          ],
+          "anchorMax": [
+            1,
+            1
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "anchoredPosition": [
+            0,
+            0
+          ],
+          "sizeDelta": [
+            0,
+            0
+          ]
+        },
+        "components": {
+          "Image": {
+            "color": "#0B0E11FF",
+            "raycastTarget": true
+          }
+        },
+        "children": [
+          {
+            "id": "trackLineMinus420",
+            "rect": {
+              "anchorMin": [
+                0.5,
+                0
+              ],
+              "anchorMax": [
+                0.5,
+                0
+              ],
+              "pivot": [
+                0.5,
+                1
+              ],
+              "anchoredPosition": [
+                -420,
+                0
+              ],
+              "sizeDelta": [
+                7,
+                0
+              ]
+            },
+            "components": {
+              "Image": {
+                "color": "#384047D9",
+                "raycastTarget": true
+              }
+            }
+          },
+          {
+            "id": "trackLineMinus140",
+            "rect": {
+              "anchorMin": [
+                0.5,
+                0
+              ],
+              "anchorMax": [
+                0.5,
+                0
+              ],
+              "pivot": [
+                0.5,
+                1
+              ],
+              "anchoredPosition": [
+                -140,
+                0
+              ],
+              "sizeDelta": [
+                7,
+                0
+              ]
+            },
+            "components": {
+              "Image": {
+                "color": "#384047D9",
+                "raycastTarget": true
+              }
+            }
+          },
+          {
+            "id": "trackLinePlus140",
+            "rect": {
+              "anchorMin": [
+                0.5,
+                0
+              ],
+              "anchorMax": [
+                0.5,
+                0
+              ],
+              "pivot": [
+                0.5,
+                1
+              ],
+              "anchoredPosition": [
+                140,
+                0
+              ],
+              "sizeDelta": [
+                7,
+                0
+              ]
+            },
+            "components": {
+              "Image": {
+                "color": "#384047D9",
+                "raycastTarget": true
+              }
+            }
+          },
+          {
+            "id": "trackLinePlus420",
+            "rect": {
+              "anchorMin": [
+                0.5,
+                0
+              ],
+              "anchorMax": [
+                0.5,
+                0
+              ],
+              "pivot": [
+                0.5,
+                1
+              ],
+              "anchoredPosition": [
+                420,
+                0
+              ],
+              "sizeDelta": [
+                7,
+                0
+              ]
+            },
+            "components": {
+              "Image": {
+                "color": "#384047D9",
+                "raycastTarget": true
+              }
+            }
+          },
+          {
+            "id": "img_player",
+            "name": "img_player",
+            "active": false,
+            "rect": {
+              "anchorMin": [
+                0.5,
+                0
+              ],
+              "anchorMax": [
+                0.5,
+                0
+              ],
+              "pivot": [
+                0.5,
+                0
+              ],
+              "anchoredPosition": [
+                0,
+                350
+              ],
+              "sizeDelta": [
+                150,
+                76
+              ]
+            },
+            "components": {
+              "Image": {
+                "color": "#1AC7D1FF",
+                "raycastTarget": true
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "menuPage",
+        "rect": {
+          "anchorMin": [
+            0,
+            0
+          ],
+          "anchorMax": [
+            1,
+            1
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "anchoredPosition": [
+            0,
+            0
+          ],
+          "sizeDelta": [
+            0,
+            0
+          ]
+        },
+        "components": {
+          "Image": {
+            "color": "#060809F0",
+            "raycastTarget": true
+          }
+        },
+        "children": [
+          {
+            "id": "gameTitle",
+            "rect": {
+              "anchorMin": [
+                0.5,
+                0.5
+              ],
+              "anchorMax": [
+                0.5,
+                0.5
+              ],
+              "pivot": [
+                0.5,
+                0.5
+              ],
+              "anchoredPosition": [
+                0,
+                250
+              ],
+              "sizeDelta": [
+                820,
+                130
+              ]
+            },
+            "components": {
+              "Text": {
+                "alignment": "center",
+                "color": "#F5F7FAFF",
+                "fontSize": 82,
+                "text": "LANE DODGE"
+              }
+            }
+          },
+          {
+            "id": "gameSubtitle",
+            "rect": {
+              "anchorMin": [
+                0.5,
+                0.5
+              ],
+              "anchorMax": [
+                0.5,
+                0.5
+              ],
+              "pivot": [
+                0.5,
+                0.5
+              ],
+              "anchoredPosition": [
+                0,
+                135
+              ],
+              "sizeDelta": [
+                680,
+                70
+              ]
+            },
+            "components": {
+              "Text": {
+                "alignment": "center",
+                "color": "#B8C2CCFF",
+                "fontSize": 32,
+                "text": "THREE-LANE RUN"
+              }
+            }
+          },
+          {
+            "id": "txt_menu_best",
+            "name": "txt_menu_best",
+            "rect": {
+              "anchorMin": [
+                0.5,
+                0.5
+              ],
+              "anchorMax": [
+                0.5,
+                0.5
+              ],
+              "pivot": [
+                0.5,
+                0.5
+              ],
+              "anchoredPosition": [
+                0,
+                35
+              ],
+              "sizeDelta": [
+                600,
+                64
+              ]
+            },
+            "components": {
+              "Text": {
+                "alignment": "center",
+                "color": "#F5F7FAFF",
+                "fontSize": 34,
+                "text": "BEST  0"
+              }
+            }
+          },
+          {
+            "id": "txt_menu_coins",
+            "name": "txt_menu_coins",
+            "rect": {
+              "anchorMin": [
+                0.5,
+                0.5
+              ],
+              "anchorMax": [
+                0.5,
+                0.5
+              ],
+              "pivot": [
+                0.5,
+                0.5
+              ],
+              "anchoredPosition": [
+                0,
+                -35
+              ],
+              "sizeDelta": [
+                600,
+                56
+              ]
+            },
+            "components": {
+              "Text": {
+                "alignment": "center",
+                "color": "#B8C2CCFF",
+                "fontSize": 28,
+                "text": "TOTAL COINS  0"
+              }
+            }
+          },
+          {
+            "id": "btn_start",
+            "name": "btn_start",
+            "rect": {
+              "anchorMin": [
+                0.5,
+                0.5
+              ],
+              "anchorMax": [
+                0.5,
+                0.5
+              ],
+              "pivot": [
+                0.5,
+                0.5
+              ],
+              "anchoredPosition": [
+                0,
+                -175
+              ],
+              "sizeDelta": [
+                520,
+                112
+              ]
+            },
+            "components": {
+              "ButtonEx": {
+                "targetGraphic": "btn_start"
+              },
+              "Image": {
+                "color": "#1F9EA6FF",
+                "raycastTarget": true
+              }
+            },
+            "children": [
+              {
+                "id": "label",
+                "rect": {
+                  "anchorMin": [
+                    0,
+                    0
+                  ],
+                  "anchorMax": [
+                    1,
+                    1
+                  ],
+                  "pivot": [
+                    0.5,
+                    0.5
+                  ],
+                  "anchoredPosition": [
+                    0,
+                    0
+                  ],
+                  "sizeDelta": [
+                    -28,
+                    -28
+                  ]
+                },
+                "components": {
+                  "Text": {
+                    "alignment": "center",
+                    "color": "#F5F7FAFF",
+                    "fontSize": 34,
+                    "text": "START"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "id": "roundedAccent",
+            "rect": {
+              "anchorMin": [
+                0.5,
+                0.5
+              ],
+              "anchorMax": [
+                0.5,
+                0.5
+              ],
+              "pivot": [
+                0.5,
+                0.5
+              ],
+              "anchoredPosition": [
+                0,
+                -310
+              ],
+              "sizeDelta": [
+                520,
+                12
+              ]
+            },
+            "components": {
+              "RoundedRect": {
+                "color": "#FFFFFF0F",
+                "raycastTarget": true
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "laneDodgeHudWidget",
+        "rect": {
+          "anchorMin": [
+            0,
+            0
+          ],
+          "anchorMax": [
+            1,
+            1
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "anchoredPosition": [
+            0,
+            0
+          ],
+          "sizeDelta": [
+            0,
+            0
+          ]
+        },
+        "components": {
+          "PrefabRef": {
+            "artifactKey": "LaneDodgeHudWidget"
+          }
+        }
+      },
+      {
+        "id": "pausePage",
+        "active": false,
+        "rect": {
+          "anchorMin": [
+            0,
+            0
+          ],
+          "anchorMax": [
+            1,
+            1
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "anchoredPosition": [
+            0,
+            0
+          ],
+          "sizeDelta": [
+            0,
+            0
+          ]
+        },
+        "components": {
+          "Image": {
+            "color": "#060809F0",
+            "raycastTarget": true
+          }
+        },
+        "children": [
+          {
+            "id": "pausePanel",
+            "rect": {
+              "anchorMin": [
+                0.5,
+                0.5
+              ],
+              "anchorMax": [
+                0.5,
+                0.5
+              ],
+              "pivot": [
+                0.5,
+                0.5
+              ],
+              "anchoredPosition": [
+                0,
+                0
+              ],
+              "sizeDelta": [
+                650,
+                650
+              ]
+            },
+            "components": {
+              "Image": {
+                "color": "#1C2024FA",
+                "raycastTarget": true
+              }
+            },
+            "children": [
+              {
+                "id": "pauseTitle",
+                "rect": {
+                  "anchorMin": [
+                    0.5,
+                    0.5
+                  ],
+                  "anchorMax": [
+                    0.5,
+                    0.5
+                  ],
+                  "pivot": [
+                    0.5,
+                    0.5
+                  ],
+                  "anchoredPosition": [
+                    0,
+                    220
+                  ],
+                  "sizeDelta": [
+                    540,
+                    100
+                  ]
+                },
+                "components": {
+                  "Text": {
+                    "alignment": "center",
+                    "color": "#F5F7FAFF",
+                    "fontSize": 64,
+                    "text": "PAUSED"
+                  }
+                }
+              },
+              {
+                "id": "btn_resume",
+                "name": "btn_resume",
+                "rect": {
+                  "anchorMin": [
+                    0.5,
+                    0.5
+                  ],
+                  "anchorMax": [
+                    0.5,
+                    0.5
+                  ],
+                  "pivot": [
+                    0.5,
+                    0.5
+                  ],
+                  "anchoredPosition": [
+                    0,
+                    65
+                  ],
+                  "sizeDelta": [
+                    480,
+                    96
+                  ]
+                },
+                "components": {
+                  "ButtonEx": {
+                    "targetGraphic": "btn_resume"
+                  },
+                  "Image": {
+                    "color": "#1F9EA6FF",
+                    "raycastTarget": true
+                  }
+                },
+                "children": [
+                  {
+                    "id": "label_1",
+                    "name": "Label",
+                    "rect": {
+                      "anchorMin": [
+                        0,
+                        0
+                      ],
+                      "anchorMax": [
+                        1,
+                        1
+                      ],
+                      "pivot": [
+                        0.5,
+                        0.5
+                      ],
+                      "anchoredPosition": [
+                        0,
+                        0
+                      ],
+                      "sizeDelta": [
+                        -28,
+                        -28
+                      ]
+                    },
+                    "components": {
+                      "Text": {
+                        "alignment": "center",
+                        "color": "#F5F7FAFF",
+                        "fontSize": 34,
+                        "text": "RESUME"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "btn_pause_restart",
+                "name": "btn_pause_restart",
+                "rect": {
+                  "anchorMin": [
+                    0.5,
+                    0.5
+                  ],
+                  "anchorMax": [
+                    0.5,
+                    0.5
+                  ],
+                  "pivot": [
+                    0.5,
+                    0.5
+                  ],
+                  "anchoredPosition": [
+                    0,
+                    -65
+                  ],
+                  "sizeDelta": [
+                    480,
+                    96
+                  ]
+                },
+                "components": {
+                  "ButtonEx": {
+                    "targetGraphic": "btn_pause_restart"
+                  },
+                  "Image": {
+                    "color": "#3B424AFF",
+                    "raycastTarget": true
+                  }
+                },
+                "children": [
+                  {
+                    "id": "label_2",
+                    "name": "Label",
+                    "rect": {
+                      "anchorMin": [
+                        0,
+                        0
+                      ],
+                      "anchorMax": [
+                        1,
+                        1
+                      ],
+                      "pivot": [
+                        0.5,
+                        0.5
+                      ],
+                      "anchoredPosition": [
+                        0,
+                        0
+                      ],
+                      "sizeDelta": [
+                        -28,
+                        -28
+                      ]
+                    },
+                    "components": {
+                      "Text": {
+                        "alignment": "center",
+                        "color": "#F5F7FAFF",
+                        "fontSize": 34,
+                        "text": "RESTART"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "btn_pause_menu",
+                "name": "btn_pause_menu",
+                "rect": {
+                  "anchorMin": [
+                    0.5,
+                    0.5
+                  ],
+                  "anchorMax": [
+                    0.5,
+                    0.5
+                  ],
+                  "pivot": [
+                    0.5,
+                    0.5
+                  ],
+                  "anchoredPosition": [
+                    0,
+                    -195
+                  ],
+                  "sizeDelta": [
+                    480,
+                    96
+                  ]
+                },
+                "components": {
+                  "ButtonEx": {
+                    "targetGraphic": "btn_pause_menu"
+                  },
+                  "Image": {
+                    "color": "#3B424AFF",
+                    "raycastTarget": true
+                  }
+                },
+                "children": [
+                  {
+                    "id": "label_3",
+                    "name": "Label",
+                    "rect": {
+                      "anchorMin": [
+                        0,
+                        0
+                      ],
+                      "anchorMax": [
+                        1,
+                        1
+                      ],
+                      "pivot": [
+                        0.5,
+                        0.5
+                      ],
+                      "anchoredPosition": [
+                        0,
+                        0
+                      ],
+                      "sizeDelta": [
+                        -28,
+                        -28
+                      ]
+                    },
+                    "components": {
+                      "Text": {
+                        "alignment": "center",
+                        "color": "#F5F7FAFF",
+                        "fontSize": 34,
+                        "text": "MENU"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "gameOverPage",
+        "active": false,
+        "rect": {
+          "anchorMin": [
+            0,
+            0
+          ],
+          "anchorMax": [
+            1,
+            1
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "anchoredPosition": [
+            0,
+            0
+          ],
+          "sizeDelta": [
+            0,
+            0
+          ]
+        },
+        "components": {
+          "Image": {
+            "color": "#060809F0",
+            "raycastTarget": true
+          }
+        },
+        "children": [
+          {
+            "id": "gameOverPanel",
+            "rect": {
+              "anchorMin": [
+                0.5,
+                0.5
+              ],
+              "anchorMax": [
+                0.5,
+                0.5
+              ],
+              "pivot": [
+                0.5,
+                0.5
+              ],
+              "anchoredPosition": [
+                0,
+                0
+              ],
+              "sizeDelta": [
+                690,
+                760
+              ]
+            },
+            "components": {
+              "Image": {
+                "color": "#1C2024FA",
+                "raycastTarget": true
+              }
+            },
+            "children": [
+              {
+                "id": "gameOverTitle",
+                "rect": {
+                  "anchorMin": [
+                    0.5,
+                    0.5
+                  ],
+                  "anchorMax": [
+                    0.5,
+                    0.5
+                  ],
+                  "pivot": [
+                    0.5,
+                    0.5
+                  ],
+                  "anchoredPosition": [
+                    0,
+                    285
+                  ],
+                  "sizeDelta": [
+                    580,
+                    100
+                  ]
+                },
+                "components": {
+                  "Text": {
+                    "alignment": "center",
+                    "color": "#F5F7FAFF",
+                    "fontSize": 64,
+                    "text": "RUN OVER"
+                  }
+                }
+              },
+              {
+                "id": "txt_result_score",
+                "name": "txt_result_score",
+                "rect": {
+                  "anchorMin": [
+                    0.5,
+                    0.5
+                  ],
+                  "anchorMax": [
+                    0.5,
+                    0.5
+                  ],
+                  "pivot": [
+                    0.5,
+                    0.5
+                  ],
+                  "anchoredPosition": [
+                    0,
+                    160
+                  ],
+                  "sizeDelta": [
+                    540,
+                    72
+                  ]
+                },
+                "components": {
+                  "Text": {
+                    "alignment": "center",
+                    "color": "#F5F7FAFF",
+                    "fontSize": 42,
+                    "text": "SCORE  0"
+                  }
+                }
+              },
+              {
+                "id": "txt_result_coins",
+                "name": "txt_result_coins",
+                "rect": {
+                  "anchorMin": [
+                    0.5,
+                    0.5
+                  ],
+                  "anchorMax": [
+                    0.5,
+                    0.5
+                  ],
+                  "pivot": [
+                    0.5,
+                    0.5
+                  ],
+                  "anchoredPosition": [
+                    0,
+                    80
+                  ],
+                  "sizeDelta": [
+                    540,
+                    64
+                  ]
+                },
+                "components": {
+                  "Text": {
+                    "alignment": "center",
+                    "color": "#B8C2CCFF",
+                    "fontSize": 32,
+                    "text": "COINS  0"
+                  }
+                }
+              },
+              {
+                "id": "sv_history",
+                "name": "sv_history",
+                "rect": {
+                  "anchorMin": [
+                    0.5,
+                    0.5
+                  ],
+                  "anchorMax": [
+                    0.5,
+                    0.5
+                  ],
+                  "pivot": [
+                    0.5,
+                    0.5
+                  ],
+                  "anchoredPosition": [
+                    0,
+                    -5
+                  ],
+                  "sizeDelta": [
+                    520,
+                    80
+                  ]
+                },
+                "components": {
+                  "Image": {
+                    "color": "#00000026",
+                    "raycastTarget": true
+                  },
+                  "ScrollRectEx": {
+                    "content": "content",
+                    "horizontal": true,
+                    "horizontalScrollbarSpacing": 0,
+                    "templates": {
+                      "LaneDodgeResultItemWidget": "laneDodgeResultItemWidget"
+                    },
+                    "vertical": false,
+                    "verticalScrollbarSpacing": 0,
+                    "viewport": "viewport"
+                  }
+                },
+                "children": [
+                  {
+                    "id": "viewport",
+                    "rect": {
+                      "anchorMin": [
+                        0,
+                        0
+                      ],
+                      "anchorMax": [
+                        1,
+                        1
+                      ],
+                      "pivot": [
+                        0.5,
+                        0.5
+                      ],
+                      "anchoredPosition": [
+                        0,
+                        0
+                      ],
+                      "sizeDelta": [
+                        0,
+                        0
+                      ]
+                    },
+                    "components": {
+                      "RectMask2D": {}
+                    },
+                    "children": [
+                      {
+                        "id": "content",
+                        "rect": {
+                          "anchorMin": [
+                            0,
+                            0
+                          ],
+                          "anchorMax": [
+                            1,
+                            1
+                          ],
+                          "pivot": [
+                            0.5,
+                            0.5
+                          ],
+                          "anchoredPosition": [
+                            0,
+                            0
+                          ],
+                          "sizeDelta": [
+                            0,
+                            0
+                          ]
+                        },
+                        "children": [
+                          {
+                            "id": "laneDodgeResultItemWidget",
+                            "active": false,
+                            "rect": {
+                              "anchorMin": [
+                                0.5,
+                                0.5
+                              ],
+                              "anchorMax": [
+                                0.5,
+                                0.5
+                              ],
+                              "pivot": [
+                                0.5,
+                                0.5
+                              ],
+                              "anchoredPosition": [
+                                0,
+                                0
+                              ],
+                              "sizeDelta": [
+                                220,
+                                64
+                              ]
+                            },
+                            "components": {
+                              "PrefabRef": {
+                                "artifactKey": "LaneDodgeResultItemWidget"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "btn_run_again",
+                "name": "btn_run_again",
+                "rect": {
+                  "anchorMin": [
+                    0.5,
+                    0.5
+                  ],
+                  "anchorMax": [
+                    0.5,
+                    0.5
+                  ],
+                  "pivot": [
+                    0.5,
+                    0.5
+                  ],
+                  "anchoredPosition": [
+                    0,
+                    -80
+                  ],
+                  "sizeDelta": [
+                    500,
+                    100
+                  ]
+                },
+                "components": {
+                  "ButtonEx": {
+                    "targetGraphic": "btn_run_again"
+                  },
+                  "Image": {
+                    "color": "#1F9EA6FF",
+                    "raycastTarget": true
+                  }
+                },
+                "children": [
+                  {
+                    "id": "label_4",
+                    "name": "Label",
+                    "rect": {
+                      "anchorMin": [
+                        0,
+                        0
+                      ],
+                      "anchorMax": [
+                        1,
+                        1
+                      ],
+                      "pivot": [
+                        0.5,
+                        0.5
+                      ],
+                      "anchoredPosition": [
+                        0,
+                        0
+                      ],
+                      "sizeDelta": [
+                        -28,
+                        -28
+                      ]
+                    },
+                    "components": {
+                      "Text": {
+                        "alignment": "center",
+                        "color": "#F5F7FAFF",
+                        "fontSize": 34,
+                        "text": "RUN AGAIN"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "btn_game_over_menu",
+                "name": "btn_game_over_menu",
+                "rect": {
+                  "anchorMin": [
+                    0.5,
+                    0.5
+                  ],
+                  "anchorMax": [
+                    0.5,
+                    0.5
+                  ],
+                  "pivot": [
+                    0.5,
+                    0.5
+                  ],
+                  "anchoredPosition": [
+                    0,
+                    -220
+                  ],
+                  "sizeDelta": [
+                    500,
+                    100
+                  ]
+                },
+                "components": {
+                  "ButtonEx": {
+                    "targetGraphic": "btn_game_over_menu"
+                  },
+                  "Image": {
+                    "color": "#3B424AFF",
+                    "raycastTarget": true
+                  }
+                },
+                "children": [
+                  {
+                    "id": "label_5",
+                    "name": "Label",
+                    "rect": {
+                      "anchorMin": [
+                        0,
+                        0
+                      ],
+                      "anchorMax": [
+                        1,
+                        1
+                      ],
+                      "pivot": [
+                        0.5,
+                        0.5
+                      ],
+                      "anchoredPosition": [
+                        0,
+                        0
+                      ],
+                      "sizeDelta": [
+                        -28,
+                        -28
+                      ]
+                    },
+                    "components": {
+                      "Text": {
+                        "alignment": "center",
+                        "color": "#F5F7FAFF",
+                        "fontSize": 34,
+                        "text": "MENU"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "sr_phase",
+        "name": "sr_phase",
+        "rect": {
+          "anchorMin": [
+            0.5,
+            0.5
+          ],
+          "anchorMax": [
+            0.5,
+            0.5
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "anchoredPosition": [
+            0,
+            0
+          ],
+          "sizeDelta": [
+            100,
+            100
+          ]
+        },
+        "components": {
+          "StateRoot": {
+            "currentState": "Menu",
+            "elements": [],
+            "states": {
+              "Menu": {
+                "gameOverPage": false,
+                "img_player": false,
+                "menuPage": true,
+                "pausePage": false
+              },
+              "Playing": {
+                "gameOverPage": false,
+                "img_player": true,
+                "menuPage": false,
+                "pausePage": false
+              },
+              "Paused": {
+                "gameOverPage": false,
+                "img_player": true,
+                "menuPage": false,
+                "pausePage": true
+              },
+              "GameOver": {
+                "gameOverPage": true,
+                "img_player": true,
+                "menuPage": false,
+                "pausePage": false
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

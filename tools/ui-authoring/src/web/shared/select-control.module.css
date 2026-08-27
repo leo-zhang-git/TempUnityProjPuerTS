@@ -1,0 +1,192 @@
+.select {
+  position: relative;
+  min-width: 0;
+  width: 100%;
+  height: 24px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--surface-input);
+  color: var(--ink);
+  font-size: 10px;
+  line-height: 1.1;
+}
+
+.select:focus-within {
+  border-color: var(--line-focus);
+  box-shadow: 0 0 0 2px var(--focus-ring);
+}
+
+.select[data-disabled="true"] {
+  color: var(--ink-disabled);
+  cursor: default;
+}
+
+.trigger {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  padding: 0 var(--select-padding-inline, 5px);
+  border: 0;
+  border-radius: inherit;
+  outline: 0;
+  background: transparent;
+  color: inherit;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 12px;
+  align-items: center;
+  gap: 2px;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.trigger:disabled {
+  cursor: default;
+}
+
+.value {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.value.is-placeholder {
+  color: var(--ink-subtle);
+}
+
+.chevron {
+  color: var(--ink-subtle);
+  transition: transform 100ms ease;
+}
+
+.trigger[aria-expanded="true"] .chevron {
+  transform: rotate(180deg);
+}
+
+.menu {
+  position: fixed;
+  z-index: 180;
+  padding: 3px;
+  border: 1px solid var(--line-strong);
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-dialog);
+  color: var(--ink);
+  box-shadow: 0 12px 30px var(--shadow-dialog);
+}
+
+.menu.open-above {
+  transform: translateY(-100%);
+}
+
+.search {
+  min-height: 27px;
+  margin-bottom: 3px;
+  padding: 0 6px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--surface-input);
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr);
+  align-items: center;
+  color: var(--ink-subtle);
+}
+
+.search:focus-within {
+  border-color: var(--line-focus);
+  box-shadow: 0 0 0 2px var(--focus-ring);
+}
+
+.search input {
+  min-width: 0;
+  width: 100%;
+  height: 25px;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+  font:
+    10px / 1.1 Inter,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+}
+
+.search input::placeholder {
+  color: var(--ink-subtle);
+}
+
+.options {
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.empty {
+  min-height: 26px;
+  padding: 6px;
+  color: var(--ink-subtle);
+  font-size: 10px;
+  text-align: center;
+}
+
+.option {
+  width: 100%;
+  min-width: 0;
+  height: 23px;
+  padding: 0 6px 0 4px;
+  border: 0;
+  border-radius: 2px;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+  display: grid;
+  grid-template-columns: 13px minmax(0, 1fr);
+  align-items: center;
+  gap: 3px;
+  font:
+    10px / 1.1 Inter,
+    "Segoe UI",
+    Arial,
+    sans-serif;
+  text-align: left;
+  cursor: pointer;
+}
+
+.option > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.option[data-active="true"] {
+  background: var(--surface-hover);
+}
+
+.option[aria-selected="true"] {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+.option[aria-selected="true"][data-active="true"] {
+  background: var(--surface-active);
+}
+
+.option:disabled {
+  color: var(--ink-disabled);
+  cursor: default;
+}
+
+.check {
+  visibility: hidden;
+}
+.option[aria-selected="true"] .check {
+  visibility: visible;
+}

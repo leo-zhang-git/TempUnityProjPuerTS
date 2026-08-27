@@ -1,0 +1,511 @@
+.changes-dialog {
+  width: min(760px, calc(100vw - 36px));
+  max-height: min(760px, calc(100vh - 36px));
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  background: var(--surface-dialog);
+  display: grid;
+  grid-template-rows: 48px minmax(0, 1fr) 48px;
+  color: var(--ink);
+  box-shadow: 0 18px 46px var(--shadow-medium);
+}
+
+.changes-dialog > header {
+  min-width: 0;
+  padding: 0 12px 0 15px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.changes-dialog > header > div {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.changes-dialog > header span {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.changes-dialog > header strong {
+  font-size: 12px;
+}
+
+.changes-dialog > header small {
+  color: var(--ink-subtle);
+  font-size: 8px;
+}
+
+.changes-scroll {
+  min-height: 0;
+  padding: 8px 12px 14px;
+  overflow: auto;
+}
+
+.change-document {
+  border-bottom: 1px solid var(--line);
+}
+
+.change-document > header {
+  min-width: 0;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.change-document > header span {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.change-document > header strong,
+.change-document > header small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.change-document > header strong {
+  font-size: 11px;
+}
+
+.change-document > header small {
+  color: var(--ink-subtle);
+  font-size: 8px;
+}
+
+.change-kind {
+  flex: 0 0 auto;
+  padding: 3px 6px;
+  border-radius: 3px;
+  background: var(--surface-active);
+  color: var(--ink-muted);
+  font-size: 7px;
+  font-style: normal;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.change-kind.is-added {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+.change-kind.is-deleted {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.change-document > div {
+  padding: 0 0 8px 13px;
+  display: grid;
+}
+
+.change-line {
+  min-width: 0;
+  min-height: 29px;
+  padding: 5px 7px;
+  border-left: 2px solid var(--line);
+  display: grid;
+  grid-template-columns: minmax(140px, 0.8fr) minmax(0, 1.2fr);
+  align-items: center;
+  gap: 10px;
+}
+
+.change-line:hover {
+  background: var(--surface-hover);
+}
+
+.change-line > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 9px;
+}
+
+.change-line code {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 18px minmax(0, 1fr);
+  align-items: center;
+  gap: 4px;
+  font-family: Consolas, monospace;
+  font-size: 8px;
+}
+
+.change-line del,
+.change-line ins {
+  min-width: 0;
+  padding: 3px 5px;
+  overflow: hidden;
+  border-radius: 2px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.change-line del {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.change-line ins {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+}
+
+.change-line i {
+  color: var(--ink-subtle);
+  font-style: normal;
+  text-align: center;
+}
+
+.changes-empty {
+  min-height: 220px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+  color: var(--ink-subtle);
+  font-size: 10px;
+}
+
+.changes-dialog > footer {
+  padding: 0 12px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 7px;
+}
+
+.changes-dialog > footer .changes-discard {
+  margin-right: auto;
+}
+
+@media (max-width: 700px) {
+  .change-line {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  padding: 12px;
+  background: var(--backdrop);
+  display: grid;
+  place-items: center;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.authoring-dialog {
+  width: min(520px, calc(100vw - 24px));
+  max-height: calc(100vh - 24px);
+  overflow: auto;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  background: var(--surface-dialog);
+  box-shadow: 0 14px 40px var(--shadow-dialog);
+}
+
+.authoring-dialog > header {
+  height: 42px;
+  padding: 0 8px 0 12px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.authoring-dialog > header > div {
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.authoring-dialog > header strong {
+  font-size: 12px;
+}
+
+.authoring-dialog > header h2 {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0;
+}
+
+.authoring-dialog > header span {
+  overflow: hidden;
+  color: var(--ink-subtle);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 9px;
+}
+
+.dialog-fields {
+  padding: 12px;
+  display: grid;
+  gap: 9px;
+}
+
+.dialog-fields label {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+}
+
+.dialog-fields label > span {
+  color: var(--ink-muted);
+  font-size: 10px;
+}
+
+.dialog-fields input,
+.dialog-fields [data-ui-select] {
+  width: 100%;
+  min-width: 0;
+  height: 28px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  outline: 0;
+  padding: 0 7px;
+  background: var(--surface-input);
+  color: var(--ink);
+  font-size: 10px;
+}
+
+.dialog-fields input:focus,
+.dialog-fields [data-ui-select]:focus-within {
+  border-color: var(--line-focus);
+  box-shadow: 0 0 0 2px var(--focus-ring);
+}
+
+.prefab-import-dialog {
+  width: min(720px, calc(100vw - 24px));
+  overflow: hidden;
+}
+
+.prefab-import-status {
+  min-height: 52px;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-muted);
+  font-size: 10px;
+}
+
+.prefab-import-status > svg {
+  animation: spin 1s linear infinite;
+}
+
+.prefab-import-progress {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+.prefab-import-result {
+  max-height: min(480px, calc(100vh - 270px));
+  overflow: auto;
+  padding: 12px;
+  border-top: 1px solid var(--line);
+  background: var(--panel-muted);
+}
+
+.prefab-import-summary,
+.prefab-import-chain section > div {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--ink-muted);
+  font-size: 9px;
+}
+
+.prefab-import-summary {
+  margin-bottom: 8px;
+}
+
+.prefab-import-summary strong,
+.prefab-import-chain section > div strong {
+  margin-right: auto;
+  color: var(--ink);
+  font-size: 11px;
+}
+
+.prefab-import-chain {
+  display: grid;
+  gap: 12px;
+}
+
+.prefab-import-chain section {
+  min-width: 0;
+}
+
+.prefab-import-chain section > div {
+  margin-bottom: 5px;
+}
+
+.prefab-import-chain section > div span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.prefab-import-result pre {
+  margin: 0;
+  padding: 9px;
+  overflow: auto;
+  border: 1px solid var(--line);
+  background: var(--surface-input);
+  color: var(--ink);
+  font:
+    9px / 1.5 Consolas,
+    monospace;
+}
+
+.prefab-import-issues {
+  margin: 0 12px 12px;
+  padding: 9px 10px;
+  border-left: 3px solid var(--danger);
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.prefab-import-result .prefab-import-issues {
+  margin: 0;
+}
+
+.prefab-import-issues strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 11px;
+}
+
+.prefab-import-issues p {
+  margin: 3px 0;
+  overflow-wrap: anywhere;
+  font-size: 9px;
+}
+
+.dialog-message {
+  margin: 0;
+  padding: 16px 14px;
+  color: var(--ink-muted);
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.dialog-feedback {
+  grid-column: 1 / -1;
+  margin: -3px 0 0;
+  padding: 0 0 0 100px;
+  color: var(--ink-subtle);
+  overflow-wrap: anywhere;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.dialog-feedback.is-error {
+  padding: 6px 10px 6px 11px;
+  border-left: 3px solid var(--danger);
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.authoring-dialog > footer {
+  height: 46px;
+  padding: 0 12px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.dialog-secondary,
+.dialog-primary,
+.dialog-danger {
+  height: 29px;
+  padding: 0 10px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.dialog-secondary {
+  border: 1px solid var(--line);
+  background: var(--surface-input);
+  color: var(--ink-muted);
+}
+
+.dialog-primary {
+  border: 1px solid var(--accent-strong);
+  background: var(--accent);
+  color: var(--ink-inverse);
+}
+
+.dialog-danger {
+  border: 1px solid var(--danger);
+  background: var(--danger-strong);
+  color: var(--ink-inverse);
+}
+
+.dialog-secondary:hover {
+  border-color: var(--accent-border);
+}
+
+.dialog-primary:hover:not(:disabled) {
+  background: var(--accent-strong-hover);
+}
+
+.dialog-danger:hover:not(:disabled) {
+  background: var(--danger-hover);
+}
+
+.dialog-danger:disabled {
+  border-color: var(--ink-disabled);
+  background: var(--surface-active);
+  color: var(--ink-disabled);
+  cursor: default;
+}
+
+.dialog-primary:disabled {
+  border-color: var(--ink-disabled);
+  background: var(--surface-active);
+  cursor: default;
+}
+
+@media (max-width: 760px) {
+  .dialog-fields label {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .dialog-feedback {
+    padding-left: 0;
+  }
+}

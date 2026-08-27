@@ -5,7 +5,7 @@
     "com.unity.multiplayer.center": "2.0.0",
     "com.unity.nuget.newtonsoft-json": "3.2.2",
     "com.unity.timeline": "6.6.0",
-    "com.unity.ugui": "2.6.0",
+    "com.unity.ugui": "file:com.unity.ugui",
     "com.unity.visualscripting": "1.9.11",
     "com.unity.modules.accessibility": "1.0.0",
     "com.unity.modules.adaptiveperformance": "1.0.0",

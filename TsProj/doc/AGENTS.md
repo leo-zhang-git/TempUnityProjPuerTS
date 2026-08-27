@@ -11,6 +11,7 @@
 - [runtime-architecture.md](runtime-architecture.md)：模块边界、运行时生命周期、ECS 约束、Unity/PuerTS 接口和模板扩展。
 - [coding-conventions.md](coding-conventions.md)：人工编码判断、数据建模、集合与高频路径、错误处理和释放规则。
 - [testing.md](testing.md)：静态检查、构建、纯逻辑验证、Unity 联调和变更准入。
+- [ui-node-naming.md](ui-node-naming.md)：Legma、Unity Prefab、Binder 节点与生成字段共用的命名契约。
 
 ## 写作边界
 
@@ -24,6 +25,7 @@
 - 运行时模块边界、依赖方向、PuerTS 导出或生命周期改变时更新 `runtime-architecture.md`。
 - 人工编码约束或通用实现模式改变时更新 `coding-conventions.md`。
 - 检查入口、测试分层或 Play Mode 验收规则改变时更新 `testing.md`。
+- UI 节点、Binder 字段或 authoring 前缀契约改变时更新 `ui-node-naming.md`，并同步修改消费该契约的校验工具。
 - 文档完成后检查本地链接、路径存在性，以及是否错误地把示例结论提升为模板稳定规则。
 
 ## 支持资料生命周期

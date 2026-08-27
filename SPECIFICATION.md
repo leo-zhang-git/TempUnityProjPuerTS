@@ -18,15 +18,21 @@
 
 - Unity 使用 `Boot` 和 `Main` 两个场景；`RuntimeBootstrap.cs` 创建 PuerTS 环境并转发 Boot、Main、FixedUpdate、Update、LateUpdate 和 Dispose。
 - Unity/PuerTS 从 `TsProj/dist/main.js` 加载 TypeScript 运行时。
-- TypeScript 侧已有轻量 ECS、显式运行时阶段、本地存储抽象、版本化 JSON 存档、PlayerPrefs 适配，以及由 `UIManager`、`CanvasBase`、`WidgetBase` 组成的 uGUI runtime。
+- TypeScript 侧已有轻量 ECS、显式运行时阶段、本地存储抽象、版本化 JSON 存档、PlayerPrefs 适配，以及由 `UIManager`、`CanvasBase`、`WidgetBase` 组成的 Prefab 驱动 uGUI runtime。
+- Unity 侧已有 `UIBinder`、Prefab Variant effective declaration、Binder Inspector/Overlay、命名与 ownership 校验、TypeScript binding 生成、本地 Resources Prefab 索引与加载，以及 `StateRoot`、`StateToggle`、`ButtonEx`、`ScrollRectEx` 等配套组件。
+- `tools/ui-authoring/` 已迁入 Legma UI Authoring 能力，包含 Source Kernel、CLI、Web 编辑器、Unity Projection/Publish bridge、Binder 命名审计、generated binding 接入和可选 coordination server；Source、DeliveryState 与正式 Prefab 分别位于 `My project/UIAuthoring/`、`My project/UIAuthoring/DeliveryState/` 和 `My project/Assets/Resources/UI/Prefab/`。
+- 当前三轨闪避示例使用真实 Canvas/Widget Prefab、generated binding、嵌套 Widget 和四状态 `StateRoot` 验证 UI 链；节点与 Binder 字段遵循 `TsProj/doc/ui-node-naming.md`。
 - `TsProj/src/main.ts` 是组合根，对 Unity 暴露 `initializeBoot`、`enterMain`、`fixedUpdate`、`update`、`lateUpdate` 和 `dispose`。
 - `TsProj/src/game/lane-dodge/` 提供可运行的三轨闪避示例，用于验证命令队列、固定帧系统顺序、快照表现和存档链。
 - `TsProj/dist/` 是生成输出，Unity 编辑器期 loader 从该目录读取 JavaScript。
 
 ## 当前阶段
 
-- 模板已具备 Unity/PuerTS/TypeScript/ECS 的基础实现和示例玩法链。
+- 模板已具备 Unity/PuerTS/TypeScript/ECS、Binder UI runtime 和本地 Prefab 示例链。
 - 仍需通过完整 Play Mode 流程持续验证 Boot-to-Main、示例交互、重复启动和 Dispose 行为。
+- Legma 本地 authoring、Source 编辑、Projection、Publish、Prefab observation、Binder/generator 链和 fail-open coordination server 已迁入。coordination 默认关闭，通过 `LEGMA_COLLAB_SERVER` 和 `LEGMA_COLLAB_PROJECT` 显式配置，只交换文档 identity、hash、昵称、时间和短期编辑 lease；它不参与 Source 写入或远程发布事务。
+- 当前迁移仍不包含远程 UI 发布、热更、AssetBundle 或 Addressables 热更新。
+- 目标 Unity Editor 已接入 `PuerTsTemplate.UI.Editor.UiAuthoringJobBridge`；Editor 可用时优先复用已打开工程，Editor 不可用时由 `start_unity6000.bat` 提供 batchMode fallback。未登记或无法安全序列化的 Unity component capability 必须 fail-closed，不静默写入。
 - 正式 Player 构建中的 JavaScript 打包路径尚未确定，当前编辑器期 loader 不代表最终发布方案。
 - 后续扩展应优先验证真实使用方需求，不提前复制完整生产框架。
 

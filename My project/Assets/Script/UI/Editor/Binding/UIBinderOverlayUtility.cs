@@ -135,6 +135,13 @@ namespace PuerTsTemplate.UI.Editor
             ValidateSourceChain(view, prefabRoot);
             BuildNodes(view);
             BuildPanelNodes(view);
+            foreach (var namingError in UIBindingNodeNamingValidator.ValidatePrefab(prefabRoot))
+            {
+                if (!view.Validation.Errors.Contains(namingError))
+                {
+                    view.Validation.Errors.Add(namingError);
+                }
+            }
             return view;
         }
 
@@ -796,4 +803,3 @@ namespace PuerTsTemplate.UI.Editor
 
     }
 }
-

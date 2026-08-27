@@ -1,0 +1,436 @@
+{
+  "sourceKind": "artifact",
+  "artifactKey": "LaneDodgeHudWidget",
+  "artifactType": "Widget",
+  "widgetType": "LaneDodgeHudWidget",
+  "initialSize": [
+    1280,
+    720
+  ],
+  "bindings": [
+    {
+      "name": "txt_score",
+      "target": {
+        "componentType": "Text",
+        "nodeId": "txt_score"
+      }
+    },
+    {
+      "name": "txt_coins",
+      "target": {
+        "componentType": "Text",
+        "nodeId": "txt_coins"
+      }
+    },
+    {
+      "name": "txt_lane",
+      "target": {
+        "componentType": "Text",
+        "nodeId": "txt_lane"
+      }
+    },
+    {
+      "name": "btn_pause",
+      "target": {
+        "componentType": "ButtonEx",
+        "nodeId": "btn_pause"
+      }
+    },
+    {
+      "name": "btn_move_left",
+      "target": {
+        "componentType": "ButtonEx",
+        "nodeId": "btn_move_left"
+      }
+    },
+    {
+      "name": "btn_move_right",
+      "target": {
+        "componentType": "ButtonEx",
+        "nodeId": "btn_move_right"
+      }
+    }
+  ],
+  "root": {
+    "id": "LaneDodgeHudWidget",
+    "rect": {
+      "anchorMin": [
+        0,
+        0
+      ],
+      "anchorMax": [
+        1,
+        1
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "anchoredPosition": [
+        0,
+        0
+      ],
+      "sizeDelta": [
+        0,
+        0
+      ]
+    },
+    "components": {
+      "StateToggle": {
+        "allowSwitchOff": true,
+        "selectedIndices": [],
+        "stateRoots": [
+          "btn_move_left",
+          "btn_move_right"
+        ]
+      }
+    },
+    "children": [
+      {
+        "id": "txt_score",
+        "name": "txt_score",
+        "rect": {
+          "anchorMin": [
+            0,
+            1
+          ],
+          "anchorMax": [
+            0,
+            1
+          ],
+          "pivot": [
+            0,
+            1
+          ],
+          "anchoredPosition": [
+            38,
+            -34
+          ],
+          "sizeDelta": [
+            500,
+            80
+          ]
+        },
+        "components": {
+          "Text": {
+            "color": "#F5F7FAFF",
+            "fontSize": 44,
+            "text": "SCORE  0000"
+          }
+        }
+      },
+      {
+        "id": "txt_coins",
+        "name": "txt_coins",
+        "rect": {
+          "anchorMin": [
+            0,
+            1
+          ],
+          "anchorMax": [
+            0,
+            1
+          ],
+          "pivot": [
+            0,
+            1
+          ],
+          "anchoredPosition": [
+            38,
+            -112
+          ],
+          "sizeDelta": [
+            420,
+            60
+          ]
+        },
+        "components": {
+          "Text": {
+            "color": "#B8C2CCFF",
+            "fontSize": 30,
+            "text": "COINS  0"
+          }
+        }
+      },
+      {
+        "id": "txt_lane",
+        "name": "txt_lane",
+        "rect": {
+          "anchorMin": [
+            0,
+            1
+          ],
+          "anchorMax": [
+            0,
+            1
+          ],
+          "pivot": [
+            0,
+            1
+          ],
+          "anchoredPosition": [
+            38,
+            -170
+          ],
+          "sizeDelta": [
+            420,
+            52
+          ]
+        },
+        "components": {
+          "Text": {
+            "color": "#B8C2CCFF",
+            "fontSize": 26,
+            "text": "LANE  --"
+          }
+        }
+      },
+      {
+        "id": "btn_pause",
+        "name": "btn_pause",
+        "rect": {
+          "anchorMin": [
+            1,
+            1
+          ],
+          "anchorMax": [
+            1,
+            1
+          ],
+          "pivot": [
+            1,
+            1
+          ],
+          "anchoredPosition": [
+            -34,
+            -34
+          ],
+          "sizeDelta": [
+            110,
+            92
+          ]
+        },
+        "components": {
+          "ButtonEx": {
+            "targetGraphic": "btn_pause"
+          },
+          "Image": {
+            "color": "#3B424AFF",
+            "raycastTarget": true
+          }
+        },
+        "children": [
+          {
+            "id": "label",
+            "rect": {
+              "anchorMin": [
+                0,
+                0
+              ],
+              "anchorMax": [
+                1,
+                1
+              ],
+              "pivot": [
+                0.5,
+                0.5
+              ],
+              "anchoredPosition": [
+                0,
+                0
+              ],
+              "sizeDelta": [
+                -28,
+                -28
+              ]
+            },
+            "components": {
+              "Text": {
+                "alignment": "center",
+                "color": "#F5F7FAFF",
+                "fontSize": 34,
+                "text": "II"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "btn_move_left",
+        "name": "btn_move_left",
+        "rect": {
+          "anchorMin": [
+            0,
+            0
+          ],
+          "anchorMax": [
+            0,
+            0
+          ],
+          "pivot": [
+            0,
+            0
+          ],
+          "anchoredPosition": [
+            38,
+            42
+          ],
+          "sizeDelta": [
+            300,
+            120
+          ]
+        },
+        "components": {
+          "ButtonEx": {
+            "targetGraphic": "btn_move_left"
+          },
+          "Image": {
+            "color": "#3B424AFF",
+            "raycastTarget": true
+          },
+          "StateRoot": {
+            "currentState": "unselected",
+            "elements": [
+              {
+                "elementType": "UColor",
+                "targetNodeId": "btn_move_left",
+                "values": {
+                  "unselected": "#3B424AFF",
+                  "selected": "#1F9EA6FF"
+                }
+              }
+            ],
+            "states": {
+              "unselected": {},
+              "selected": {}
+            }
+          }
+        },
+        "children": [
+          {
+            "id": "label_1",
+            "name": "Label",
+            "rect": {
+              "anchorMin": [
+                0,
+                0
+              ],
+              "anchorMax": [
+                1,
+                1
+              ],
+              "pivot": [
+                0.5,
+                0.5
+              ],
+              "anchoredPosition": [
+                0,
+                0
+              ],
+              "sizeDelta": [
+                -28,
+                -28
+              ]
+            },
+            "components": {
+              "Text": {
+                "alignment": "center",
+                "color": "#F5F7FAFF",
+                "fontSize": 34,
+                "text": "<"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "btn_move_right",
+        "name": "btn_move_right",
+        "rect": {
+          "anchorMin": [
+            1,
+            0
+          ],
+          "anchorMax": [
+            1,
+            0
+          ],
+          "pivot": [
+            1,
+            0
+          ],
+          "anchoredPosition": [
+            -38,
+            42
+          ],
+          "sizeDelta": [
+            300,
+            120
+          ]
+        },
+        "components": {
+          "ButtonEx": {
+            "targetGraphic": "btn_move_right"
+          },
+          "Image": {
+            "color": "#3B424AFF",
+            "raycastTarget": true
+          },
+          "StateRoot": {
+            "currentState": "unselected",
+            "elements": [
+              {
+                "elementType": "UColor",
+                "targetNodeId": "btn_move_right",
+                "values": {
+                  "unselected": "#3B424AFF",
+                  "selected": "#1F9EA6FF"
+                }
+              }
+            ],
+            "states": {
+              "unselected": {},
+              "selected": {}
+            }
+          }
+        },
+        "children": [
+          {
+            "id": "label_2",
+            "name": "Label",
+            "rect": {
+              "anchorMin": [
+                0,
+                0
+              ],
+              "anchorMax": [
+                1,
+                1
+              ],
+              "pivot": [
+                0.5,
+                0.5
+              ],
+              "anchoredPosition": [
+                0,
+                0
+              ],
+              "sizeDelta": [
+                -28,
+                -28
+              ]
+            },
+            "components": {
+              "Text": {
+                "alignment": "center",
+                "color": "#F5F7FAFF",
+                "fontSize": 34,
+                "text": ">"
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

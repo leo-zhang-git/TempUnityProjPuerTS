@@ -396,7 +396,15 @@ namespace PuerTsTemplate.UI.Editor
 
                 if (canEdit && showUseObjectName && GUI.Button(useNameRect, "Use Name"))
                 {
-                    nameProperty.stringValue = DefaultNodeName(valueProperty.objectReferenceValue);
+                    var suggestedName = DefaultNodeName(valueProperty.objectReferenceValue);
+                    if (string.IsNullOrEmpty(suggestedName))
+                    {
+                        Debug.LogError("当前 Binder 类型尚未确认命名前缀，请先更新 UI 节点命名契约。");
+                    }
+                    else
+                    {
+                        nameProperty.stringValue = suggestedName;
+                    }
                 }
 
                 if (canEdit && GUI.Button(deleteRect, new GUIContent("x", "Delete local declaration")))
@@ -522,7 +530,13 @@ namespace PuerTsTemplate.UI.Editor
                         continue;
                     }
 
-                    AddLocalNode(localSerializedObject, nodesProperty, DefaultNodeName(reference), value);
+                    var suggestedName = DefaultNodeName(value);
+                    if (string.IsNullOrEmpty(suggestedName))
+                    {
+                        Debug.LogError($"Binder 类型尚未确认命名前缀，无法添加：{value.GetType().FullName}", value);
+                        continue;
+                    }
+                    AddLocalNode(localSerializedObject, nodesProperty, suggestedName, value);
                 }
                 currentEvent.Use();
             }
@@ -732,6 +746,12 @@ namespace PuerTsTemplate.UI.Editor
             {
                 var resolution = UIBinderOverlayUtility.ResolveBindingType(candidate);
                 var label = resolution.IsValid ? $"{resolution.Key}/{candidate.GetType().Name}" : candidate.GetType().Name;
+                if (!UIBindingDeclarationResolver.TryResolveContract(candidate, out var contract, out _)
+                    || !UIBindingNamingRules.HasConfirmedNamingRule(contract))
+                {
+                    menu.AddDisabledItem(new GUIContent(label + " (命名前缀未确认)"));
+                    continue;
+                }
                 menu.AddItem(new GUIContent(label), ReferenceEquals(valueProperty.objectReferenceValue, candidate), selected =>
                 {
                     valueProperty.objectReferenceValue = selected as UnityEngine.Object;
@@ -789,16 +809,53 @@ namespace PuerTsTemplate.UI.Editor
         private static string DefaultNodeName(UnityEngine.Object value)
         {
             var go = ToGameObject(value);
-            var name = go != null ? go.name : value != null ? value.name : "node";
-            if (string.IsNullOrWhiteSpace(name))
+            if (go == null
+                || !UIBindingDeclarationResolver.TryResolveContract(value, out var contract, out _)
+                || !UIBindingNamingRules.HasConfirmedNamingRule(contract))
             {
-                return "node";
+                return string.Empty;
             }
 
-            return char.ToLowerInvariant(name[0]) + name.Substring(1);
+            if (string.Equals(contract.Key, "UIBinder", StringComparison.Ordinal))
+            {
+                return UIBindingNamingRules.IsPascalCaseNodeName(go.name)
+                       || UIBindingNamingRules.IsLowerSnakeCase(go.name)
+                    ? go.name
+                    : string.Empty;
+            }
+            UIBindingNamingRules.TryGetRequiredPrefix(contract, out var prefix);
+
+            if (UIBindingNamingRules.IsLowerSnakeCase(go.name))
+            {
+                return go.name.StartsWith(prefix, StringComparison.Ordinal) ? go.name : prefix + go.name;
+            }
+            var suffix = ToLowerSnakeCase(go.name);
+            return string.IsNullOrEmpty(suffix) ? string.Empty : prefix + suffix;
+        }
+
+        private static string ToLowerSnakeCase(string value)
+        {
+            var result = new System.Text.StringBuilder();
+            for (var index = 0; index < value.Length; index += 1)
+            {
+                var character = value[index];
+                if (!char.IsLetterOrDigit(character))
+                {
+                    if (result.Length > 0 && result[result.Length - 1] != '_')
+                    {
+                        result.Append('_');
+                    }
+                    continue;
+                }
+
+                if (char.IsUpper(character) && result.Length > 0 && result[result.Length - 1] != '_')
+                {
+                    result.Append('_');
+                }
+                result.Append(char.ToLowerInvariant(character));
+            }
+            return result.ToString().Trim('_');
         }
 
     }
 }
-
-

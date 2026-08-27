@@ -65,7 +65,59 @@
     <Analyzer Include="F:\Unity6000.6b\Editor\Data\BCLExtensions\TargetingPacks\netstandard2.1\analyzers\dotnet\roslyn4.0\cs\System.Text.Json.SourceGeneration.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Script\UI\Runtime\Components\AutoLayoutGroup.cs" />
+    <Compile Include="Assets\Script\UI\Runtime\Binding\UIBinder.cs" />
+    <Compile Include="Assets\Script\UI\Runtime\Components\RoundedRectGraphic.cs" />
+    <Compile Include="Assets\Script\UI\Runtime\Binding\UIAuthoringNodeIdentity.cs" />
+    <Compile Include="Assets\Script\UI\Runtime\State\ElementAgent.cs" />
+    <Compile Include="Assets\Script\UI\Runtime\State\StateToggle.cs" />
+    <Compile Include="Assets\Script\UI\Runtime\State\ElementStateProperty.cs" />
     <Compile Include="Assets\Script\RuntimeBootstrap.cs" />
+    <Compile Include="Assets\Script\UI\Runtime\Components\LayoutSettings.cs" />
+    <Compile Include="Assets\Script\UI\Runtime\State\StateRoot.cs" />
+    <Compile Include="Assets\Script\UI\UiDefaultMaterialRuntimeInitializer.cs" />
+    <Compile Include="Assets\Script\UI\Runtime\State\ElementAgentEngine.cs" />
+    <Compile Include="Assets\Script\UI\Runtime\Components\VirtualJoystick.cs" />
+    <Compile Include="Assets\Script\UI\Runtime\Components\ScrollRectEx.cs" />
+    <Compile Include="Assets\Script\UI\Runtime\State\ElementAgentUGUI.cs" />
+    <Compile Include="Assets\Script\UI\Runtime\State\Element.cs" />
+    <Compile Include="Assets\Script\UI\Runtime\State\ElementFactory.cs" />
+    <Compile Include="Assets\Script\UI\Runtime\State\StateRootUtility.cs" />
+    <Compile Include="Assets\Script\UI\Runtime\Binding\LocalUiPrefabLoader.cs" />
+    <Compile Include="Assets\Script\UI\Runtime\Components\CustomDropDown.cs" />
+    <Compile Include="Assets\Script\UI\Runtime\State\StateConfig.cs" />
+    <Compile Include="Assets\Script\UI\Runtime\Components\ButtonEx.cs" />
+    <Compile Include="Assets\Script\UI\Runtime\Components\CustomDropDownOption.cs" />
+    <Compile Include="Assets\Script\UI\Runtime\Components\ComponentCross.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile-2-Pass.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+    <None Include="Assets\Shaders\Resources\sRGBUI-Gray.shader" />
+    <None Include="Assets\Shaders\Resources\ShapeSoftMask-Unsupported.shader" />
+    <None Include="Assets\Shaders\UI\ShapeSoftMask.hlsl" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\SDFFunctions.hlsl" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
+    <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\Shaders\Resources\sRGBUI-Default.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+    <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -696,6 +748,10 @@
       <HintPath>Library\PackageCache\com.unity.visualscripting@8bed5ad90189\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@4dfd81071c64\Runtime\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="netstandard">
       <HintPath>F:\Unity6000.6b\Editor\Data\NetStandard\ref\2.1.0\netstandard.dll</HintPath>
       <Private>False</Private>
@@ -1228,20 +1284,8 @@
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Flow.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Unity.VisualScripting.Flow.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Flow.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEditor.UI.Analytics">
-      <HintPath>Library\ScriptAssemblies\UnityEditor.UI.Analytics.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro">
-      <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.VisualStudio.Editor">
@@ -1258,10 +1302,6 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.SettingsProvider.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.TestTools.CodeCoverage.Editor.OpenCover.Model">
@@ -1286,10 +1326,6 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.Core.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Core.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.InternalAPIEngineBridge.004">
-      <HintPath>Library\ScriptAssemblies\Unity.InternalAPIEngineBridge.004.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Multiplayer.Center.Editor">
@@ -1328,10 +1364,6 @@
       <HintPath>Library\ScriptAssemblies\Unity.Settings.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="UnityEditor.UI">
-      <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="com.puerts.mcp.Editor.csproj">
@@ -1342,13 +1374,33 @@
       <Project>{A7915A70-E8FE-E183-95C8-D6DB7722A606}</Project>
       <Name>com.tencent.puerts.nodejs</Name>
     </ProjectReference>
+    <ProjectReference Include="Unity.TextMeshPro.Editor.csproj">
+      <Project>{AB010756-D918-EA42-906F-0FD15891EDA7}</Project>
+      <Name>Unity.TextMeshPro.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="UnityEditor.UI.Analytics.csproj">
+      <Project>{4F486059-2AE6-783C-F9E1-EFA058E10972}</Project>
+      <Name>UnityEditor.UI.Analytics</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.TextMeshPro.csproj">
+      <Project>{3375ABF2-BCB5-BC3F-D583-0FE77C66C37C}</Project>
+      <Name>Unity.TextMeshPro</Name>
+    </ProjectReference>
     <ProjectReference Include="com.tencent.puerts.v8.csproj">
       <Project>{2CABD349-E0B9-81E3-5A90-F1815A126282}</Project>
       <Name>com.tencent.puerts.v8</Name>
     </ProjectReference>
+    <ProjectReference Include="UnityEngine.UI.csproj">
+      <Project>{03AC2CA7-AF01-FE34-84B6-7CE92CF47147}</Project>
+      <Name>UnityEngine.UI</Name>
+    </ProjectReference>
     <ProjectReference Include="com.puerts.agent.csproj">
       <Project>{A153353C-2773-8A9F-0EAB-CDDFF837740C}</Project>
       <Name>com.puerts.agent</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.InternalAPIEngineBridge.004.csproj">
+      <Project>{D6DEA930-8BB5-322C-2752-62EFDBD1C3C3}</Project>
+      <Name>Unity.InternalAPIEngineBridge.004</Name>
     </ProjectReference>
     <ProjectReference Include="com.puerts.agent.Editor.csproj">
       <Project>{A331420E-613A-CAFD-86F5-5252080FAE47}</Project>
@@ -1365,6 +1417,10 @@
     <ProjectReference Include="com.tencent.puerts.v8.Editor.csproj">
       <Project>{A34994ED-1C3D-FEAA-C9D4-89209A876244}</Project>
       <Name>com.tencent.puerts.v8.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="UnityEditor.UI.csproj">
+      <Project>{067C016A-9BDF-7DCE-2E59-C851BCB7CD88}</Project>
+      <Name>UnityEditor.UI</Name>
     </ProjectReference>
     <ProjectReference Include="com.tencent.puerts.core.csproj">
       <Project>{FBF08F72-C1FF-FAF0-C138-814CE7D6D047}</Project>

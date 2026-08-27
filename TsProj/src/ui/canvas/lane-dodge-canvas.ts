@@ -13,7 +13,6 @@ import {
   fixedLayout,
   RectLayout
 } from "../common/unity-ui";
-import { LaneDodgeHudWidget } from "../widgets/lane-dodge-hud-widget";
 import { CanvasBase } from "./canvas-base";
 
 const Unity = CS.UnityEngine;
@@ -39,11 +38,13 @@ interface ObjectView {
   kind: LaneObjectSnapshot["kind"];
 }
 
-export interface LaneDodgeCanvas extends LaneDodgeCanvasUI {}
-
 export class LaneDodgeCanvas extends CanvasBase {
   private readonly objectViews = new Map<EntityGuid, ObjectView>();
   private snapshot!: LaneDodgeSnapshot;
+
+  private get ui(): LaneDodgeCanvasUI {
+    return this.getBinderUI<LaneDodgeCanvasUI>();
+  }
 
   private readonly handleStartClick = (): void => {
     this.dispatch("start-run");
@@ -71,12 +72,12 @@ export class LaneDodgeCanvas extends CanvasBase {
 
   protected override onLoaded(): void {
     this.snapshot = this.port.getSnapshot();
-    this.bindClick(this.menuStartButton, this.handleStartClick);
-    this.bindClick(this.pauseResumeButton, this.handleResumeClick);
-    this.bindClick(this.pauseRestartButton, this.handleRestartClick);
-    this.bindClick(this.pauseMenuButton, this.handleMenuClick);
-    this.bindClick(this.gameOverAgainButton, this.handleRestartClick);
-    this.bindClick(this.gameOverMenuButton, this.handleMenuClick);
+    this.bindClick(this.ui.btn_start, this.handleStartClick);
+    this.bindClick(this.ui.btn_resume, this.handleResumeClick);
+    this.bindClick(this.ui.btn_pause_restart, this.handleRestartClick);
+    this.bindClick(this.ui.btn_pause_menu, this.handleMenuClick);
+    this.bindClick(this.ui.btn_run_again, this.handleRestartClick);
+    this.bindClick(this.ui.btn_game_over_menu, this.handleMenuClick);
     this.sync();
   }
 
@@ -142,16 +143,16 @@ export class LaneDodgeCanvas extends CanvasBase {
 
   private sync(): void {
     this.snapshot = this.port.getSnapshot();
-    this.phaseState.SetCurrentState(this.snapshot.phase, false);
+    this.ui.sr_phase.SetCurrentState(this.snapshot.phase, false);
     if (this.snapshot.phase === "Playing") {
-      this.hudWidget.show();
+      this.ui.LaneDodgeHudWidget.show();
     } else {
-      this.hudWidget.hide();
+      this.ui.LaneDodgeHudWidget.hide();
     }
 
     if (this.snapshot.playerLane !== null) {
       applyLayout(
-        this.player.transform as CS.UnityEngine.RectTransform,
+        this.ui.img_player.transform as CS.UnityEngine.RectTransform,
         laneObjectLayout(
           LANE_X[this.snapshot.playerLane],
           PLAYER_BOTTOM_OFFSET,
@@ -161,12 +162,12 @@ export class LaneDodgeCanvas extends CanvasBase {
       );
     }
 
-    this.hudWidget.render(this.snapshot);
-    this.resultScoreText.text = `SCORE  ${this.snapshot.score}`;
-    this.resultCoinText.text =
+    this.ui.LaneDodgeHudWidget.render(this.snapshot);
+    this.ui.txt_result_score.text = `SCORE  ${this.snapshot.score}`;
+    this.ui.txt_result_coins.text =
       `COINS  ${this.snapshot.runCoins}   BEST  ${this.snapshot.bestScore}`;
-    this.menuBestText.text = `BEST  ${this.snapshot.bestScore}`;
-    this.menuCoinsText.text = `TOTAL COINS  ${this.snapshot.totalCoins}`;
+    this.ui.txt_menu_best.text = `BEST  ${this.snapshot.bestScore}`;
+    this.ui.txt_menu_coins.text = `TOTAL COINS  ${this.snapshot.totalCoins}`;
     this.syncObjectViews();
   }
 
@@ -205,7 +206,7 @@ export class LaneDodgeCanvas extends CanvasBase {
   private createObjectView(laneObject: LaneObjectSnapshot): ObjectView {
     const node = createPanel(
       `${laneObject.kind}:${laneObject.entityGuid}`,
-      this.playfield.transform,
+      this.ui.img_playfield.transform,
       this.colorForObject(laneObject.kind),
       fixedLayout(0, 0, 1, 1)
     );

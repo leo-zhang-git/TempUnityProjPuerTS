@@ -1,0 +1,49 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.5/schema.json",
+  "files": {
+    "includes": [
+      "src/**/*.{ts,tsx}",
+      "src/**/*.css",
+      "scripts/**/*.{ts,mjs}",
+      "tests/**/*.{ts,mjs}",
+      "vite.config.ts",
+      "biome.json",
+      "knip.json",
+      "package.json",
+      "tsconfig.json"
+    ]
+  },
+  "formatter": {
+    "enabled": false,
+    "indentStyle": "space",
+    "lineWidth": 140
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "none",
+      "correctness": {
+        "noUnsafeFinally": "error",
+        "noUnsafeOptionalChaining": "error"
+      },
+      "suspicious": {
+        "noAssignInExpressions": "error",
+        "noEmptyInterface": "error",
+        "noExplicitAny": "error",
+        "noImplicitAnyLet": "error",
+        "noNonNullAssertedOptionalChain": "error",
+        "noUselessEscapeInString": "error",
+        "useArraySortCompare": "error",
+        "useIterableCallbackReturn": "error"
+      }
+    }
+  },
+  "assist": {
+    "enabled": false,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  }
+}

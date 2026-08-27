@@ -32,6 +32,23 @@ Unity RuntimeBootstrap -> TypeScript composition root
 - `TsProj/src/ui/common/` 与 Canvas/Widget 基类持有通用 UI runtime，不依赖具体游戏、ECS 或组合根；`src/ui/canvas/` 和 `src/ui/widgets/` 中的具体表现 owner 可以依赖游戏命令与只读视图契约。
 - `TsProj/src/main.ts` 是组合根，业务模块不反向依赖它。
 
+## UI 资产与绑定边界
+
+```text
+Unity UI Prefab + UIBinder declarations
+  -> Legma Source / Projection / Unity Publish
+  -> Editor validation/generation
+  -> generated TypeScript binding + prefab path index
+  -> local Resources loader
+  -> CanvasBase / WidgetBase runtime
+```
+
+- Unity Prefab 是节点层级、组件引用和 `StateRoot` 配置的运行时资产 owner；generated TypeScript 只描述经过校验的访问契约，不复制序列化状态。
+- `tools/ui-authoring/` 是本模板的本地 Legma/UI Authoring owner：`My project/UIAuthoring/Sources/` 持有唯一 Source，`My project/UIAuthoring/DeliveryState/` 持有交付 identity，`My project/Assets/Resources/UI/Prefab/` 持有正式 Prefab；Source 不能绕过 Publish 直接成为正式 Prefab 的第二写入口。
+- Binder Inspector、Overlay、Prefab ownership 校验和 binding generator 只在 Unity Editor 运行；TypeScript runtime 不依赖 `UnityEditor` 或 Newtonsoft.Json。
+- `CanvasBase` 按 generated path index 从 `Assets/Resources/UI/Prefab` 本地实例化 Prefab，`UIBinder` 注入完成后才进入业务 `onLoaded()`；当前边界不包含远程发布、AssetBundle、Addressables 或热更加载。
+- 嵌套 Widget 由显式 `widgetType` 和 `WidgetFactory` 建立 TypeScript 实例，生命周期归所属 Canvas/Widget；ScrollRect 模板保留独立 Widget identity，但不自动提升为顶层 Canvas。
+
 ## Unity 接入约定
 
 - Unity 拥有 Scene 生命周期、Unity 对象生命周期、物理与渲染能力，以及 PuerTS 环境的创建和销毁。
@@ -39,6 +56,9 @@ Unity RuntimeBootstrap -> TypeScript composition root
 - TypeScript 拥有游戏规则、ECS 状态、运行时阶段和不依赖 Unity 对象的确定性逻辑。
 - 表现层读取 TypeScript 状态并驱动 GameObject 和 UI，不重新计算游戏规则结论。
 - 持有 Unity 对象、callback、订阅或句柄的 TypeScript 模块必须有明确的创建、场景卸载和释放边界。
+- Legma Source、Unity Prefab、Binder 声明与 generated binding 使用 `TsProj/doc/ui-node-naming.md` 的同一节点命名契约；投影和生成阶段只校验与保真，不另行改名。
+- Unity Projection/Publish bridge 通过 request/claim/result 文件与 Node 服务协作；已打开 Editor 优先接取任务，batchMode 仅作为无人值守 fallback。该桥接只依赖本地任务文件，不依赖 coordination server。
+- coordination server 是 Web/Node 侧默认关闭、fail-open 的元数据旁路，只提供编辑活动与 hash 一致性提示；中心不可达不改变本地 Save 或 Publish 结果。远程 UI 发布、热更、AssetBundle 和 Addressables 不属于当前模板边界。
 - Unity `FixedUpdate`、`Update` 和 `LateUpdate` 分别驱动 TypeScript 对应阶段；PuerTS `ScriptEnv.Tick()` 只在 Unity `Update` 中执行一次。
 
 ## 运行时与生命周期

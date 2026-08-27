@@ -1,0 +1,59 @@
+.artifact-board {
+  position: relative;
+  min-width: 360px;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  background: var(--surface-overlay-muted);
+  box-shadow: 0 10px 24px var(--shadow-soft);
+}
+
+.artifact-board-edges {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.artifact-board-edges path {
+  fill: none;
+  stroke: var(--ink-subtle);
+  stroke-width: 1.25;
+  opacity: 0.8;
+}
+
+.artifact-board-edges marker path {
+  fill: var(--ink-subtle);
+  stroke: none;
+  opacity: 1;
+}
+
+.gallery-item-identity {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 5px;
+}
+
+.gallery-item-identity strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 10px;
+}
+
+.gallery-item-identity small {
+  color: var(--ink-muted);
+  font-size: 8px;
+  text-transform: uppercase;
+}
+
+.gallery-item-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 10px;
+  color: var(--ink-muted);
+  font-size: 8px;
+  text-transform: uppercase;
+}

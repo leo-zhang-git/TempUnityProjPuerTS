@@ -1,0 +1,131 @@
+.track {
+  width: 100%;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--surface-active);
+}
+
+.track i {
+  height: 100%;
+  display: block;
+  border-radius: inherit;
+  background: var(--accent);
+  transition: width 180ms ease;
+}
+
+.track[data-status="failed"] i {
+  background: var(--danger);
+}
+
+.track[data-indeterminate="true"] i {
+  width: 32%;
+  animation: unity-progress-indeterminate 1.2s ease-in-out infinite;
+}
+
+.current {
+  min-width: 0;
+  margin-top: 6px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, auto);
+  gap: 7px;
+  align-items: center;
+  color: var(--ink-muted);
+  font-size: 9px;
+}
+
+.current > span,
+.current code {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.current code {
+  color: var(--ink-subtle);
+  font-size: 8px;
+}
+
+.current small,
+.steps small {
+  color: var(--ink-subtle);
+  font-size: 8px;
+}
+
+.steps {
+  margin: 9px 0 0;
+  padding: 7px 8px;
+  border: 1px solid var(--line);
+  background: var(--surface-input);
+  display: grid;
+  gap: 4px;
+  list-style: none;
+}
+
+.steps li {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 13px minmax(100px, 1fr) auto minmax(0, 140px);
+  gap: 6px;
+  align-items: center;
+  color: var(--ink-subtle);
+  font-size: 9px;
+}
+
+.steps li > span,
+.steps code {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.steps code {
+  color: var(--ink-subtle);
+  font-size: 8px;
+  text-align: right;
+}
+
+.steps li[data-status="running"] {
+  color: var(--ink);
+}
+
+.steps li[data-status="running"] svg {
+  color: var(--accent);
+  animation: unity-progress-spin 800ms linear infinite;
+}
+
+.steps li[data-status="succeeded"] svg {
+  color: var(--accent);
+}
+
+.steps li[data-status="failed"] {
+  color: var(--danger);
+}
+
+@keyframes unity-progress-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes unity-progress-indeterminate {
+  from {
+    transform: translateX(-110%);
+  }
+  to {
+    transform: translateX(320%);
+  }
+}
+
+@media (max-width: 620px) {
+  .steps li {
+    grid-template-columns: 13px minmax(0, 1fr) auto;
+  }
+
+  .steps code {
+    grid-column: 2 / -1;
+    text-align: left;
+  }
+}

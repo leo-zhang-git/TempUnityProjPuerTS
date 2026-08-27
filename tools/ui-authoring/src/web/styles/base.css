@@ -1,0 +1,39 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+body {
+  background: var(--app-background);
+  color: var(--ink);
+}
+
+html.capture-document,
+html.capture-document body,
+html.capture-document #root {
+  background: transparent;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+  letter-spacing: 0;
+}
+
+button {
+  color: inherit;
+}
+
+/* Authoring chrome is designed for a 2560px-or-wider workspace. Game UI preview text keeps its Source size. */
+body {
+  font-size: 14px;
+}

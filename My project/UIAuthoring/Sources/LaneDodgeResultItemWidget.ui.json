@@ -1,0 +1,79 @@
+{
+  "sourceKind": "artifact",
+  "artifactKey": "LaneDodgeResultItemWidget",
+  "artifactType": "Widget",
+  "widgetType": "LaneDodgeResultItemWidget",
+  "initialSize": [
+    220,
+    64
+  ],
+  "bindings": [
+    {
+      "name": "txt_label",
+      "target": {
+        "componentType": "Text",
+        "nodeId": "txt_label"
+      }
+    }
+  ],
+  "root": {
+    "id": "LaneDodgeResultItemWidget",
+    "rect": {
+      "anchorMin": [
+        0.5,
+        0.5
+      ],
+      "anchorMax": [
+        0.5,
+        0.5
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "anchoredPosition": [
+        0,
+        0
+      ],
+      "sizeDelta": [
+        220,
+        64
+      ]
+    },
+    "children": [
+      {
+        "id": "txt_label",
+        "name": "txt_label",
+        "rect": {
+          "anchorMin": [
+            0,
+            0
+          ],
+          "anchorMax": [
+            1,
+            1
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "anchoredPosition": [
+            0,
+            0
+          ],
+          "sizeDelta": [
+            -16,
+            -16
+          ]
+        },
+        "components": {
+          "Text": {
+            "alignment": "center",
+            "color": "#B8C2CCFF",
+            "text": "RUN"
+          }
+        }
+      }
+    ]
+  }
+}

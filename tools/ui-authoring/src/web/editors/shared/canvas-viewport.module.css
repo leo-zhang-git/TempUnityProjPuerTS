@@ -1,0 +1,67 @@
+.canvas-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 12px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  background-color: var(--workspace);
+}
+
+.canvas-scroll.is-panning {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.canvas-scroll > [data-canvas-stage] {
+  margin: auto;
+  zoom: var(--canvas-page-zoom-inverse, 1);
+}
+
+.canvas-zoom-controls {
+  height: 20px;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.canvas-zoom-controls button {
+  min-width: 22px;
+  height: 18px;
+  padding: 0;
+  border: 0;
+  border-right: 1px solid var(--line);
+  background: var(--surface-raised);
+  display: grid;
+  place-items: center;
+  color: var(--ink-muted);
+  font-size: 8px;
+  cursor: pointer;
+}
+
+.canvas-zoom-controls button:last-child {
+  border-right: 0;
+}
+
+.canvas-zoom-controls button:hover:not(:disabled) {
+  background: var(--surface-hover);
+  color: var(--ink-strong);
+}
+
+.canvas-zoom-controls button:disabled {
+  color: var(--ink-disabled);
+  cursor: default;
+}
+
+.canvas-zoom-controls .canvas-zoom-value {
+  width: 38px;
+}
+
+@media (max-width: 760px) {
+  .canvas-scroll {
+    padding: 10px;
+  }
+}

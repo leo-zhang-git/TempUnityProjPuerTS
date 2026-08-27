@@ -50,6 +50,13 @@ class FrameConfigTests(unittest.TestCase):
                         "tools": {
                             "legma": {"coordinationEnabled": False},
                             "staticdata": {"enabled": True},
+                            "mcp": {
+                                "enabled": True,
+                                "workspacePath": "F:\\WorkSpace\\longdemo",
+                                "unityAssetServerPath": "tools\\unity-asset-mcp\\server.py",
+                                "gameServerPath": "tools\\game-mcp\\server.py",
+                                "unityEndpoint": "http://127.0.0.1:18180/mcp",
+                            },
                         },
                     }
                 ),
@@ -78,6 +85,20 @@ class FrameConfigTests(unittest.TestCase):
             self.assertEqual(config.legma_ai_fallback_ports.start, 4331)
             self.assertEqual(config.unity_editor_path, "F:\\Unity6000.6b\\Editor\\Unity.exe")
             self.assertEqual(config.unity_project_path, "My project")
+            self.assertTrue(config.mcp_enabled)
+            self.assertEqual(config.mcp_unity_endpoint, "http://127.0.0.1:18180/mcp")
+
+    def test_rejects_non_loopback_unity_mcp_endpoint(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            defaults = json.loads((REPO_ROOT / "frame-config.json").read_text(encoding="utf-8"))
+            defaults["tools"]["mcp"]["unityEndpoint"] = "http://0.0.0.0:18180/mcp"
+
+            with self.assertRaisesRegex(
+                self.frame_config.FrameConfigError,
+                "explicit loopback HTTP /mcp URL",
+            ):
+                self.frame_config.validate_frame_defaults(defaults, root / "frame-config.json")
 
     def test_rejects_local_configuration_from_another_workspace(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:

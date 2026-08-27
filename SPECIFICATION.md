@@ -19,7 +19,9 @@
 - Unity 使用 `Boot` 和 `Main` 两个场景；`RuntimeBootstrap.cs` 创建 PuerTS 环境并转发 Boot、Main、FixedUpdate、Update、LateUpdate 和 Dispose。
 - Unity/PuerTS 从 `TsProj/dist/main.js` 加载 TypeScript 运行时。
 - 根 `frame-config.json` 持有框架工具的稳定默认配置（包括端口槽位数量和备用端口扫描数量）；每个副本通过被 Git 忽略的 `frame-config.local.json` 保存 `workspaceId` 和 `portSlot`。Legma、静态配表 Web 和可选 coordination server 从同一端口槽位派生本地监听端口，首选端口被占用时由各自 launcher 自动扫描备用端口。
-- 根 `启动工具.bat` 启动 Python 可视化工具，可编辑 `frame-config.json`、初始化副本槽位、启动 Unity 编辑器、Legma UI 工具和 Staticdata 导表工具；Unity 编辑器路径与项目路径由 `frame-config.json` 的 `unity` 节配置。
+- Unity MCP 使用 `com.coplaydev.unity-mcp` `9.7.3` 本地包；根 `.codex/config.toml` 注册 `unity-asset-mcp`、`game-mcp` 和 `UnityMCP` 三个服务，旧的 PuerTS MCP 服务不再注册。
+- `frame-config.json` 的 `tools.mcp` 节记录当前接入的 `longdemo` 工具工作区、两个 Python server 相对路径和 `UnityMCP` endpoint；Unity 插件从该 endpoint 启动本工程的本地 HTTP server，启动工具把同一配置同步到 `.codex/config.toml`。模板使用独立于 `longdemo` `18080–18089` 端口段的地址。
+- 根 `启动工具.bat` 启动卡片式 Python 可视化工具，其独立图形化配置中心在一个连续滚动表单中按基础、端口、工具和 MCP 分区展示 `frame-config.json`，提供路径选择、当前副本端口预览和保存前语义差异预览；配置中心只允许保存通过统一配置校验的值，并保留未参与编辑的字段。启动工具还负责初始化副本槽位以及启动 Unity 编辑器、Legma UI 工具和 Staticdata 导表工具。保存配置时立即校验 MCP 路径并同步工作区 Codex 配置；已打开的 Unity Editor 自动应用 `tools.mcp.enabled` 和 endpoint 变化，正在运行或启用自动启动的本地 UnityMCP 会安全重载。Codex 已运行会话不会由启动工具终止或替换，需要重启会话后重建 MCP client 进程；Unity、Legma 和 Staticdata 的其它启动参数由对应入口在下次启动时读取。
 - TypeScript 侧已有轻量 ECS、显式运行时阶段、本地存储抽象、版本化 JSON 存档、PlayerPrefs 适配、schema 驱动静态配表工具链，以及由 `UIManager`、`CanvasBase`、`WidgetBase` 组成的 Prefab 驱动 uGUI runtime。
 - Unity 侧已有 `UIBinder`、Prefab Variant effective declaration、Binder Inspector/Overlay、命名与 ownership 校验、TypeScript binding 生成、本地 Resources Prefab 索引与加载，以及 `StateRoot`、`StateToggle`、`ButtonEx`、`ScrollRectEx` 等配套组件。
 - `tools/ui-authoring/` 已迁入 Legma UI Authoring 能力，包含 Source Kernel、CLI、Web 编辑器、Unity Projection/Publish bridge、Binder 命名审计、generated binding 接入和可选 coordination server；Source、DeliveryState 与正式 Prefab 分别位于 `My project/UIAuthoring/`、`My project/UIAuthoring/DeliveryState/` 和 `My project/Assets/Resources/UI/Prefab/`。

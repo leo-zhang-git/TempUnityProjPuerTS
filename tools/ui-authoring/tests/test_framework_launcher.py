@@ -50,6 +50,33 @@ class FrameworkLauncherTests(unittest.TestCase):
             popen.assert_called_once()
             self.assertIn("测试工具", message)
 
+    def test_save_and_apply_updates_frame_and_codex_configs(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            workspace = root / "longdemo"
+            for relative_path in (
+                Path("tools/unity-asset-mcp/server.py"),
+                Path("tools/game-mcp/server.py"),
+            ):
+                server_path = workspace / relative_path
+                server_path.parent.mkdir(parents=True, exist_ok=True)
+                server_path.write_text("", encoding="utf-8")
+
+            payload = json.loads((REPO_ROOT / "frame-config.json").read_text(encoding="utf-8"))
+            payload["tools"]["mcp"]["workspacePath"] = str(workspace)
+            frame_config_path = root / "frame-config.json"
+
+            message = self.launcher.save_and_apply_frame_defaults(
+                payload,
+                repo_root=root,
+                frame_config_path=frame_config_path,
+            )
+
+            self.assertEqual(json.loads(frame_config_path.read_text(encoding="utf-8")), payload)
+            codex = (root / ".codex" / "config.toml").read_text(encoding="utf-8")
+            self.assertIn('url = "http://127.0.0.1:18180/mcp"', codex)
+            self.assertIn("Codex MCP 配置已同步", message)
+
 
 if __name__ == "__main__":
     unittest.main()

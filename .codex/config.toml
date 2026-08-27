@@ -1,2 +1,15 @@
-[mcp_servers.puerts-unity-editor-assistant]
-url = "http://127.0.0.1:3101/mcp"
+[mcp_servers.unity-asset-mcp]
+command = "python"
+args = ["F:/WorkSpace/longdemo/tools/unity-asset-mcp/server.py"]
+cwd = "F:/WorkSpace/longdemo"
+
+[mcp_servers.game-mcp]
+command = "python"
+args = ["F:/WorkSpace/longdemo/tools/game-mcp/server.py"]
+cwd = "F:/WorkSpace/longdemo"
+default_tools_approval_mode = "approve"
+
+[mcp_servers.UnityMCP]
+url = "http://127.0.0.1:18180/mcp"
+startup_timeout_sec = 60
+default_tools_approval_mode = "approve"

@@ -30,6 +30,8 @@ if str(TOOLS_ROOT) not in sys.path:
     sys.path.insert(0, str(TOOLS_ROOT))
 
 from frame_config import FrameConfigError, load_frame_config, load_frame_defaults, validate_frame_defaults
+from frame_config_editor import FrameConfigEditorWindow
+from mcp_config_sync import McpConfigSyncError, build_codex_config_text, sync_codex_mcp_config
 
 
 class LauncherError(RuntimeError):
@@ -51,6 +53,41 @@ def write_json_atomically(path: Path, payload: dict[str, Any]) -> None:
         temporary_path.replace(path)
     finally:
         temporary_path.unlink(missing_ok=True)
+
+
+def save_and_apply_frame_defaults(
+    payload: dict[str, Any],
+    repo_root: Path = REPO_ROOT,
+    frame_config_path: Path = FRAME_CONFIG_PATH,
+) -> str:
+    validate_frame_defaults(payload, frame_config_path)
+    codex_config_path = repo_root / ".codex" / "config.toml"
+    existing_codex = codex_config_path.read_text(encoding="utf-8") if codex_config_path.exists() else ""
+    build_codex_config_text(existing_codex, repo_root, payload)
+    write_json_atomically(frame_config_path, payload)
+    synced_path, changed = sync_codex_mcp_config(repo_root, payload)
+    return _format_apply_message(frame_config_path, synced_path, changed)
+
+
+def apply_current_frame_defaults(repo_root: Path = REPO_ROOT) -> str:
+    try:
+        defaults = load_frame_defaults(repo_root)
+        write_json_atomically(repo_root / "frame-config.json", defaults)
+        synced_path, changed = sync_codex_mcp_config(repo_root, defaults)
+    except (FrameConfigError, McpConfigSyncError) as exc:
+        raise LauncherError(str(exc)) from exc
+    return _format_apply_message(repo_root / "frame-config.json", synced_path, changed)
+
+
+def _format_apply_message(frame_config_path: Path, codex_config_path: Path, codex_changed: bool) -> str:
+    codex_status = "已同步" if codex_changed else "已是最新"
+    return (
+        f"frame-config 已保存，MCP 配置已应用：{frame_config_path}\n"
+        f"Codex MCP 配置{codex_status}：{codex_config_path}\n"
+        "Unity Editor 会自动检测 MCP 配置变化；正在运行或已启用自动启动的 UnityMCP 会自动重载。\n"
+        "已运行的 Codex 会话不会重建 MCP 进程，请重启该会话后使用新的 server 路径或 endpoint。\n"
+        "Unity、Legma 和 Staticdata 的其它启动参数由对应工具在下次启动时读取。"
+    )
 
 
 def launch_unity() -> str:
@@ -113,49 +150,319 @@ def initialize_config(slot: int) -> str:
 class LauncherWindow:
     def __init__(self, window: tk.Tk):
         self.window = window
-        self.status_var = tk.StringVar()
+        self.workspace_status_var = tk.StringVar()
+        self.port_status_var = tk.StringVar()
+        self.mcp_status_var = tk.StringVar()
+        self.unity_status_var = tk.StringVar()
         self.log_view: scrolledtext.ScrolledText | None = None
+        self.config_editor: FrameConfigEditorWindow | None = None
         self._build()
         self.refresh_status()
 
     def _build(self) -> None:
         self.window.title("Unity PuerTS 框架启动工具")
-        self.window.geometry("760x600")
-        self.window.minsize(680, 500)
-        self.window.configure(bg="#f4f6f8")
+        self.window.geometry("980x840")
+        self.window.minsize(840, 700)
+        self.window.configure(bg="#edf2f7")
 
         style = ttk.Style(self.window)
         try:
             style.theme_use("vista")
         except tk.TclError:
             style.theme_use("clam")
-        style.configure("Title.TLabel", font=("Microsoft YaHei UI", 18, "bold"))
-        style.configure("Section.TLabel", font=("Microsoft YaHei UI", 10, "bold"))
-        style.configure("Action.TButton", padding=(12, 8))
+        style.configure("Launcher.TButton", font=("Microsoft YaHei UI", 9, "bold"), padding=(12, 8))
 
-        outer = ttk.Frame(self.window, padding=20)
+        header = tk.Frame(self.window, bg="#182236", padx=26, pady=20)
+        header.pack(fill="x")
+        header.columnconfigure(0, weight=1)
+        tk.Label(
+            header,
+            text="UNITY · PUERTS",
+            bg="#182236",
+            fg="#7fa2ff",
+            font=("Microsoft YaHei UI", 9, "bold"),
+        ).grid(row=0, column=0, sticky="w")
+        tk.Label(
+            header,
+            text="框架启动工具",
+            bg="#182236",
+            fg="#ffffff",
+            font=("Microsoft YaHei UI", 22, "bold"),
+        ).grid(row=1, column=0, sticky="w", pady=(2, 0))
+        tk.Label(
+            header,
+            text="统一管理框架配置、Unity、MCP、Legma 和 Staticdata 入口",
+            bg="#182236",
+            fg="#aebbd0",
+            font=("Microsoft YaHei UI", 9),
+        ).grid(row=2, column=0, sticky="w", pady=(4, 0))
+        tk.Button(
+            header,
+            text="退出",
+            command=self.window.destroy,
+            bg="#26334c",
+            fg="#dce5f5",
+            activebackground="#334362",
+            activeforeground="#ffffff",
+            relief="flat",
+            cursor="hand2",
+            padx=18,
+            pady=7,
+            font=("Microsoft YaHei UI", 9),
+        ).grid(row=0, column=1, rowspan=3, sticky="e")
+
+        outer = tk.Frame(self.window, bg="#edf2f7", padx=24, pady=18)
         outer.pack(fill="both", expand=True)
-        ttk.Label(outer, text="Unity PuerTS 框架启动工具", style="Title.TLabel").pack(anchor="w")
-        ttk.Label(outer, text="统一管理框架配置、Unity、Legma 和 Staticdata 入口", foreground="#5f6b76").pack(anchor="w", pady=(4, 14))
 
-        status_frame = ttk.LabelFrame(outer, text="当前配置", padding=12)
-        status_frame.pack(fill="x")
-        ttk.Label(status_frame, textvariable=self.status_var, justify="left").pack(anchor="w")
+        overview = tk.Frame(outer, bg="#ffffff", padx=18, pady=14, highlightthickness=1, highlightbackground="#dce3ed")
+        overview.pack(fill="x")
+        tk.Label(
+            overview,
+            text="工作区概览",
+            bg="#ffffff",
+            fg="#202b3c",
+            font=("Microsoft YaHei UI", 12, "bold"),
+        ).pack(anchor="w", pady=(0, 10))
+        status_grid = tk.Frame(overview, bg="#ffffff")
+        status_grid.pack(fill="x")
+        status_cards = (
+            ("WORKSPACE", "工作副本", self.workspace_status_var, "#4f7cff"),
+            ("PORTS", "本地端口", self.port_status_var, "#26a69a"),
+            ("MCP", "MCP 工具链", self.mcp_status_var, "#8b6ee8"),
+            ("UNITY", "Unity 工程", self.unity_status_var, "#e88a4f"),
+        )
+        for column, status in enumerate(status_cards):
+            self._build_status_card(status_grid, column, *status)
+            status_grid.columnconfigure(column, weight=1, uniform="status")
 
-        actions = ttk.LabelFrame(outer, text="启动与维护", padding=12)
-        actions.pack(fill="x", pady=(14, 0))
-        buttons = [
-            ("修改 frame-config", self.open_config_editor),
-            ("初始化/分配端口槽位", self.initialize_from_dialog),
-            ("启动 Unity 编辑器", lambda: self.run_action(launch_unity)),
-            ("启动 UI 工具（Legma）", lambda: self.run_action(self.launch_ui)),
-            ("启动导表工具（Staticdata）", lambda: self.run_action(self.launch_staticdata)),
+        section_header = tk.Frame(outer, bg="#edf2f7")
+        section_header.pack(fill="x", pady=(16, 8))
+        tk.Label(
+            section_header,
+            text="开发工具",
+            bg="#edf2f7",
+            fg="#202b3c",
+            font=("Microsoft YaHei UI", 12, "bold"),
+        ).pack(side="left")
+        tk.Label(
+            section_header,
+            text="选择一个工作入口快速启动",
+            bg="#edf2f7",
+            fg="#718096",
+            font=("Microsoft YaHei UI", 9),
+        ).pack(side="left", padx=(10, 0), pady=(3, 0))
+
+        tool_grid = tk.Frame(outer, bg="#edf2f7")
+        tool_grid.pack(fill="x")
+        tool_cards = (
+            (
+                "UNITY",
+                "Unity Editor",
+                "打开当前模板工程，UnityMCP 会按配置自动接入。",
+                "启动 Unity",
+                lambda: self.run_action(launch_unity),
+                "#4f7cff",
+                "#edf2ff",
+            ),
+            (
+                "LEGMA",
+                "UI 编辑工具",
+                "启动 Legma，编辑、预览并交付 Unity UI Source。",
+                "启动 Legma",
+                lambda: self.run_action(self.launch_ui),
+                "#8b6ee8",
+                "#f2efff",
+            ),
+            (
+                "STATICDATA",
+                "配表编辑工具",
+                "启动 Staticdata Web 工具，维护项目结构化数据。",
+                "启动 Staticdata",
+                lambda: self.run_action(self.launch_staticdata),
+                "#26a69a",
+                "#eaf8f5",
+            ),
+        )
+        for column, tool_card in enumerate(tool_cards):
+            self._build_tool_card(tool_grid, column, *tool_card)
+            tool_grid.columnconfigure(column, weight=1, uniform="tools")
+
+        maintenance = tk.Frame(
+            outer,
+            bg="#ffffff",
+            padx=16,
+            pady=12,
+            highlightthickness=1,
+            highlightbackground="#dce3ed",
+        )
+        maintenance.pack(fill="x", pady=(14, 0))
+        tk.Label(
+            maintenance,
+            text="配置与维护",
+            bg="#ffffff",
+            fg="#202b3c",
+            font=("Microsoft YaHei UI", 11, "bold"),
+        ).grid(row=0, column=0, sticky="w", padx=(0, 16))
+        maintenance_buttons = (
+            ("打开配置中心", self.open_config_editor),
+            ("初始化端口槽位", self.initialize_from_dialog),
+            ("重新应用 MCP", lambda: self.run_action(apply_current_frame_defaults)),
             ("打开项目目录", self.open_project_directory),
-        ]
-        for index, (label, callback) in enumerate(buttons):
-            ttk.Button(actions, text=label, style="Action.TButton", command=callback).grid(
-                row=index // 3, column=index % 3, padx=5, pady=5, sticky="ew"
-            )
+        )
+        for column, (label, callback) in enumerate(maintenance_buttons, start=1):
+            ttk.Button(
+                maintenance,
+                text=label,
+                style="Launcher.TButton",
+                command=callback,
+            ).grid(row=0, column=column, padx=(6, 0), sticky="ew")
+            maintenance.columnconfigure(column, weight=1, uniform="maintenance")
+
+        log_card = tk.Frame(
+            outer,
+            bg="#ffffff",
+            padx=14,
+            pady=12,
+            highlightthickness=1,
+            highlightbackground="#dce3ed",
+        )
+        log_card.pack(fill="both", expand=True, pady=(14, 0))
+        log_header = tk.Frame(log_card, bg="#ffffff")
+        log_header.pack(fill="x", pady=(0, 8))
+        tk.Label(
+            log_header,
+            text="运行日志",
+            bg="#ffffff",
+            fg="#202b3c",
+            font=("Microsoft YaHei UI", 11, "bold"),
+        ).pack(side="left")
+        tk.Button(
+            log_header,
+            text="清空",
+            command=self.clear_log,
+            bg="#ffffff",
+            fg="#718096",
+            activebackground="#f1f4f8",
+            activeforeground="#202b3c",
+            relief="flat",
+            cursor="hand2",
+            font=("Microsoft YaHei UI", 9),
+        ).pack(side="right")
+        self.log_view = scrolledtext.ScrolledText(
+            log_card,
+            height=7,
+            state="disabled",
+            wrap="word",
+            bg="#111827",
+            fg="#d9e2f2",
+            insertbackground="#ffffff",
+            selectbackground="#3859a8",
+            relief="flat",
+            padx=12,
+            pady=10,
+            font=("Consolas", 9),
+        )
+        self.log_view.pack(fill="both", expand=True)
+
+    def _build_status_card(
+        self,
+        parent: Any,
+        column: int,
+        badge: str,
+        title: str,
+        value_var: Any,
+        accent: str,
+    ) -> None:
+        card = tk.Frame(parent, bg="#f7f9fc", padx=12, pady=10)
+        card.grid(row=0, column=column, padx=(0 if column == 0 else 5, 0), sticky="nsew")
+        tk.Frame(card, bg=accent, width=4).pack(side="left", fill="y", padx=(0, 10))
+        content = tk.Frame(card, bg="#f7f9fc")
+        content.pack(side="left", fill="both", expand=True)
+        tk.Label(
+            content,
+            text=f"{badge}  ·  {title}",
+            bg="#f7f9fc",
+            fg=accent,
+            font=("Microsoft YaHei UI", 8, "bold"),
+        ).pack(anchor="w")
+        tk.Label(
+            content,
+            textvariable=value_var,
+            bg="#f7f9fc",
+            fg="#344054",
+            justify="left",
+            anchor="nw",
+            wraplength=190,
+            font=("Microsoft YaHei UI", 9),
+        ).pack(anchor="w", pady=(4, 0))
+
+    def _build_tool_card(
+        self,
+        parent: Any,
+        column: int,
+        badge: str,
+        title: str,
+        description: str,
+        button_text: str,
+        callback: Callable[[], None],
+        accent: str,
+        tint: str,
+    ) -> None:
+        card = tk.Frame(
+            parent,
+            bg="#ffffff",
+            padx=16,
+            pady=14,
+            highlightthickness=1,
+            highlightbackground="#dce3ed",
+        )
+        card.grid(row=0, column=column, padx=(0 if column == 0 else 8, 0), sticky="nsew")
+        tk.Label(
+            card,
+            text=badge,
+            bg=tint,
+            fg=accent,
+            padx=8,
+            pady=3,
+            font=("Microsoft YaHei UI", 8, "bold"),
+        ).pack(anchor="w")
+        tk.Label(
+            card,
+            text=title,
+            bg="#ffffff",
+            fg="#202b3c",
+            font=("Microsoft YaHei UI", 13, "bold"),
+        ).pack(anchor="w", pady=(9, 3))
+        tk.Label(
+            card,
+            text=description,
+            bg="#ffffff",
+            fg="#667085",
+            justify="left",
+            anchor="w",
+            wraplength=245,
+            font=("Microsoft YaHei UI", 9),
+        ).pack(anchor="w", fill="x")
+        tk.Button(
+            card,
+            text=button_text,
+            command=callback,
+            bg=accent,
+            fg="#ffffff",
+            activebackground=accent,
+            activeforeground="#ffffff",
+            relief="flat",
+            cursor="hand2",
+            pady=7,
+            font=("Microsoft YaHei UI", 9, "bold"),
+        ).pack(fill="x", pady=(12, 0))
+
+    def clear_log(self) -> None:
+        if self.log_view is None:
+            return
+        self.log_view.configure(state="normal")
+        self.log_view.delete("1.0", "end")
+        self.log_view.configure(state="disabled")
         for column in range(3):
             actions.columnconfigure(column, weight=1)
 
@@ -169,16 +476,25 @@ class LauncherWindow:
         try:
             config = load_frame_config(REPO_ROOT, require_local=False)
             local_state = "已初始化" if config.workspace_id != "unconfigured" else "未初始化"
-            self.status_var.set(
-                f"状态：{local_state}    workspaceId：{config.workspace_id}\n"
-                f"portSlot：{config.port_slot}    备用端口数量：{config.fallback_port_count}\n"
-                f"Legma manual：{config.loopback_host}:{config.legma_manual_port}    "
-                f"Legma AI：{config.loopback_host}:{config.legma_ai_port}\n"
-                f"Staticdata：{config.loopback_host}:{config.staticdata_web_port}    "
-                f"Unity：{config.unity_editor_path}"
+            mcp_state = "已启用" if config.mcp_enabled else "已关闭"
+            self.workspace_status_var.set(
+                f"{local_state}\n{config.workspace_id}\nportSlot {config.port_slot}"
+            )
+            self.port_status_var.set(
+                f"Legma {config.legma_manual_port} / {config.legma_ai_port}\n"
+                f"Staticdata {config.staticdata_web_port}\n备用 {config.fallback_port_count} 个"
+            )
+            self.mcp_status_var.set(
+                f"{mcp_state}\n{config.mcp_unity_endpoint}"
+            )
+            self.unity_status_var.set(
+                f"{Path(config.unity_project_path).name}\n{config.unity_editor_path}"
             )
         except FrameConfigError as exc:
-            self.status_var.set(f"配置读取失败：{exc}")
+            self.workspace_status_var.set(f"配置读取失败\n{exc}")
+            self.port_status_var.set("—")
+            self.mcp_status_var.set("—")
+            self.unity_status_var.set("—")
             self.append_log(f"配置读取失败：{exc}")
 
     def append_log(self, message: str) -> None:
@@ -229,58 +545,34 @@ class LauncherWindow:
         self.run_action(lambda: initialize_config(slot))
 
     def open_config_editor(self) -> None:
+        if self.config_editor is not None and self.config_editor.is_open():
+            self.config_editor.focus()
+            return
         try:
             defaults = load_frame_defaults(REPO_ROOT)
-            initial_text = json.dumps(defaults, ensure_ascii=False, indent=2)
+            config = load_frame_config(REPO_ROOT, require_local=False)
         except FrameConfigError as exc:
             messagebox.showerror("配置读取失败", str(exc), parent=self.window)
             return
 
-        editor = tk.Toplevel(self.window)
-        editor.title("修改 frame-config.json")
-        editor.geometry("720x620")
-        editor.transient(self.window)
-        editor.grab_set()
-        body = ttk.Frame(editor, padding=12)
-        body.pack(fill="both", expand=True)
-        ttk.Label(body, text="编辑稳定默认配置；每个字段修改后会影响对应工具的下一次启动。", foreground="#5f6b76").pack(anchor="w")
-        text_view = scrolledtext.ScrolledText(body, wrap="none", undo=True, font=("Consolas", 10))
-        text_view.pack(fill="both", expand=True, pady=(8, 10))
-        text_view.insert("1.0", initial_text)
-
-        def replace_text(payload: dict[str, Any]) -> None:
-            text_view.delete("1.0", "end")
-            text_view.insert("1.0", json.dumps(payload, ensure_ascii=False, indent=2))
-
-        def format_json() -> None:
-            try:
-                payload = json.loads(text_view.get("1.0", "end"))
-                if not isinstance(payload, dict):
-                    raise ValueError("frame-config.json 必须是 JSON 对象。")
-                replace_text(payload)
-            except (json.JSONDecodeError, ValueError) as exc:
-                messagebox.showerror("格式化失败", str(exc), parent=editor)
-
-        def save_json() -> None:
-            try:
-                payload = json.loads(text_view.get("1.0", "end"))
-                if not isinstance(payload, dict):
-                    raise ValueError("frame-config.json 必须是 JSON 对象。")
-                validate_frame_defaults(payload, FRAME_CONFIG_PATH)
-                write_json_atomically(FRAME_CONFIG_PATH, payload)
-            except (json.JSONDecodeError, ValueError, FrameConfigError, OSError) as exc:
-                messagebox.showerror("保存失败", str(exc), parent=editor)
-                return
-            self.append_log(f"已保存配置：{FRAME_CONFIG_PATH}")
+        def handle_saved(message: str) -> None:
+            self.append_log(message)
             self.refresh_status()
-            messagebox.showinfo("保存成功", "frame-config.json 已保存。", parent=editor)
-            editor.destroy()
 
-        controls = ttk.Frame(body)
-        controls.pack(fill="x")
-        ttk.Button(controls, text="格式化", command=format_json).pack(side="left")
-        ttk.Button(controls, text="保存", command=save_json).pack(side="right", padx=(8, 0))
-        ttk.Button(controls, text="取消", command=editor.destroy).pack(side="right")
+        def handle_closed() -> None:
+            self.config_editor = None
+
+        self.config_editor = FrameConfigEditorWindow(
+            parent=self.window,
+            repo_root=REPO_ROOT,
+            config_path=FRAME_CONFIG_PATH,
+            initial_payload=defaults,
+            workspace_id=config.workspace_id,
+            port_slot=config.port_slot,
+            save_callback=save_and_apply_frame_defaults,
+            saved_callback=handle_saved,
+            closed_callback=handle_closed,
+        )
 
     def open_project_directory(self) -> None:
         try:
@@ -318,6 +610,8 @@ def run_cli_action(action: str, slot: int | None) -> int:
             if slot is None:
                 raise LauncherError("初始化动作必须指定 --slot。")
             print(initialize_config(slot))
+        elif action == "apply-config":
+            print(apply_current_frame_defaults())
         else:
             raise LauncherError(f"未知启动动作：{action}")
     except (LauncherError, OSError, ValueError) as exc:
@@ -328,7 +622,7 @@ def run_cli_action(action: str, slot: int | None) -> int:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Unity PuerTS framework launcher")
-    parser.add_argument("--action", choices=("unity", "ui", "staticdata", "init"))
+    parser.add_argument("--action", choices=("unity", "ui", "staticdata", "init", "apply-config"))
     parser.add_argument("--slot", type=int)
     args = parser.parse_args()
     if args.action:

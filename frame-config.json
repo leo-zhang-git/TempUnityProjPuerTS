@@ -21,6 +21,13 @@
     },
     "staticdata": {
       "enabled": true
+    },
+    "mcp": {
+      "enabled": true,
+      "workspacePath": "F:\\WorkSpace\\longdemo",
+      "unityAssetServerPath": "tools\\unity-asset-mcp\\server.py",
+      "gameServerPath": "tools\\game-mcp\\server.py",
+      "unityEndpoint": "http://127.0.0.1:18180/mcp"
     }
   }
 }

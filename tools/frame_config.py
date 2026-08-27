@@ -5,6 +5,7 @@ import os
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 
 FRAME_CONFIG_FILE_NAME = "frame-config.json"
@@ -31,6 +32,11 @@ class FrameConfig:
     staticdata_web_base: int
     legma_coordination_base: int
     coordination_enabled: bool
+    mcp_enabled: bool
+    mcp_workspace_path: str
+    mcp_unity_asset_server_path: str
+    mcp_game_server_path: str
+    mcp_unity_endpoint: str
 
     @property
     def legma_manual_port(self) -> int:
@@ -122,6 +128,11 @@ def load_frame_config(repo_root: Path, require_local: bool = True) -> FrameConfi
         staticdata_web_base=ports["staticdataWebBase"],
         legma_coordination_base=ports["legmaCoordinationBase"],
         coordination_enabled=tools["legma"]["coordinationEnabled"],
+        mcp_enabled=tools["mcp"]["enabled"],
+        mcp_workspace_path=tools["mcp"]["workspacePath"],
+        mcp_unity_asset_server_path=tools["mcp"]["unityAssetServerPath"],
+        mcp_game_server_path=tools["mcp"]["gameServerPath"],
+        mcp_unity_endpoint=tools["mcp"]["unityEndpoint"],
     )
 
 
@@ -198,10 +209,36 @@ def _validate_defaults(payload: dict[str, Any], path: Path) -> None:
         raise FrameConfigError(f"Missing tools in {path}.")
     legma = tools.get("legma")
     staticdata = tools.get("staticdata")
+    mcp = tools.get("mcp")
     if not isinstance(legma, dict) or not isinstance(legma.get("coordinationEnabled"), bool):
         raise FrameConfigError(f"Invalid tools.legma in {path}.")
     if not isinstance(staticdata, dict) or not isinstance(staticdata.get("enabled"), bool):
         raise FrameConfigError(f"Invalid tools.staticdata in {path}.")
+    if not isinstance(mcp, dict) or not isinstance(mcp.get("enabled"), bool):
+        raise FrameConfigError(f"Invalid tools.mcp in {path}.")
+    for field in ("workspacePath", "unityAssetServerPath", "gameServerPath", "unityEndpoint"):
+        value = mcp.get(field)
+        if not isinstance(value, str) or not value.strip():
+            raise FrameConfigError(f"Invalid tools.mcp.{field} in {path}.")
+    try:
+        unity_endpoint = urlparse(mcp["unityEndpoint"])
+        unity_port = unity_endpoint.port
+    except ValueError as exc:
+        raise FrameConfigError(f"Invalid tools.mcp.unityEndpoint in {path}.") from exc
+    if (
+        unity_endpoint.scheme != "http"
+        or unity_endpoint.hostname not in {"127.0.0.1", "localhost", "::1"}
+        or unity_port is None
+        or unity_endpoint.path.rstrip("/") != "/mcp"
+        or unity_endpoint.params
+        or unity_endpoint.query
+        or unity_endpoint.fragment
+        or unity_endpoint.username
+        or unity_endpoint.password
+    ):
+        raise FrameConfigError(
+            f"tools.mcp.unityEndpoint must be an explicit loopback HTTP /mcp URL in {path}."
+        )
 
 
 def _validate_local(payload: dict[str, Any], path: Path) -> None:

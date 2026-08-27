@@ -11,8 +11,9 @@
 
 - `TsProj/` 持有 TypeScript 运行时、ECS、示例规则、状态、存档、静态配表 authoring/target 和明确命名的 Unity 表现适配。
 - `My project/` 持有 Unity 场景、GameObject、Prefab、序列化资源、物理、UI 和 C# 引擎桥接。
-- 根 `frame-config.json` 持有跨工具的框架默认配置；本地 `frame-config.local.json` 持有副本身份和端口槽位。工具 launcher 只能从该配置派生监听端口，不将工作区端口写入业务数据、Unity 序列化资产或 TypeScript runtime target。首选端口被占用时，launcher 按配置的备用端口数量顺序探测可用端口，只替换同一工作区的旧服务。
-- 根 `启动工具.bat` 与 `tools/framework_launcher.py` 只负责入口编排和配置编辑，不承载 Unity、Legma 或 Staticdata 的业务实现；各按钮复用对应工具的既有 BAT/脚本入口。
+- 根 `frame-config.json` 持有跨工具的框架默认配置；本地 `frame-config.local.json` 持有副本身份和端口槽位。工具 launcher 只能从该配置派生监听端口或生成工具本地配置，不将工作区端口写入业务数据、Unity 序列化资产或 TypeScript runtime target。首选端口被占用时，launcher 按配置的备用端口数量顺序探测可用端口，只替换同一工作区的旧服务。
+- MCP 工具链属于编辑器开发基础设施，不进入 TypeScript runtime 依赖方向：Unity 工程通过 `com.coplaydev.unity-mcp` 暴露 Editor HTTP endpoint，外部 `.codex/config.toml` 再组合该 endpoint 与离线 `unity-asset-mcp`、联调 `game-mcp`；根 `frame-config.json` 的 `tools.mcp` 节是 MCP 工作区路径、开关和 Unity endpoint 的 owner。`tools/mcp_config_sync.py` 只替换工作区 Codex 配置中由模板管理的三个 MCP table，保留其它 Codex 设置。
+- 根 `启动工具.bat` 与 `tools/framework_launcher.py` 负责入口编排、配置编辑与工具配置应用，不承载 Unity、Legma、Staticdata 或 MCP server 的业务实现。Unity 插件监听 `frame-config.json` 中影响本地 server 生命周期的 MCP 字段并成对停止、重启 bridge/server；启动工具不终止或替换正在运行的 Codex 会话。
 - 根级文档只持有跨范围稳定事实和边界；具体系统行为进入 `TsProj/doc/`、局部 README、Unity 资产和局部入口。
 - `TsProj/dist/`、`node_modules/` 与 Unity 生成目录都是派生内容，不作为源码或文档权威。
 

@@ -27,6 +27,8 @@ Desktop.ini
 [Oo]bj/
 [Bb]uild/
 [Bb]uilds/
+!My project/PackagesResource/com.coplaydev.unity-mcp/Editor/Tools/Build/
+!My project/PackagesResource/com.coplaydev.unity-mcp/Editor/Tools/Build/**
 [Ll]ogs/
 [Uu]ser[Ss]ettings/
 [Mm]emoryCaptures/
@@ -37,6 +39,7 @@ Desktop.ini
 *.booproj
 *.svd
 *.pdb
+*.pdb.meta
 *.mdb
 *.opendb
 *.VC.db
